@@ -1,0 +1,18 @@
+project_name: "DartsArena"
+project_type: "web-app"
+project_level: 1
+output_folder: "docs"
+tech_stack:
+  frontend: "TailwindCSS v4"
+  backend: "Laravel 11"
+  database: "SQLite (dev) / PostgreSQL (prod)"
+  hosting: "Laravel Herd (dev) / Railway (prod)"
+  scraping: "Guzzle + Symfony DomCrawler"
+  i18n: "spatie/laravel-translatable + mcamara/laravel-localization"
+bmm:
+  workflow_status_file: "docs/bmm-workflow-status.yaml"
+  sprint_status_file: "docs/sprint-status.yaml"
+paths:
+  docs: "docs"
+  stories: "docs/stories"
+  tests: "tests"

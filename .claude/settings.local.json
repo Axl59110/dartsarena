@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(PYTHONIOENCODING=utf-8 python:*)",
+      "WebFetch(domain:www.pdc.tv)",
+      "WebFetch(domain:andysbetclub.co.uk)",
+      "WebFetch(domain:mastercaller.com)",
+      "Bash(\"C:/Users/axel/.claude/plugins/cache/claude-plugins-official/ralph-loop/aa296ec81e8c/scripts/setup-ralph-loop.sh\" \"Développe le projet DartsArena en suivant les stories BMAD dans docs/stories/ \\(STORY-001 à STORY-005 pour le Sprint 1\\). Commence par STORY-001 \\(setup Laravel + TailwindCSS v4 + i18n FR/EN\\), puis STORY-002 \\(modèles et migrations\\), STORY-003 \\(seeders\\), STORY-004 \\(pages silos SEO\\), STORY-005 \\(fiches joueurs\\). Le site doit tourner sur Laravel Herd et être fonctionnel dans le navigateur. Lis chaque story avant de la développer. Mets à jour docs/sprint-status.yaml au fur et à mesure.\" --max-iterations 50)",
+      "Bash(php -v:*)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php\" -v)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php84\" -v)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php84/php.exe\" -v)",
+      "Bash(export PATH=\"/c/Users/axel/.config/herd/bin/php84:$PATH\")",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php84/php.exe\" \"/c/Users/axel/.config/herd/bin/composer.phar\" --version)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php84/php.exe\" \"/c/Users/axel/.config/herd/bin/laravel.phar\" --version)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php84/php.exe\" \"/c/Users/axel/.config/herd/bin/herd.phar\" paths)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/HerdHelper.exe\":*)",
+      "Bash(\"/c/Users/axel/.config/herd/bin/php84/php.exe\" \"/c/Users/axel/.config/herd/bin/composer.phar\" create-project laravel/laravel dartsarena --prefer-dist)",
+      "Bash(php:*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192333_create_competitions_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192334_create_seasons_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192336_create_players_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192337_create_darts_matches_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192339_create_player_rankings_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192341_create_calendar_events_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192342_create_match_stats_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192344_create_betting_tips_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192345_create_articles_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192346_create_guides_table.php\":*)",
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192348_create_tags_table.php\":*)"
+    ]
+  }
+}

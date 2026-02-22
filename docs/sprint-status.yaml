@@ -1,0 +1,102 @@
+# BMAD Method Sprint Status
+# Generated: 2026-02-22
+# Project: DartsArena
+
+project_name: "DartsArena"
+last_updated: "2026-02-22"
+
+sprints:
+  - number: 1
+    goal: "Fondations — Architecture, modeles, donnees, silos SEO, fiches joueurs"
+    status: "not-started"
+    total_points: 19
+    stories:
+      - id: "STORY-001"
+        name: "Setup Laravel + TailwindCSS + Architecture de base + i18n"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-001.md"
+      - id: "STORY-002"
+        name: "Modeles & Migrations"
+        points: 5
+        status: "not-started"
+        file: "docs/stories/STORY-002.md"
+      - id: "STORY-003"
+        name: "Seeders avec Donnees Initiales"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-003.md"
+      - id: "STORY-004"
+        name: "Pages Federation + Competition (Silos SEO)"
+        points: 5
+        status: "not-started"
+        file: "docs/stories/STORY-004.md"
+      - id: "STORY-005"
+        name: "Fiches Joueurs"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-005.md"
+
+  - number: 2
+    goal: "Core — Matchs, classements, calendrier, scraping automatise"
+    status: "not-started"
+    total_points: 21
+    stories:
+      - id: "STORY-006"
+        name: "Page Classement Filtrable + Page Calendrier"
+        points: 5
+        status: "not-started"
+        file: "docs/stories/STORY-006.md"
+      - id: "STORY-007"
+        name: "Pages de Match (Resultats, Stats, Score)"
+        points: 5
+        status: "not-started"
+        file: "docs/stories/STORY-007.md"
+      - id: "STORY-008"
+        name: "Page Matchs du Jour"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-008.md"
+      - id: "STORY-009"
+        name: "Service de Scraping + Jobs Schedules"
+        points: 8
+        status: "not-started"
+        file: "docs/stories/STORY-009.md"
+
+  - number: 3
+    goal: "Contenu — Migration WP, news, guides, betting tips, SEO complet, homepage"
+    status: "not-started"
+    total_points: 19
+    stories:
+      - id: "STORY-010"
+        name: "Migration WordPress (Articles + Guides)"
+        points: 5
+        status: "not-started"
+        file: "docs/stories/STORY-010.md"
+      - id: "STORY-011"
+        name: "Pages News + Guides avec Templates"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-011.md"
+      - id: "STORY-012"
+        name: "Betting Tips par Match/Competition"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-012.md"
+      - id: "STORY-013"
+        name: "SEO Complet (Sitemap, Schema.org, Meta Tags, Hreflang)"
+        points: 5
+        status: "not-started"
+        file: "docs/stories/STORY-013.md"
+      - id: "STORY-014"
+        name: "Homepage Dashboard"
+        points: 3
+        status: "not-started"
+        file: "docs/stories/STORY-014.md"
+
+metrics:
+  total_stories: 14
+  total_points: 59
+  stories_completed: 0
+  stories_in_progress: 0
+  stories_not_started: 14

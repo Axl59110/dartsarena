@@ -1,0 +1,54 @@
+# BMAD Method Workflow Status
+# Generated: 2026-02-22
+# Project: DartsArena
+
+project_name: "DartsArena"
+project_type: "web-app"
+project_level: 1
+communication_language: "Francais"
+output_language: "Francais"
+last_updated: "2026-02-22"
+
+workflow_status:
+  # Phase 1: Analysis
+  - name: product-brief
+    phase: 1
+    status: "docs/product-brief-dartsarena-2026-02-22.md"
+    description: "Create comprehensive product brief"
+
+  - name: brainstorm-project
+    phase: 1
+    status: "skipped"
+    description: "Structured brainstorming session (done via POC deliberation)"
+
+  - name: research
+    phase: 1
+    status: "skipped"
+    description: "Market and competitive research (done via POC deliberation)"
+
+  # Phase 2: Planning
+  - name: prd
+    phase: 2
+    status: "recommended"
+    description: "Product Requirements Document"
+
+  - name: tech-spec
+    phase: 2
+    status: "docs/tech-spec-dartsarena-2026-02-22.md"
+    description: "Technical Specification"
+
+  - name: create-ux-design
+    phase: 2
+    status: "optional"
+    description: "UX/UI design workflow"
+
+  # Phase 3: Solutioning
+  - name: architecture
+    phase: 3
+    status: "optional"
+    description: "System architecture design"
+
+  - name: solutioning-gate-check
+    phase: 3
+    status: "optional"
+    description: "Validate architecture against requirements"
