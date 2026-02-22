@@ -1,59 +1,236 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🎯 DartsArena
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel)](https://laravel.com)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## About Laravel
+**Site de news et statistiques fléchettes professionnel** - Multilingue FR/EN
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 📰 Système d'Articles/News
+- **8 articles réalistes** : Résultats, interviews, analyses du circuit PDC
+- **Pagination** : 12 articles par page
+- **Filtres par catégorie** : Résultats, News, Interviews, Analyses
+- **Articles similaires** : Recommandations automatiques
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 👥 Joueurs & Statistiques
+- **20 joueurs top PDC** avec données complètes :
+  - Biographies FR/EN
+  - Statistiques : Titres, 9-darters, Meilleures moyennes
+  - Palmares détaillé
+  - Fiches individuelles complètes
 
-## Learning Laravel
+### 📊 Classements Dynamiques
+- **Top 20 PDC** avec prize money réaliste
+- **Évolutions** : Flèches ↑ ↓ pour suivre les mouvements
+- **Filtrable** par fédération (PDC, WDF, BDO)
+- Distribution prize money exponentielle réaliste
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 📅 Calendrier Complet 2026
+- **11 événements majeurs** :
+  - World Championship, Premier League, UK Open
+  - World Matchplay, Grand Slam, Players Championship Finals
+  - European Championship, World Grand Prix, etc.
+- Dates, lieux, liens billetterie
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 📖 Guides & Ressources
+- **4 guides complets** :
+  - Les Règles des Fléchettes
+  - Formats PDC : Sets vs Legs
+  - Comprendre les Statistiques
+  - Calendrier des Grandes Compétitions
 
-## Laravel Sponsors
+### 🌍 Multilingue
+- **Français & Anglais** complet
+- Traduction automatique des contenus
+- URLs localisées : `/fr/news`, `/en/news`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🎨 Design
+- **Dark Theme** moderne et professionnel
+- **TailwindCSS v4** avec design system cohérent
+- **Responsive** : Mobile, tablette, desktop
+- **Navigation** : 7 sections complètes
+- **Breadcrumbs** pour une meilleure UX
 
-### Premium Partners
+## 🛠️ Stack Technique
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Backend** : Laravel 11
+- **Frontend** : Blade Templates + TailwindCSS v4
+- **Base de données** : SQLite (dev) / PostgreSQL (production ready)
+- **i18n** :
+  - mcamara/laravel-localization
+  - spatie/laravel-translatable
+- **Slugs** : spatie/laravel-sluggable
+- **Serveur** : Laravel Herd (dev) / Compatible tous serveurs
 
-## Contributing
+## 📊 Données Incluses
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- ✅ **3 fédérations** : PDC, WDF, BDO
+- ✅ **8 compétitions** majeures
+- ✅ **7 saisons** (2026)
+- ✅ **20 joueurs** : Humphries, Littler, MVG, Smith, Wright, Cross, Price, etc.
+- ✅ **20 classements** avec prize money et évolutions
+- ✅ **11 événements** calendrier pour toute l'année 2026
+- ✅ **8 articles** de news
+- ✅ **4 guides** complets
 
-## Code of Conduct
+## 🚀 Installation
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Prérequis
+- PHP 8.2+
+- Composer
+- Node.js & npm
+- SQLite ou PostgreSQL
 
-## Security Vulnerabilities
+### Étapes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# 1. Cloner le projet
+git clone https://github.com/Axl59110/dartsarena.git
+cd dartsarena
 
-## License
+# 2. Installer les dépendances PHP
+composer install
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 3. Installer les dépendances Node
+npm install
+
+# 4. Copier le fichier d'environnement
+cp .env.example .env
+
+# 5. Générer la clé d'application
+php artisan key:generate
+
+# 6. Créer la base de données SQLite
+touch database/database.sqlite
+
+# 7. Exécuter les migrations et seeders
+php artisan migrate --seed
+
+# 8. Compiler les assets (optionnel)
+npm run build
+
+# 9. Démarrer le serveur
+php artisan serve
+```
+
+Le site sera accessible sur `http://localhost:8000`
+
+## 📂 Structure
+
+```
+dartsarena/
+├── app/
+│   ├── Http/Controllers/     # ArticleController, PlayerController, etc.
+│   └── Models/               # Article, Player, Competition, etc.
+├── database/
+│   ├── migrations/           # Schéma de la base de données
+│   └── seeders/              # Données de démonstration
+├── resources/
+│   ├── views/
+│   │   ├── articles/         # Vues articles/news
+│   │   ├── players/          # Fiches joueurs
+│   │   ├── rankings/         # Classements
+│   │   ├── calendar/         # Calendrier
+│   │   └── guides/           # Guides
+│   └── lang/                 # Traductions FR/EN
+└── routes/
+    └── web.php               # Routes de l'application
+```
+
+## 🌐 Pages Disponibles
+
+### Navigation Principale
+- **`/`** - Page d'accueil
+- **`/news`** - Actualités avec filtres
+- **`/competitions`** - Liste des compétitions
+- **`/players`** - Joueurs top PDC
+- **`/rankings`** - Classements avec évolutions
+- **`/calendar`** - Calendrier des événements
+- **`/guides`** - Guides et ressources
+
+### URLs Multilingues
+- `/fr/news` - Version française
+- `/en/news` - Version anglaise
+- Sélecteur de langue dans le header
+
+## 🔧 Configuration
+
+### Base de données
+Modifier `.env` pour PostgreSQL :
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=dartsarena
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+### Langues supportées
+Config dans `config/laravellocalization.php` :
+```php
+'supportedLocales' => [
+    'fr' => ['name' => 'Français', 'script' => 'Latn', 'native' => 'Français'],
+    'en' => ['name' => 'English', 'script' => 'Latn', 'native' => 'English'],
+]
+```
+
+## 📸 Aperçu
+
+- **Design dark theme** professionnel
+- **Cartes d'articles** avec badges catégories
+- **Fiches joueurs** détaillées avec stats
+- **Classements** avec évolutions visuelles
+- **Calendrier** événements à venir/passés
+
+## 🎯 Fonctionnalités à Venir
+
+- [ ] Système de recherche globale
+- [ ] Matchs récents par joueur
+- [ ] Head-to-head entre joueurs
+- [ ] Live scores (simulés ou API)
+- [ ] Système de tags pour articles
+- [ ] Newsletter subscription
+- [ ] Commentaires sur articles
+- [ ] API REST publique
+- [ ] Application mobile (PWA)
+
+## 📝 Documentation
+
+- **[POC_SETUP.md](POC_SETUP.md)** - Instructions complètes de setup
+- **[SITE_NEWS_READY.md](SITE_NEWS_READY.md)** - Vue d'ensemble du site
+- **[VERIFICATION_POC.md](VERIFICATION_POC.md)** - Checklist de vérification
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à :
+1. Fork le projet
+2. Créer une branche (`git checkout -b feature/amazing-feature`)
+3. Commit vos changements (`git commit -m 'Add amazing feature'`)
+4. Push vers la branche (`git push origin feature/amazing-feature`)
+5. Ouvrir une Pull Request
+
+## 📄 License
+
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+
+## 👏 Remerciements
+
+- **Laravel** pour le framework backend
+- **TailwindCSS** pour le design system
+- **Spatie** pour les packages Laravel
+- **PDC** & **WDF** pour l'inspiration
+
+## 📧 Contact
+
+Axel - [@Axl59110](https://github.com/Axl59110)
+
+Lien du projet : [https://github.com/Axl59110/dartsarena](https://github.com/Axl59110/dartsarena)
+
+---
+
+⭐ Si ce projet vous plaît, n'hésitez pas à lui donner une étoile !
+
+**Made with ❤️ and 🎯**
