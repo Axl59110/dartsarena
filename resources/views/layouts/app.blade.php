@@ -10,6 +10,12 @@
 
     @yield('seo_head')
 
+    <!-- Hreflang Tags -->
+    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+        <link rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" />
+    @endforeach
+    <link rel="alternate" hreflang="x-default" href="{{ LaravelLocalization::getLocalizedURL(config('app.fallback_locale'), null, [], true) }}" />
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +50,7 @@
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                     <div class="relative">
-                        <span class="relative text-4xl transform group-hover:scale-110 transition-transform duration-200">🎯</span>
+                        <span class="relative text-4xl transform group-hover:scale-110 transition-transform duration-200" role="img" aria-label="{{ __('DartsArena logo - dart target') }}">🎯</span>
                     </div>
                     <div class="flex flex-col">
                         <span class="font-display text-2xl lg:text-3xl font-bold tracking-tighter">
@@ -57,37 +63,41 @@
                 <!-- Desktop Navigation -->
                 <nav class="hidden lg:flex items-center gap-2">
                     <a href="{{ route('home') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('home') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('home') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('Home') }}
                     </a>
                     <a href="{{ route('articles.index') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('articles.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('articles.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('News') }}
                     </a>
                     <a href="{{ route('players.index') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('players.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('players.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('Players') }}
                     </a>
                     <a href="{{ route('rankings.index') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('rankings.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('rankings.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('Rankings') }}
                     </a>
                     <a href="{{ route('competitions.index') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('competitions.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('competitions.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('Competitions') }}
                     </a>
                     <a href="{{ route('calendar.index') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('calendar.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('calendar.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('Fixtures') }}
                     </a>
                     <a href="{{ route('guides.index') }}"
-                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('guides.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                       class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('guides.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
                         {{ __('Guides') }}
                     </a>
                 </nav>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="lg:hidden inline-flex items-center justify-center p-2.5 rounded-lg hover:bg-muted transition-colors" aria-label="Toggle menu">
+                <button id="mobile-menu-btn"
+                        class="lg:hidden inline-flex items-center justify-center p-2.5 rounded-[var(--radius-md)] hover:bg-muted transition-colors focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:outline-none"
+                        aria-label="{{ __('Toggle menu') }}"
+                        aria-expanded="false"
+                        aria-controls="mobile-menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -96,7 +106,9 @@
         </div>
 
         <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl">
+        <div id="mobile-menu"
+             class="hidden lg:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl"
+             aria-hidden="true">
             <nav class="container py-4 flex flex-col gap-1">
                 <a href="{{ route('home') }}"
                    class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('home') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
@@ -230,7 +242,41 @@
 
             if (menuBtn && mobileMenu) {
                 menuBtn.addEventListener('click', function() {
+                    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+
+                    // Toggle ARIA states
+                    menuBtn.setAttribute('aria-expanded', !isExpanded);
+                    mobileMenu.setAttribute('aria-hidden', isExpanded);
                     mobileMenu.classList.toggle('hidden');
+
+                    // Focus trap - focus first link when opening
+                    if (!isExpanded) {
+                        const firstLink = mobileMenu.querySelector('a');
+                        if (firstLink) {
+                            setTimeout(() => firstLink.focus(), 100);
+                        }
+                    }
+                });
+
+                // Close with Escape key
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                        mobileMenu.setAttribute('aria-hidden', 'true');
+                        mobileMenu.classList.add('hidden');
+                        menuBtn.focus();
+                    }
+                });
+
+                // Close when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!mobileMenu.classList.contains('hidden') &&
+                        !mobileMenu.contains(e.target) &&
+                        !menuBtn.contains(e.target)) {
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                        mobileMenu.setAttribute('aria-hidden', 'true');
+                        mobileMenu.classList.add('hidden');
+                    }
                 });
             }
         });
