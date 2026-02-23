@@ -47,7 +47,7 @@
                                 <div class="h-px flex-1 bg-primary/30"></div>
                             </div>
 
-                            <h1 class="font-display text-3xl lg:text-5xl font-black leading-[1.1] tracking-tight group-hover:text-primary transition-colors">
+                            <h1 class="font-display text-3xl lg:text-5xl font-black leading-tight tracking-tight group-hover:text-primary transition-colors">
                                 {{ $featuredArticle->title }}
                             </h1>
 
@@ -174,10 +174,23 @@
                                            x-transition:enter-end="opacity-100">
 
                                             <!-- Image -->
-                                            <div class="aspect-[16/9] bg-muted relative">
+                                            <div class="aspect-[16/9] bg-gradient-to-br from-primary/20 via-accent/10 to-muted relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                                                @if($article->featured_image)
+                                                    <img src="{{ $article->featured_image }}"
+                                                         alt="{{ $article->title }}"
+                                                         class="w-full h-full object-cover">
+                                                @else
+                                                    <!-- Placeholder avec motif géométrique -->
+                                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/30 via-accent/20 to-darker/40">
+                                                        <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                                        </svg>
+                                                    </div>
+                                                @endif
+
                                                 <!-- Category Badge -->
                                                 <div class="absolute top-2 left-2">
-                                                    <span class="inline-flex px-2 py-1 text-xs font-bold bg-white/90 rounded-[var(--radius-base)]
+                                                    <span class="inline-flex px-2 py-1 text-xs font-bold bg-white/90 backdrop-blur-sm rounded-[var(--radius-base)]
                                                         @if($article->category === 'results') text-primary
                                                         @elseif($article->category === 'interview') text-warning
                                                         @elseif($article->category === 'analysis') text-info
@@ -198,7 +211,7 @@
                                                     {{ $article->published_at?->format('M d, Y') }}
                                                 </time>
 
-                                                <h3 class="font-display text-base font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                                                <h3 class="font-display text-base font-bold leading-snug group-hover:text-primary transition-colors line-clamp-2">
                                                     {{ $article->title }}
                                                 </h3>
 
@@ -377,4 +390,236 @@
             </div>
         </div>
     </div>
+
+    <!-- SEO Content Section -->
+    <section class="bg-background border-t-2 border-border py-12 lg:py-16">
+        <div class="container">
+            <div class="max-w-5xl mx-auto space-y-10">
+                <!-- Main SEO Content -->
+                <div class="prose prose-lg max-w-none">
+                    <h2 class="font-display text-2xl lg:text-3xl font-bold text-foreground mb-6">
+                        {{ __('DartsArena: Your Complete Professional Darts Hub') }}
+                    </h2>
+                    <div class="text-muted-foreground leading-relaxed space-y-4">
+                        <p>
+                            {{ __('Welcome to DartsArena, the ultimate destination for professional darts enthusiasts. Whether you\'re following the') }}
+                            <a href="{{ route('federations.show', 'pdc') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('PDC (Professional Darts Corporation)') }}</a>,
+                            <a href="{{ route('federations.show', 'wdf') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('WDF (World Darts Federation)') }}</a>,
+                            {{ __('or the') }}
+                            <a href="{{ route('federations.show', 'bdo') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('BDO (British Darts Organisation)') }}</a>,
+                            {{ __('we provide comprehensive coverage of all major darts competitions and events worldwide.') }}
+                        </p>
+                        <p>
+                            {{ __('Track your favorite players, follow live scores, and stay updated with breaking news from the world of professional darts. From the prestigious') }}
+                            <a href="{{ route('competitions.index') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('PDC World Championship') }}</a>
+                            {{ __('to the exciting') }}
+                            <a href="{{ route('competitions.index') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('Premier League Darts') }}</a>,
+                            {{ __('we cover every major tournament with detailed statistics, player profiles, and expert analysis.') }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Internal Links Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Major Federations -->
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
+                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                            🏛️ {{ __('Major Federations') }}
+                        </h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="{{ route('federations.show', 'pdc') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('PDC - Professional Darts Corporation') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('federations.show', 'wdf') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('WDF - World Darts Federation') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('federations.show', 'bdo') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('BDO - British Darts Organisation') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('federations.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('View All Federations') }} →
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Major Competitions -->
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
+                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                            🏆 {{ __('Major Competitions') }}
+                        </h3>
+                        <ul class="space-y-2">
+                            @foreach($majorCompetitions->take(4) as $competition)
+                                <li>
+                                    <a href="{{ route('competitions.show', $competition->slug) }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                        {{ $competition->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                            <li>
+                                <a href="{{ route('competitions.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('View All Competitions') }} →
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Top Players -->
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
+                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                            ⭐ {{ __('Top Players') }}
+                        </h3>
+                        <ul class="space-y-2">
+                            @foreach($featuredPlayers->take(4) as $player)
+                                <li>
+                                    <a href="{{ route('players.show', $player->slug) }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                        {{ $player->full_name }} <span class="text-xs">({{ $player->nationality }})</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                            <li>
+                                <a href="{{ route('players.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('View All Players') }} →
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
+                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                            🔗 {{ __('Quick Links') }}
+                        </h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="{{ route('rankings.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('PDC Order of Merit') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('calendar.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Darts Calendar & Fixtures') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Latest Darts News') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('guides.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Darts Rules & Guides') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Statistics & Analysis -->
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
+                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                            📊 {{ __('Statistics & Analysis') }}
+                        </h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="{{ route('players.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Player Statistics & Averages') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Match Results & Archives') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rankings.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('World Rankings') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Expert Analysis & Predictions') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Special Features -->
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
+                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+                            ✨ {{ __('Special Features') }}
+                        </h3>
+                        <ul class="space-y-2">
+                            <li>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Live Match Coverage') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('calendar.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Tournament Schedules') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Player Interviews') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('guides.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    {{ __('Beginner\'s Guide to Darts') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Additional SEO Text -->
+                <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-8 shadow-sm">
+                    <div class="prose max-w-none">
+                        <h3 class="font-display text-xl font-bold text-foreground mb-4">
+                            {{ __('Why Choose DartsArena?') }}
+                        </h3>
+                        <div class="text-sm text-muted-foreground leading-relaxed space-y-3">
+                            <p>
+                                {{ __('DartsArena offers the most comprehensive coverage of professional darts worldwide. Our platform aggregates real-time results, detailed player statistics, and exclusive insights from all major darts organizations including the PDC, WDF, and BDO.') }}
+                            </p>
+                            <p>
+                                {{ __('Stay informed with our up-to-the-minute news coverage of major tournaments such as the PDC World Championship, Premier League Darts, World Matchplay, UK Open, and many more. We provide detailed match statistics, 180s counts, checkout percentages, and three-dart averages for every professional player.') }}
+                            </p>
+                            <p>
+                                {{ __('Our expert team delivers in-depth analysis, betting tips, player interviews, and tournament previews to enhance your darts viewing experience. Whether you\'re a casual fan or a dedicated follower of the sport, DartsArena is your go-to source for everything related to professional darts.') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
