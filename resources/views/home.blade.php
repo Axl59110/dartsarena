@@ -174,14 +174,21 @@
                                            x-transition:enter-end="opacity-100">
 
                                             <!-- Image -->
-                                            <div class="aspect-[16/9] bg-gradient-to-br from-primary/20 via-accent/10 to-muted relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                                            <div class="aspect-[16/9] bg-gradient-to-br from-primary/30 via-accent/20 to-darker/40 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
                                                 @if($article->featured_image)
                                                     <img src="{{ $article->featured_image }}"
                                                          alt="{{ $article->title }}"
-                                                         class="w-full h-full object-cover">
+                                                         class="w-full h-full object-cover"
+                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                    <!-- Placeholder fallback (hidden by default) -->
+                                                    <div class="w-full h-full flex items-center justify-center" style="display: none;">
+                                                        <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                                        </svg>
+                                                    </div>
                                                 @else
-                                                    <!-- Placeholder avec motif géométrique -->
-                                                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/30 via-accent/20 to-darker/40">
+                                                    <!-- Placeholder par défaut -->
+                                                    <div class="w-full h-full flex items-center justify-center">
                                                         <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 24 24">
                                                             <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
                                                         </svg>
@@ -189,7 +196,7 @@
                                                 @endif
 
                                                 <!-- Category Badge -->
-                                                <div class="absolute top-2 left-2">
+                                                <div class="absolute top-2 left-2 z-10">
                                                     <span class="inline-flex px-2 py-1 text-xs font-bold bg-white/90 backdrop-blur-sm rounded-[var(--radius-base)]
                                                         @if($article->category === 'results') text-primary
                                                         @elseif($article->category === 'interview') text-warning
@@ -334,9 +341,9 @@
                                         </div>
                                         <div class="flex-1 min-w-0">
                                             <h4 class="font-display font-bold text-sm text-white mb-1 line-clamp-2 leading-tight">{{ $event->title }}</h4>
-                                            <p class="text-xs text-white/70">{{ $event->venue }}</p>
+                                            <p class="text-xs text-white/85">{{ $event->venue }}</p>
                                             @if($event->competition)
-                                                <span class="inline-flex mt-1 px-2 py-0.5 bg-white/10 text-white/70 text-xs font-semibold rounded-[var(--radius-base)]">
+                                                <span class="inline-flex mt-1 px-2 py-0.5 bg-white/10 text-white/85 text-xs font-semibold rounded-[var(--radius-base)]">
                                                     {{ $event->competition->federation->name }}
                                                 </span>
                                             @endif
@@ -370,7 +377,7 @@
                                             <p class="font-display font-bold text-sm text-white group-hover:text-accent transition-colors truncate">
                                                 {{ $ranking->player->full_name }}
                                             </p>
-                                            <p class="text-xs text-white/60 font-semibold uppercase">{{ $ranking->player->nationality }}</p>
+                                            <p class="text-xs text-white/80 font-semibold uppercase">{{ $ranking->player->nationality }}</p>
                                         </div>
                                         @if($ranking->previous_position && $ranking->previous_position > $ranking->position)
                                             <svg class="w-4 h-4 text-success flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
