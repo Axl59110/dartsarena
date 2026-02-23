@@ -3,204 +3,124 @@
 @section('title', $guide->title . ' - DartsArena')
 
 @section('breadcrumbs')
-    <div class="breadcrumbs">
+    <div class="breadcrumbs py-3">
         <a href="{{ route('home') }}">{{ __('Accueil') }}</a>
-        <span class="separator">/</span>
+        <span class="text-muted-foreground mx-2">/</span>
         <a href="{{ route('guides.index') }}">{{ __('Guides') }}</a>
-        <span class="separator">/</span>
-        <span>{{ Str::limit($guide->title, 50) }}</span>
+        <span class="text-muted-foreground mx-2">/</span>
+        <span class="text-foreground">{{ Str::limit($guide->title, 50) }}</span>
     </div>
 @endsection
 
 @section('content')
     <!-- Guide Hero -->
-    <section class="guide-hero">
-        <div class="container">
-            <div class="guide-hero-content">
-                <div class="guide-category-badge">
+    <section class="bg-gradient-to-b from-muted/30 to-background">
+        <div class="container py-12 lg:py-16">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-full text-xs font-bold uppercase tracking-wider mb-6">
                     @if($guide->category === 'rules') {{ __('Règles') }}
                     @elseif($guide->category === 'stats') {{ __('Statistiques') }}
                     @elseif($guide->category === 'competitions') {{ __('Compétitions') }}
                     @else {{ ucfirst($guide->category) }}
                     @endif
                 </div>
-                <h1 class="guide-hero-title">{{ $guide->title }}</h1>
+
+                <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+                    {{ $guide->title }}
+                </h1>
+
                 @if($guide->excerpt)
-                    <p class="guide-hero-excerpt">{{ $guide->excerpt }}</p>
+                    <p class="text-lg text-muted-foreground leading-relaxed">
+                        {{ $guide->excerpt }}
+                    </p>
                 @endif
             </div>
         </div>
     </section>
 
-    <div class="container guide-page">
-        <!-- Guide Content -->
-        <div class="guide-content-card">
-            <div class="guide-body">
-                {!! $guide->content !!}
+    <div class="container py-8 lg:py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Guide Content -->
+            <div class="bg-card rounded-xl border border-card-border p-6 lg:p-8 mb-12 prose prose-invert prose-lg max-w-none">
+                <div class="guide-content">
+                    {!! $guide->content !!}
+                </div>
             </div>
-        </div>
 
-        <!-- Back Button -->
-        <div class="back-button-container">
-            <a href="{{ route('guides.index') }}" class="back-button">
-                <span class="back-arrow">←</span>
-                {{ __('Retour aux guides') }}
-            </a>
+            <!-- Back Button -->
+            <div class="text-center">
+                <a href="{{ route('guides.index') }}" class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border border-border rounded-lg font-semibold hover:bg-muted hover:border-primary transition-all hover:-translate-y-0.5 shadow-sm">
+                    <span class="text-xl">←</span>
+                    {{ __('Retour aux guides') }}
+                </a>
+            </div>
         </div>
     </div>
 
     <style>
-        .guide-hero {
-            background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
-            padding: 4rem 0 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .guide-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(225, 29, 72, 0.15), transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(251, 191, 36, 0.08), transparent 50%);
-            pointer-events: none;
-        }
-
-        .guide-hero::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--da-primary), var(--da-accent), transparent);
-        }
-
-        .guide-hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-        }
-
-        .guide-category-badge {
-            display: inline-flex;
-            padding: 0.5rem 1.25rem;
-            background: var(--da-gradient-1);
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 1.5rem;
-            color: white;
-            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
-        }
-
-        .guide-hero-title {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 3.5rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-            line-height: 1.15;
-            background: linear-gradient(135deg, #FAFAFA 0%, var(--da-primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .guide-hero-excerpt {
-            font-size: 1.25rem;
-            line-height: 1.7;
-            color: var(--da-text-muted);
-            font-weight: 500;
-        }
-
-        .guide-page {
-            max-width: 900px;
-        }
-
-        .guide-content-card {
-            background: var(--da-card);
-            border: 1px solid var(--da-border);
-            border-radius: 1.5rem;
-            padding: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .guide-body {
-            line-height: 1.9;
-            color: var(--da-text);
-        }
-
-        .guide-body h2 {
+        /* Guide Content Styling */
+        .guide-content h2 {
             font-family: 'Bebas Neue', cursive;
             font-size: 2.25rem;
             letter-spacing: 0.05em;
             margin-top: 2.5rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             color: white;
-            padding-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
             border-bottom: 2px solid rgba(225, 29, 72, 0.3);
         }
 
-        .guide-body h2:first-child {
+        .guide-content h2:first-child {
             margin-top: 0;
         }
 
-        .guide-body h3 {
+        .guide-content h3 {
             font-family: 'Bebas Neue', cursive;
             font-size: 1.6rem;
             letter-spacing: 0.05em;
             margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: #EF4444;
+        }
+
+        .guide-content p {
             margin-bottom: 1rem;
-            color: var(--da-primary-light);
+            line-height: 1.8;
+            color: #D1D5DB;
         }
 
-        .guide-body p {
-            margin-bottom: 1.25rem;
-            font-size: 1.05rem;
-        }
-
-        .guide-body ul,
-        .guide-body ol {
+        .guide-content ul,
+        .guide-content ol {
             margin-left: 2rem;
             margin-bottom: 1.5rem;
         }
 
-        .guide-body li {
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
+        .guide-content li {
+            margin-bottom: 0.5rem;
+            color: #D1D5DB;
+        }
+
+        .guide-content ul li {
+            list-style: none;
+            position: relative;
             padding-left: 0.5rem;
         }
 
-        .guide-body ul li {
-            list-style: none;
-            position: relative;
-        }
-
-        .guide-body ul li::before {
+        .guide-content ul li::before {
             content: '▸';
             position: absolute;
             left: -1.5rem;
-            color: var(--da-primary);
+            color: #EF4444;
             font-weight: 700;
         }
 
-        .guide-body ol li {
-            padding-left: 0.25rem;
-        }
-
-        .guide-body strong {
-            color: var(--da-accent);
+        .guide-content strong {
+            color: #FBBF24;
             font-weight: 700;
         }
 
-        .guide-body a {
-            color: var(--da-primary);
+        .guide-content a {
+            color: #EF4444;
             font-weight: 600;
             text-decoration: underline;
             text-decoration-thickness: 2px;
@@ -208,98 +128,32 @@
             transition: color 0.2s ease;
         }
 
-        .guide-body a:hover {
-            color: var(--da-primary-light);
+        .guide-content a:hover {
+            color: #F87171;
         }
 
-        .guide-body code {
-            background: var(--da-darker);
+        .guide-content code {
+            background: #0A0A0A;
             padding: 0.25rem 0.5rem;
             border-radius: 0.375rem;
             font-family: 'Courier New', monospace;
             font-size: 0.9em;
-            color: var(--da-accent);
+            color: #FBBF24;
         }
 
-        .guide-body pre {
-            background: var(--da-darker);
+        .guide-content pre {
+            background: #0A0A0A;
             padding: 1.5rem;
             border-radius: 0.75rem;
             overflow-x: auto;
             margin-bottom: 1.5rem;
-            border: 1px solid var(--da-border);
+            border: 1px solid #262626;
         }
 
-        .guide-body pre code {
+        .guide-content pre code {
             background: none;
             padding: 0;
-            color: var(--da-text);
-        }
-
-        /* Back Button */
-        .back-button-container {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: var(--da-card);
-            border: 1px solid var(--da-border);
-            border-radius: 0.75rem;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .back-button:hover {
-            background: var(--da-card-hover);
-            border-color: var(--da-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(225, 29, 72, 0.2);
-        }
-
-        .back-arrow {
-            font-size: 1.25rem;
-            transition: transform 0.3s ease;
-        }
-
-        .back-button:hover .back-arrow {
-            transform: translateX(-4px);
-        }
-
-        @media (max-width: 768px) {
-            .guide-hero {
-                padding: 3rem 0 2rem;
-            }
-
-            .guide-hero-title {
-                font-size: 2.5rem;
-            }
-
-            .guide-hero-excerpt {
-                font-size: 1.05rem;
-            }
-
-            .guide-content-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .guide-body h2 {
-                font-size: 1.85rem;
-            }
-
-            .guide-body h3 {
-                font-size: 1.4rem;
-            }
-
-            .guide-body p,
-            .guide-body li {
-                font-size: 1rem;
-            }
+            color: #D1D5DB;
         }
     </style>
 @endsection

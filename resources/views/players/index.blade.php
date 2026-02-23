@@ -2,187 +2,63 @@
 
 @section('title', __('Joueurs de Fléchettes') . ' - DartsArena')
 
+@section('breadcrumbs')
+    <div class="breadcrumbs py-3">
+        <a href="{{ route('home') }}">{{ __('Accueil') }}</a>
+        <span class="text-muted-foreground mx-2">/</span>
+        <span class="text-foreground">{{ __('Joueurs') }}</span>
+    </div>
+@endsection
+
 @section('content')
-    <section class="hero">
-        <div class="container hero-content">
-            <h1 class="animate-in">{{ __('Joueurs') }}</h1>
-            <p class="animate-in" style="animation-delay: 0.1s;">{{ __('Les meilleurs joueurs de fléchettes du monde.') }}</p>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-muted/30 to-background">
+        <div class="container py-12 lg:py-16">
+            <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-4">
+                {{ __('Joueurs') }}
+            </h1>
+            <p class="text-lg text-muted-foreground max-w-3xl">
+                {{ __('Les meilleurs joueurs de fléchettes du monde.') }}
+            </p>
         </div>
     </section>
 
-    <div class="container">
-        <div class="players-grid">
-            @foreach($players as $index => $player)
+    <div class="container py-8 lg:py-12">
+        <!-- Players Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            @foreach($players as $player)
                 <a href="{{ route('players.show', $player->slug) }}"
-                   class="player-card animate-in"
-                   style="animation-delay: {{ $index * 0.04 }}s;">
-                    <div class="player-card-bg"></div>
-                    <div class="player-avatar">
-                        <span class="player-icon">🎯</span>
-                    </div>
-                    <div class="player-content">
-                        <h3 class="player-name">{{ $player->full_name }}</h3>
+                   class="bg-card rounded-xl border border-card-border shadow-sm hover:shadow-lg hover:border-border-strong hover:-translate-y-1 transition-all duration-200 group overflow-hidden">
+                    <!-- Avatar -->
+                    <div class="p-6 flex flex-col items-center text-center">
+                        <div class="w-24 h-24 bg-gradient-to-br from-muted to-border rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <span class="text-5xl">🎯</span>
+                        </div>
+
+                        <h3 class="font-display text-2xl font-bold text-foreground group-hover:text-primary transition-colors mb-2 leading-tight">
+                            {{ $player->full_name }}
+                        </h3>
+
                         @if($player->nickname)
-                            <p class="player-nickname">"{{ $player->nickname }}"</p>
+                            <p class="text-primary text-sm font-semibold italic mb-3">
+                                "{{ $player->nickname }}"
+                            </p>
                         @endif
-                        <p class="player-nationality">
-                            <span class="flag-icon">🌍</span>
+
+                        <p class="text-sm text-muted-foreground flex items-center gap-2">
+                            <span class="text-lg">🌍</span>
                             {{ $player->nationality }}
                         </p>
+
+                        <div class="flex items-center gap-2 text-primary font-semibold text-sm pt-4">
+                            {{ __('Voir le profil') }}
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
                     </div>
-                    <div class="player-arrow">→</div>
                 </a>
             @endforeach
         </div>
     </div>
-
-    <style>
-        .players-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .player-card {
-            background: var(--da-card);
-            border: 1px solid var(--da-border);
-            border-radius: 1rem;
-            padding: 2rem 1.75rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .player-card-bg {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.08), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .player-card:hover .player-card-bg {
-            opacity: 1;
-        }
-
-        .player-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--da-gradient-1);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .player-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--da-primary);
-            box-shadow: 0 20px 60px rgba(225, 29, 72, 0.3);
-        }
-
-        .player-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .player-avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, #1A1A1A, #262626);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            border: 3px solid transparent;
-            position: relative;
-            transition: all 0.4s ease;
-        }
-
-        .player-avatar::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            background: var(--da-gradient-1);
-            border-radius: 50%;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .player-card:hover .player-avatar::before {
-            opacity: 1;
-        }
-
-        .player-card:hover .player-avatar {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        .player-icon {
-            font-size: 3rem;
-            filter: drop-shadow(0 4px 15px rgba(225, 29, 72, 0.4));
-        }
-
-        .player-content {
-            flex: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        .player-name {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 1.65rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
-            color: white;
-            line-height: 1.2;
-        }
-
-        .player-nickname {
-            color: var(--da-primary);
-            font-size: 1rem;
-            font-style: italic;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
-        }
-
-        .player-nationality {
-            color: var(--da-text-muted);
-            font-size: 0.95rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .flag-icon {
-            font-size: 1.1rem;
-        }
-
-        .player-arrow {
-            margin-top: 1.25rem;
-            font-size: 1.5rem;
-            color: var(--da-primary);
-            transform: translateX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .player-card:hover .player-arrow {
-            transform: translateX(8px);
-        }
-
-        @media (max-width: 768px) {
-            .players-grid {
-                grid-template-columns: 1fr;
-                gap: 1.25rem;
-            }
-        }
-    </style>
 @endsection

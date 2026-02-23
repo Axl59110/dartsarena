@@ -2,207 +2,67 @@
 
 @section('title', __('Compétitions de Fléchettes') . ' - DartsArena')
 
+@section('breadcrumbs')
+    <div class="breadcrumbs py-3">
+        <a href="{{ route('home') }}">{{ __('Accueil') }}</a>
+        <span class="text-muted-foreground mx-2">/</span>
+        <span class="text-foreground">{{ __('Compétitions') }}</span>
+    </div>
+@endsection
+
 @section('content')
-    <section class="hero">
-        <div class="container hero-content">
-            <h1 class="animate-in">{{ __('Compétitions') }}</h1>
-            <p class="animate-in" style="animation-delay: 0.1s;">{{ __('Tous les tournois majeurs de fléchettes à travers le monde.') }}</p>
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-muted/30 to-background">
+        <div class="container py-12 lg:py-16">
+            <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-4">
+                {{ __('Compétitions') }}
+            </h1>
+            <p class="text-lg text-muted-foreground max-w-3xl">
+                {{ __('Tous les tournois majeurs de fléchettes à travers le monde.') }}
+            </p>
         </div>
     </section>
 
-    <div class="container">
-        <div class="competitions-grid">
-            @foreach($competitions as $index => $competition)
+    <div class="container py-8 lg:py-12">
+        <!-- Competitions Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            @foreach($competitions as $competition)
                 <a href="{{ route('competitions.show', $competition->slug) }}"
-                   class="competition-card animate-in"
-                   style="animation-delay: {{ $index * 0.05 }}s;">
-                    <div class="competition-bg"></div>
-
-                    <div class="competition-header">
-                        <span class="federation-badge">{{ $competition->federation->name }}</span>
-                        <span class="trophy-icon">🏆</span>
+                   class="bg-card rounded-xl border border-card-border shadow-sm hover:shadow-lg hover:border-border-strong hover:-translate-y-1 transition-all duration-200 group overflow-hidden">
+                    <!-- Header -->
+                    <div class="p-5 flex items-center justify-between border-b border-border">
+                        <span class="inline-flex items-center px-2.5 py-1 bg-primary/10 text-primary border border-primary/30 rounded text-xs font-bold uppercase tracking-wider">
+                            {{ $competition->federation->name }}
+                        </span>
+                        <span class="text-4xl group-hover:scale-110 group-hover:rotate-12 transition-transform">🏆</span>
                     </div>
 
-                    <h3 class="competition-title">{{ $competition->name }}</h3>
+                    <!-- Content -->
+                    <div class="p-6 space-y-4">
+                        <h3 class="font-display text-2xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                            {{ $competition->name }}
+                        </h3>
 
-                    <p class="competition-description">{{ $competition->description }}</p>
+                        <p class="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+                            {{ $competition->description }}
+                        </p>
 
-                    @if($competition->prize_money)
-                        <div class="competition-footer">
-                            <div class="prize-info">
-                                <span class="prize-label">{{ __('Prize Money') }}</span>
-                                <span class="prize-value">${{ number_format($competition->prize_money) }}</span>
+                        @if($competition->prize_money)
+                            <div class="pt-4 border-t border-border flex items-center justify-between">
+                                <span class="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{{ __('Prize Money') }}</span>
+                                <span class="font-display text-xl font-bold text-accent">${{ number_format($competition->prize_money) }}</span>
                             </div>
-                        </div>
-                    @endif
+                        @endif
 
-                    <div class="competition-arrow">→</div>
+                        <div class="flex items-center gap-2 text-primary font-semibold text-sm pt-2">
+                            {{ __('Voir les détails') }}
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                    </div>
                 </a>
             @endforeach
         </div>
     </div>
-
-    <style>
-        .competitions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2rem;
-        }
-
-        .competition-card {
-            background: var(--da-card);
-            border: 1px solid var(--da-border);
-            border-radius: 1rem;
-            padding: 2rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .competition-bg {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 80% 20%, rgba(225, 29, 72, 0.1), transparent 60%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .competition-card:hover .competition-bg {
-            opacity: 1;
-        }
-
-        .competition-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--da-gradient-1);
-            transform: scaleX(0);
-            transition: transform 0.4s ease;
-        }
-
-        .competition-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--da-primary);
-            box-shadow: 0 20px 60px rgba(225, 29, 72, 0.25);
-        }
-
-        .competition-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .competition-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .federation-badge {
-            padding: 0.5rem 1rem;
-            background: rgba(225, 29, 72, 0.15);
-            border: 1px solid rgba(225, 29, 72, 0.3);
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--da-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-        }
-
-        .trophy-icon {
-            font-size: 2.5rem;
-            filter: drop-shadow(0 4px 15px rgba(225, 29, 72, 0.4));
-            transition: transform 0.4s ease;
-        }
-
-        .competition-card:hover .trophy-icon {
-            transform: scale(1.15) rotate(-10deg);
-        }
-
-        .competition-title {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 1.85rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        .competition-description {
-            color: var(--da-text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            flex: 1;
-            position: relative;
-            z-index: 1;
-        }
-
-        .competition-footer {
-            padding-top: 1.25rem;
-            border-top: 1px solid var(--da-border);
-            position: relative;
-            z-index: 1;
-        }
-
-        .prize-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .prize-label {
-            color: var(--da-text-muted);
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .prize-value {
-            color: var(--da-accent);
-            font-size: 1.25rem;
-            font-weight: 700;
-            font-family: 'Bebas Neue', cursive;
-            letter-spacing: 0.05em;
-        }
-
-        .competition-arrow {
-            margin-top: 1.25rem;
-            font-size: 1.75rem;
-            color: var(--da-primary);
-            transform: translateX(0);
-            transition: transform 0.4s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .competition-card:hover .competition-arrow {
-            transform: translateX(8px);
-        }
-
-        @media (max-width: 768px) {
-            .competitions-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .competition-card {
-                padding: 1.75rem;
-            }
-
-            .competition-title {
-                font-size: 1.6rem;
-            }
-        }
-    </style>
 @endsection
