@@ -3,95 +3,66 @@
 @section('title', 'DartsArena - ' . __('Professional Darts News, Stats & Coverage'))
 
 @section('content')
-    {{--
-    ==========================================
-    DARTSARENA HOMEPAGE - UX PRINCIPLES APPLIED
-    ==========================================
-    1. Hiérarchie claire
-    2. Lisibilité maximale
-    3. Espacement respirant
-    4. Cohérence visuelle
-    5. Accessibilité WCAG AAA
-    ==========================================
-    --}}
-
     <!-- Hero Featured Article -->
     @if($featuredArticle)
-        <section class="relative overflow-hidden bg-gradient-to-br from-darker via-[oklch(20%_0.03_264)] to-darker">
-            {{-- Subtle accent --}}
-            <div class="absolute top-0 left-0 w-32 h-1 bg-primary"></div>
-            <div class="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 blur-3xl rounded-full"></div>
+        <section class="hero-section relative overflow-hidden">
+            <!-- Diagonal accent -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
 
-            <div class="container section">
+            <div class="container relative py-8 lg:py-12">
                 <a href="{{ route('articles.show', $featuredArticle->slug) }}" class="block group">
-                    <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-                        {{-- Image --}}
-                        <div class="relative overflow-hidden rounded-[var(--radius-base)]">
-                            <div class="aspect-[4/3] bg-gradient-to-br from-primary/20 via-primary/10 to-transparent relative">
-                                {{-- Placeholder for real image --}}
-                                <div class="absolute inset-0 flex items-center justify-center text-primary/20">
-                                    <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 10a2 2 0 114 0 2 2 0 01-4 0z"/>
-                                    </svg>
+                    <div class="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-6 lg:gap-8 items-center">
+                        <!-- Image -->
+                        <div class="relative img-frame cut-corner-br">
+                            <div class="aspect-[16/9] bg-gradient-to-br from-primary/90 via-primary to-darker relative overflow-hidden">
+                                <!-- Geometric pattern overlay -->
+                                <div class="absolute inset-0 opacity-10">
+                                    <div class="absolute top-0 right-0 w-64 h-64 border-4 border-white transform rotate-45 translate-x-32 -translate-y-32"></div>
+                                    <div class="absolute bottom-0 left-0 w-48 h-48 border-4 border-white transform -rotate-12 -translate-x-24 translate-y-24"></div>
                                 </div>
 
-                                {{-- Live Badge --}}
-                                <div class="absolute top-4 left-4 inline-flex items-center gap-2 px-4 py-2 bg-primary/95 backdrop-blur-sm rounded-md">
-                                    <span class="relative flex h-2 w-2">
-                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                                    </span>
-                                    <span class="text-white text-sm font-bold uppercase tracking-wide">{{ __('Live') }}</span>
+                                <!-- Live indicator - Simplifié -->
+                                <div class="absolute top-0 left-0 flex items-center gap-2 bg-primary px-3 py-2 cut-corner-br">
+                                    <div class="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                                    <span class="text-white text-xs font-bold uppercase">{{ __('Live') }}</span>
                                 </div>
 
-                                {{-- Category --}}
-                                <div class="absolute bottom-4 left-4">
-                                    <span class="inline-flex px-3 py-1.5 text-sm font-semibold bg-white/90 backdrop-blur rounded-md
-                                        @if($featuredArticle->category === 'results') text-primary
-                                        @elseif($featuredArticle->category === 'interview') text-warning
-                                        @elseif($featuredArticle->category === 'analysis') text-info
-                                        @else text-secondary
-                                        @endif">
+                                <!-- Category tag -->
+                                <div class="absolute bottom-3 left-3">
+                                    <span class="inline-flex items-center px-3 py-1.5 text-xs font-bold uppercase border-l-3 border-white bg-white/10 text-white">
                                         @if($featuredArticle->category === 'results') {{ __('Results') }}
                                         @elseif($featuredArticle->category === 'news') {{ __('News') }}
                                         @elseif($featuredArticle->category === 'interview') {{ __('Interview') }}
-                                        @else {{ __('Analysis') }}
+                                        @elseif($featuredArticle->category === 'analysis') {{ __('Analysis') }}
                                         @endif
                                     </span>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Content --}}
-                        <div class="space-y-6">
-                            {{-- Meta --}}
+                        <!-- Content -->
+                        <div class="space-y-4 text-white relative bg-darker p-6 rounded-[var(--radius-base)] border border-white/10">
                             <div class="flex items-center gap-3">
-                                <div class="h-px flex-1 bg-primary/30"></div>
-                                <time class="text-sm font-semibold text-primary uppercase tracking-wide">
-                                    {{ $featuredArticle->published_at?->diffForHumans() }}
-                                </time>
+                                <span class="text-primary text-sm font-bold uppercase">{{ $featuredArticle->published_at?->diffForHumans() }}</span>
                                 <div class="h-px flex-1 bg-primary/30"></div>
                             </div>
 
-                            {{-- Title - Proper line-height for readability --}}
-                            <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] text-white group-hover:text-primary transition-colors">
+                            <h1 class="font-display text-3xl lg:text-5xl font-black leading-[1.1] tracking-tight group-hover:text-primary transition-colors">
                                 {{ $featuredArticle->title }}
                             </h1>
 
-                            {{-- Excerpt - Optimal line-height 1.6 --}}
-                            <p class="text-lg leading-relaxed text-white/85">
+                            <p class="text-base leading-relaxed text-white">
                                 {{ $featuredArticle->excerpt }}
                             </p>
 
-                            {{-- CTA --}}
                             <div class="flex items-center gap-3 pt-2">
-                                <span class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-primary-foreground font-semibold rounded-[var(--radius-base)] transition-colors">
+                                <span class="inline-flex items-center gap-2 text-primary font-bold uppercase text-sm group-hover:gap-3 transition-all">
                                     {{ __('Read Full Story') }}
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
                                     </svg>
                                 </span>
+                                <div class="h-px flex-1 bg-gradient-to-r from-primary to-transparent"></div>
                             </div>
                         </div>
                     </div>
@@ -100,20 +71,22 @@
         </section>
     @endif
 
-    {{-- Main Content --}}
-    <div class="bg-background section">
+    <!-- Main Content Grid -->
+    <div class="bg-muted py-8 lg:py-12">
         <div class="container">
-            <div class="grid lg:grid-cols-[2fr_1fr] gap-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                {{-- Primary Column --}}
-                <div class="space-y-12">
+                <!-- Main Content (2/3) -->
+                <div class="lg:col-span-2 space-y-6">
 
-                    {{-- Latest News --}}
-                    <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-8 shadow-sm">
-                        {{-- Header --}}
-                        <div class="flex items-center justify-between mb-8 pb-6 border-b border-border">
-                            <h2 class="font-display text-3xl font-bold">{{ __('Latest News') }}</h2>
-                            <a href="{{ route('articles.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
+                    <!-- Latest News -->
+                    <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-border">
+                            <div class="flex items-center gap-3">
+                                <div class="w-1 h-8 bg-primary"></div>
+                                <h2 class="font-display text-2xl font-bold tracking-tight">{{ __('Latest News') }}</h2>
+                            </div>
+                            <a href="{{ route('articles.index') }}" class="text-primary font-semibold hover:text-primary-hover flex items-center gap-1 text-sm">
                                 {{ __('View All') }}
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -121,8 +94,8 @@
                             </a>
                         </div>
 
-                        {{-- Federation Filter --}}
-                        <div class="mb-8" x-data="{
+                        <!-- Federation Filter -->
+                        <div class="mb-6" x-data="{
                             activeFederation: 'all',
                             isLoading: false,
                             visibleCount: 0,
@@ -135,36 +108,48 @@
                             }
                         }" x-init="$watch('activeFederation', () => { setTimeout(() => { visibleCount = $el.querySelectorAll('[x-show]:not([style*=\'display: none\'])').length }, 200) })">
 
-                            {{-- Filter Tabs - Clear spacing --}}
-                            <div class="flex flex-wrap gap-3 mb-6">
+                            <!-- Filter Tabs -->
+                            <div class="flex flex-wrap gap-2 mb-4" role="tablist" aria-label="{{ __('Filter by federation') }}">
                                 <button @click="changeFederation('all')"
                                         :disabled="isLoading"
-                                        :class="activeFederation === 'all' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-muted hover:bg-muted/80'"
-                                        class="px-6 py-3 rounded-[var(--radius-base)] text-sm font-semibold transition-all disabled:opacity-50">
+                                        :class="activeFederation === 'all' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                                        class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                                        role="tab"
+                                        :aria-selected="activeFederation === 'all'"
+                                        aria-label="{{ __('Show all federations') }}">
                                     {{ __('All') }}
                                 </button>
                                 <button @click="changeFederation('pdc')"
                                         :disabled="isLoading"
-                                        :class="activeFederation === 'pdc' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-muted hover:bg-muted/80'"
-                                        class="px-6 py-3 rounded-[var(--radius-base)] text-sm font-semibold transition-all disabled:opacity-50">
+                                        :class="activeFederation === 'pdc' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                                        class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                                        role="tab"
+                                        :aria-selected="activeFederation === 'pdc'"
+                                        aria-label="{{ __('Show PDC federation') }}">
                                     PDC
                                 </button>
                                 <button @click="changeFederation('wdf')"
                                         :disabled="isLoading"
-                                        :class="activeFederation === 'wdf' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-muted hover:bg-muted/80'"
-                                        class="px-6 py-3 rounded-[var(--radius-base)] text-sm font-semibold transition-all disabled:opacity-50">
+                                        :class="activeFederation === 'wdf' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                                        class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                                        role="tab"
+                                        :aria-selected="activeFederation === 'wdf'"
+                                        aria-label="{{ __('Show WDF federation') }}">
                                     WDF
                                 </button>
                                 <button @click="changeFederation('bdo')"
                                         :disabled="isLoading"
-                                        :class="activeFederation === 'bdo' ? 'bg-primary text-primary-foreground shadow-sm' : 'bg-muted hover:bg-muted/80'"
-                                        class="px-6 py-3 rounded-[var(--radius-base)] text-sm font-semibold transition-all disabled:opacity-50">
+                                        :class="activeFederation === 'bdo' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                                        class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                                        role="tab"
+                                        :aria-selected="activeFederation === 'bdo'"
+                                        aria-label="{{ __('Show BDO federation') }}">
                                     BDO
                                 </button>
                             </div>
 
-                            {{-- Loading State --}}
-                            <div class="min-h-[24px] mb-6">
+                            <!-- Loading State -->
+                            <div class="min-h-[24px] mb-4">
                                 <div x-show="isLoading" class="flex items-center gap-2 text-sm text-muted-foreground">
                                     <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -177,9 +162,9 @@
                                 </div>
                             </div>
 
-                            {{-- Articles Grid - Clear spacing --}}
+                            <!-- Articles Grid - 3 colonnes desktop -->
                             @if($latestNews->count() > 0)
-                                <div class="grid md:grid-cols-2 gap-6">
+                                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     @foreach($latestNews as $article)
                                         <a href="{{ route('articles.show', $article->slug) }}"
                                            class="group bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden hover:border-primary hover:shadow-md transition-all"
@@ -188,11 +173,11 @@
                                            x-transition:enter-start="opacity-0"
                                            x-transition:enter-end="opacity-100">
 
-                                            {{-- Image Placeholder --}}
+                                            <!-- Image -->
                                             <div class="aspect-[16/9] bg-muted relative">
-                                                {{-- Category Badge --}}
-                                                <div class="absolute top-3 left-3">
-                                                    <span class="inline-flex px-3 py-1.5 text-xs font-semibold bg-white rounded-md
+                                                <!-- Category Badge -->
+                                                <div class="absolute top-2 left-2">
+                                                    <span class="inline-flex px-2 py-1 text-xs font-bold bg-white/90 rounded-[var(--radius-base)]
                                                         @if($article->category === 'results') text-primary
                                                         @elseif($article->category === 'interview') text-warning
                                                         @elseif($article->category === 'analysis') text-info
@@ -207,18 +192,18 @@
                                                 </div>
                                             </div>
 
-                                            {{-- Content - Proper spacing --}}
-                                            <div class="p-5 space-y-3">
-                                                <time class="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                                            <!-- Content -->
+                                            <div class="p-4 space-y-2">
+                                                <time class="text-xs font-semibold text-muted-foreground uppercase">
                                                     {{ $article->published_at?->format('M d, Y') }}
                                                 </time>
 
-                                                <h3 class="font-display text-xl font-bold leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                                <h3 class="font-display text-base font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
                                                     {{ $article->title }}
                                                 </h3>
 
                                                 <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">
-                                                    {{ Str::limit($article->excerpt, 120) }}
+                                                    {{ Str::limit($article->excerpt, 80) }}
                                                 </p>
                                             </div>
                                         </a>
@@ -228,14 +213,15 @@
                         </div>
                     </section>
 
-                    {{-- Recent Results --}}
+                    <!-- Recent Results -->
                     @if($recentResults->count() > 0)
-                        <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-8 shadow-sm">
-                            <div class="flex items-center justify-between mb-8 pb-6 border-b border-border">
-                                <h2 class="font-display text-2xl font-bold">{{ __('Recent Results') }}</h2>
+                        <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-6 shadow-sm">
+                            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+                                <div class="w-1 h-8 bg-primary"></div>
+                                <h2 class="font-display text-2xl font-bold tracking-tight">{{ __('Recent Results') }}</h2>
                             </div>
 
-                            <div class="grid md:grid-cols-2 gap-6">
+                            <div class="grid md:grid-cols-2 gap-4">
                                 @foreach($recentResults as $result)
                                     @php
                                         $allPlayers = $topRankings->pluck('player')->shuffle();
@@ -245,41 +231,41 @@
                                         $score2 = rand(0, $score1 - 1);
                                     @endphp
                                     <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden" x-data="{ open: false }">
-                                        {{-- Competition Header --}}
-                                        <div class="px-5 py-3 bg-muted/50 border-b border-border flex items-center justify-between">
-                                            <span class="text-sm font-bold">{{ $result->competition?->name ?? $result->title }}</span>
-                                            <span class="inline-flex px-2 py-1 bg-success/10 text-success text-xs font-semibold rounded">
+                                        <!-- Competition Header -->
+                                        <div class="px-4 py-2 bg-muted/50 border-b border-border flex items-center justify-between">
+                                            <span class="text-sm font-bold truncate">{{ $result->competition?->name ?? $result->title }}</span>
+                                            <span class="inline-flex px-2 py-1 bg-success/10 text-success text-xs font-semibold rounded-[var(--radius-base)]">
                                                 {{ __('Finished') }}
                                             </span>
                                         </div>
 
-                                        {{-- Match Result - Clear hierarchy --}}
-                                        <div class="p-6">
-                                            <div class="flex items-center justify-between gap-8">
-                                                {{-- Winner --}}
-                                                <div class="flex-1">
-                                                    <p class="font-display text-lg font-bold mb-1">{{ $player1?->full_name ?? 'Michael Smith' }}</p>
-                                                    <p class="text-sm text-success font-semibold">{{ __('Winner') }}</p>
+                                        <!-- Match Result -->
+                                        <div class="p-4">
+                                            <div class="flex items-center justify-between gap-4">
+                                                <!-- Winner -->
+                                                <div class="flex-1 min-w-0">
+                                                    <p class="font-display text-base font-bold truncate">{{ $player1?->full_name ?? 'Michael Smith' }}</p>
+                                                    <p class="text-xs text-success font-semibold uppercase">{{ __('Winner') }}</p>
                                                 </div>
 
-                                                {{-- Score --}}
-                                                <div class="flex items-center gap-3">
-                                                    <span class="font-display text-5xl font-bold text-primary">{{ $score1 }}</span>
-                                                    <span class="text-2xl font-bold text-muted-foreground">-</span>
-                                                    <span class="font-display text-4xl font-bold text-muted-foreground">{{ $score2 }}</span>
+                                                <!-- Score -->
+                                                <div class="flex items-center gap-2">
+                                                    <span class="font-display text-4xl font-bold text-primary">{{ $score1 }}</span>
+                                                    <span class="text-xl font-bold text-muted-foreground">-</span>
+                                                    <span class="font-display text-3xl font-bold text-muted-foreground">{{ $score2 }}</span>
                                                 </div>
 
-                                                {{-- Runner-up --}}
-                                                <div class="flex-1 text-right">
-                                                    <p class="font-display text-lg font-bold text-muted-foreground mb-1">{{ $player2?->full_name ?? 'Michael van Gerwen' }}</p>
-                                                    <p class="text-sm text-muted-foreground font-semibold">{{ __('Runner-up') }}</p>
+                                                <!-- Runner-up -->
+                                                <div class="flex-1 min-w-0 text-right">
+                                                    <p class="font-display text-base font-bold text-muted-foreground truncate">{{ $player2?->full_name ?? 'Michael van Gerwen' }}</p>
+                                                    <p class="text-xs text-muted-foreground font-semibold uppercase">{{ __('Runner-up') }}</p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {{-- Stats Toggle --}}
+                                        <!-- Stats Toggle -->
                                         <div class="border-t border-border">
-                                            <button @click="open = !open" class="w-full px-5 py-3 flex items-center justify-center gap-2 text-sm font-semibold text-primary hover:bg-primary/5 transition-colors">
+                                            <button @click="open = !open" class="w-full px-4 py-2 flex items-center justify-center gap-2 text-xs font-semibold text-primary hover:bg-primary/5 transition-colors">
                                                 <span x-text="open ? '{{ __('Hide Stats') }}' : '{{ __('View Stats') }}'"></span>
                                                 <svg class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -287,15 +273,15 @@
                                             </button>
                                         </div>
 
-                                        {{-- Stats Panel --}}
-                                        <div x-show="open" x-transition class="border-t border-border bg-muted/30 p-6 space-y-4">
+                                        <!-- Stats Panel -->
+                                        <div x-show="open" x-transition class="border-t border-border bg-muted/30 p-4 space-y-3">
                                             <div>
                                                 <div class="flex items-center justify-between mb-2">
-                                                    <span class="text-sm font-semibold text-muted-foreground">{{ __('Average') }}</span>
-                                                    <div class="flex items-center gap-4">
-                                                        <span class="font-display text-lg font-bold text-primary">98.5</span>
-                                                        <span class="text-sm text-muted-foreground">vs</span>
-                                                        <span class="font-display text-lg font-bold text-muted-foreground">89.2</span>
+                                                    <span class="text-xs font-semibold text-muted-foreground">{{ __('Average') }}</span>
+                                                    <div class="flex items-center gap-3">
+                                                        <span class="font-display text-base font-bold text-primary">98.5</span>
+                                                        <span class="text-xs text-muted-foreground">vs</span>
+                                                        <span class="font-display text-base font-bold text-muted-foreground">89.2</span>
                                                     </div>
                                                 </div>
                                                 <div class="h-2 bg-muted rounded-full overflow-hidden">
@@ -310,27 +296,37 @@
                     @endif
                 </div>
 
-                {{-- Sidebar --}}
-                <aside class="space-y-8">
+                <!-- Sidebar (1/3) - Sticky + Dark Backgrounds -->
+                <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
 
-                    {{-- Upcoming Events --}}
+                    <!-- Upcoming Events - Dark -->
                     @if($upcomingEvents->count() > 0)
-                        <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-6 shadow-sm">
-                            <div class="flex items-center justify-between mb-6 pb-4 border-b border-border">
-                                <h3 class="font-display text-xl font-bold">{{ __('Upcoming') }}</h3>
-                                <a href="{{ route('calendar.index') }}" class="text-sm font-semibold text-primary hover:text-primary-hover">{{ __('View All') }}</a>
+                        <section class="bg-darker rounded-[var(--radius-base)] overflow-hidden shadow-lg">
+                            <div class="px-5 py-4 border-b border-primary/30 flex items-center justify-between">
+                                <h3 class="font-display text-xl font-bold text-white">{{ __('Upcoming') }}</h3>
+                                <a href="{{ route('calendar.index') }}" class="text-xs text-primary font-bold hover:text-primary-hover uppercase flex items-center gap-1">
+                                    {{ __('View All') }}
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
                             </div>
 
-                            <div class="space-y-4">
+                            <div class="p-5 space-y-3">
                                 @foreach($upcomingEvents as $event)
-                                    <div class="flex gap-4 pb-4 border-b border-border last:border-0 last:pb-0">
-                                        <div class="flex-shrink-0 text-center w-14">
-                                            <div class="text-xs font-bold text-muted-foreground uppercase">{{ $event->start_date->format('M') }}</div>
-                                            <div class="text-2xl font-display font-bold text-primary leading-none mt-1">{{ $event->start_date->format('d') }}</div>
+                                    <div class="flex gap-3 pb-3 border-b border-white/10 last:border-0 last:pb-0 hover:bg-white/5 -mx-2 px-3 py-2 rounded-[var(--radius-base)] transition-colors">
+                                        <div class="flex-shrink-0 text-center bg-primary rounded-[var(--radius-base)] p-2 min-w-[48px]">
+                                            <div class="text-xs font-bold text-white uppercase">{{ $event->start_date->format('M') }}</div>
+                                            <div class="text-xl font-display font-black text-white leading-none mt-1">{{ $event->start_date->format('d') }}</div>
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <h4 class="font-semibold text-sm mb-2 line-clamp-2">{{ $event->title }}</h4>
-                                            <p class="text-xs text-muted-foreground">{{ $event->venue }}</p>
+                                            <h4 class="font-display font-bold text-sm text-white mb-1 line-clamp-2 leading-tight">{{ $event->title }}</h4>
+                                            <p class="text-xs text-white/70">{{ $event->venue }}</p>
+                                            @if($event->competition)
+                                                <span class="inline-flex mt-1 px-2 py-0.5 bg-white/10 text-white/70 text-xs font-semibold rounded-[var(--radius-base)]">
+                                                    {{ $event->competition->federation->name }}
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach
@@ -338,27 +334,38 @@
                         </section>
                     @endif
 
-                    {{-- PDC Rankings --}}
+                    <!-- PDC Rankings - Dark -->
                     @if($topRankings->count() > 0)
-                        <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-6 shadow-sm">
-                            <div class="flex items-center justify-between mb-6 pb-4 border-b border-border">
-                                <h3 class="font-display text-xl font-bold">{{ __('PDC Rankings') }}</h3>
-                                <a href="{{ route('rankings.index') }}" class="text-sm font-semibold text-primary hover:text-primary-hover">{{ __('Full Table') }}</a>
+                        <section class="bg-darker rounded-[var(--radius-base)] overflow-hidden shadow-lg">
+                            <div class="px-5 py-4 border-b border-accent/30 flex items-center justify-between">
+                                <h3 class="font-display text-xl font-bold text-white">{{ __('PDC Rankings') }}</h3>
+                                <a href="{{ route('rankings.index') }}" class="text-xs text-accent font-bold hover:text-accent-hover uppercase flex items-center gap-1">
+                                    {{ __('Full Table') }}
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
                             </div>
 
-                            <div class="space-y-2">
+                            <div class="p-5 space-y-1">
                                 @foreach($topRankings->take(10) as $ranking)
-                                    <a href="{{ route('players.show', $ranking->player->slug) }}" class="flex items-center gap-3 py-2 px-3 hover:bg-muted/50 rounded-md transition-colors group">
-                                        <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-primary/10 rounded-md font-display text-sm font-bold text-primary">
+                                    <a href="{{ route('players.show', $ranking->player->slug) }}" class="flex items-center gap-3 py-2 px-3 hover:bg-white/5 border-l-2 border-transparent hover:border-accent transition-all group -mx-3 rounded-[var(--radius-base)]">
+                                        <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-accent/20 rounded-[var(--radius-base)] font-display text-sm font-bold text-accent">
                                             {{ $ranking->position }}
                                         </div>
                                         <div class="flex-1 min-w-0">
-                                            <p class="font-semibold text-sm truncate group-hover:text-primary transition-colors">{{ $ranking->player->full_name }}</p>
-                                            <p class="text-xs text-muted-foreground">{{ $ranking->player->nationality }}</p>
+                                            <p class="font-display font-bold text-sm text-white group-hover:text-accent transition-colors truncate">
+                                                {{ $ranking->player->full_name }}
+                                            </p>
+                                            <p class="text-xs text-white/60 font-semibold uppercase">{{ $ranking->player->nationality }}</p>
                                         </div>
                                         @if($ranking->previous_position && $ranking->previous_position > $ranking->position)
                                             <svg class="w-4 h-4 text-success flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                                            </svg>
+                                        @elseif($ranking->previous_position && $ranking->previous_position < $ranking->position)
+                                            <svg class="w-4 h-4 text-danger flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                             </svg>
                                         @endif
                                     </a>
