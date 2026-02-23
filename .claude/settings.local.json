@@ -28,7 +28,11 @@
       "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192344_create_betting_tips_table.php\":*)",
       "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192345_create_articles_table.php\":*)",
       "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192346_create_guides_table.php\":*)",
-      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192348_create_tags_table.php\":*)"
+      "Bash(\"/c/Users/axel/OneDrive/Desktop/Claude/Site Darts/database/migrations/2026_02_22_192348_create_tags_table.php\":*)",
+      "WebSearch",
+      "WebFetch(domain:www.flashscore.fr)",
+      "WebFetch(domain:brandfetch.com)",
+      "WebFetch(domain:dribbble.com)"
     ]
   }
 }

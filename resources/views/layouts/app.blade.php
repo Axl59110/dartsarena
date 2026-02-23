@@ -1,185 +1,263 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="ltr">
+<html lang="{{ app()->getLocale() }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'DartsArena - ' . __('Actualités, Résultats et Statistiques Fléchettes'))</title>
-    <meta name="description" content="@yield('meta_description', __('DartsArena - Votre hub complet pour les fléchettes : résultats, classements, calendrier, statistiques et guides.'))">
+    <title>@yield('title', 'DartsArena - ' . __('Professional Darts News & Stats'))</title>
+    <meta name="description" content="@yield('meta_description', __('DartsArena - The ultimate destination for professional darts: breaking news, player stats, rankings, fixtures and expert analysis.'))">
 
     @yield('seo_head')
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700,800&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <style>
-            *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-            body { font-family: 'Inter', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
-            a { color: inherit; text-decoration: none; }
-            .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
-        </style>
-    @endif
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <style>
-        :root {
-            --da-primary: #dc2626;
-            --da-primary-dark: #991b1b;
-            --da-dark: #0f172a;
-            --da-darker: #020617;
-            --da-card: #1e293b;
-            --da-card-hover: #334155;
-            --da-text: #e2e8f0;
-            --da-text-muted: #94a3b8;
-            --da-border: #334155;
-            --da-accent: #f59e0b;
-        }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--da-dark); color: var(--da-text); }
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
-
-        /* Header */
-        .site-header { background: var(--da-darker); border-bottom: 2px solid var(--da-primary); position: sticky; top: 0; z-index: 50; }
-        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
-        .logo { font-size: 1.5rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 0.5rem; }
-        .logo span.red { color: var(--da-primary); }
-
-        /* Navigation */
-        .main-nav { display: flex; gap: 0.25rem; }
-        .main-nav a { padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 500; color: var(--da-text-muted); transition: all 0.2s; }
-        .main-nav a:hover, .main-nav a.active { background: var(--da-card); color: white; }
-
-        /* Lang Switcher */
-        .lang-switcher { display: flex; gap: 0.25rem; background: var(--da-card); border-radius: 0.5rem; padding: 0.15rem; }
-        .lang-switcher a { padding: 0.35rem 0.75rem; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; color: var(--da-text-muted); transition: all 0.2s; text-transform: uppercase; }
-        .lang-switcher a.active { background: var(--da-primary); color: white; }
-        .lang-switcher a:hover:not(.active) { color: white; }
-
-        /* Footer */
-        .site-footer { background: var(--da-darker); border-top: 1px solid var(--da-border); padding: 2rem 0; margin-top: 3rem; }
-        .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .footer-text { color: var(--da-text-muted); font-size: 0.875rem; }
-
-        /* Cards */
-        .card { background: var(--da-card); border: 1px solid var(--da-border); border-radius: 0.75rem; padding: 1.5rem; transition: all 0.2s; }
-        .card:hover { border-color: var(--da-primary); background: var(--da-card-hover); }
-
-        /* Badges */
-        .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-        .badge-live { background: #dc262633; color: #ef4444; border: 1px solid #dc262666; }
-        .badge-upcoming { background: #f59e0b33; color: #fbbf24; border: 1px solid #f59e0b66; }
-        .badge-finished { background: #22c55e33; color: #4ade80; border: 1px solid #22c55e66; }
-
-        /* Breadcrumbs */
-        .breadcrumbs { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--da-text-muted); padding: 1rem 0; }
-        .breadcrumbs a { color: var(--da-primary); }
-        .breadcrumbs a:hover { text-decoration: underline; }
-        .breadcrumbs .separator { opacity: 0.5; }
-
-        /* Hero */
-        .hero { background: linear-gradient(135deg, var(--da-darker) 0%, #1e1b4b 50%, var(--da-primary-dark) 100%); padding: 3rem 0; margin-bottom: 2rem; border-bottom: 2px solid var(--da-primary); }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .hero p { color: var(--da-text-muted); font-size: 1.1rem; }
-
-        /* Section */
-        .section-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .section-title .icon { color: var(--da-primary); }
-
-        /* Grid */
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
-
-        /* Mobile */
-        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-        @media (max-width: 768px) {
-            .main-nav { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--da-darker); padding: 1rem; border-bottom: 2px solid var(--da-primary); }
-            .main-nav.open { display: flex; }
-            .mobile-menu-btn { display: block; }
-            .hero h1 { font-size: 1.75rem; }
-            .header-inner { flex-wrap: wrap; }
-        }
-    </style>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
-    <!-- Header -->
-    <header class="site-header">
+<body class="min-h-screen flex flex-col">
+    <!-- Top Bar -->
+    <div class="bg-secondary text-secondary-foreground">
         <div class="container">
-            <div class="header-inner">
-                <a href="{{ route('home') }}" class="logo">
-                    🎯 Darts<span class="red">Arena</span>
+            <div class="flex items-center justify-between h-12 text-sm">
+                <div class="flex items-center gap-8">
+                    <span class="hidden md:inline font-medium">{{ now()->format('l, F j, Y') }}</span>
+                    <span class="hidden lg:inline text-secondary-foreground/80">{{ __('Professional Darts Coverage') }}</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <x-lang-switcher />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="sticky top-0 z-50 bg-background border-b border-border">
+        <div class="container">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                    <div class="relative">
+                        <span class="relative text-4xl transform group-hover:scale-110 transition-transform duration-200">🎯</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display text-2xl lg:text-3xl font-bold tracking-tighter">
+                            Darts<span class="text-primary">Arena</span>
+                        </span>
+                        <span class="hidden sm:block text-[10px] text-muted-foreground uppercase tracking-widest font-semibold -mt-0.5">Professional Coverage</span>
+                    </div>
                 </a>
 
-                <button class="mobile-menu-btn" onclick="document.querySelector('.main-nav').classList.toggle('open')">
-                    ☰
-                </button>
-
-                <nav class="main-nav">
-                    <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">
-                        {{ __('Accueil') }}
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-center gap-2">
+                    <a href="{{ route('home') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('home') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                        {{ __('Home') }}
                     </a>
-                    <a href="{{ route('articles.index') }}" class="{{ request()->routeIs('articles.*') ? 'active' : '' }}">
+                    <a href="{{ route('articles.index') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('articles.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
                         {{ __('News') }}
                     </a>
-                    <a href="{{ route('competitions.index') }}" class="{{ request()->routeIs('competitions.*') ? 'active' : '' }}">
-                        {{ __('Compétitions') }}
+                    <a href="{{ route('players.index') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('players.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                        {{ __('Players') }}
                     </a>
-                    <a href="{{ route('players.index') }}" class="{{ request()->routeIs('players.*') ? 'active' : '' }}">
-                        {{ __('Joueurs') }}
+                    <a href="{{ route('rankings.index') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('rankings.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                        {{ __('Rankings') }}
                     </a>
-                    <a href="{{ route('rankings.index') }}" class="{{ request()->routeIs('rankings.*') ? 'active' : '' }}">
-                        {{ __('Classements') }}
+                    <a href="{{ route('competitions.index') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('competitions.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                        {{ __('Competitions') }}
                     </a>
-                    <a href="{{ route('calendar.index') }}" class="{{ request()->routeIs('calendar.*') ? 'active' : '' }}">
-                        {{ __('Calendrier') }}
+                    <a href="{{ route('calendar.index') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('calendar.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
+                        {{ __('Fixtures') }}
                     </a>
-                    <a href="{{ route('guides.index') }}" class="{{ request()->routeIs('guides.*') ? 'active' : '' }}">
+                    <a href="{{ route('guides.index') }}"
+                       class="px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('guides.*') ? 'bg-primary text-primary-foreground' : 'hover:bg-muted hover:text-foreground' }}">
                         {{ __('Guides') }}
                     </a>
                 </nav>
 
-                <x-lang-switcher />
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden inline-flex items-center justify-center p-2.5 rounded-lg hover:bg-muted transition-colors" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl">
+            <nav class="container py-4 flex flex-col gap-1">
+                <a href="{{ route('home') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('home') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('Home') }}
+                </a>
+                <a href="{{ route('articles.index') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('articles.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('News') }}
+                </a>
+                <a href="{{ route('players.index') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('players.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('Players') }}
+                </a>
+                <a href="{{ route('rankings.index') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('rankings.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('Rankings') }}
+                </a>
+                <a href="{{ route('competitions.index') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('competitions.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('Competitions') }}
+                </a>
+                <a href="{{ route('calendar.index') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('calendar.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('Fixtures') }}
+                </a>
+                <a href="{{ route('guides.index') }}"
+                   class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('guides.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
+                    {{ __('Guides') }}
+                </a>
+            </nav>
         </div>
     </header>
 
     <!-- Breadcrumbs -->
     @hasSection('breadcrumbs')
-        <div class="container">
-            @yield('breadcrumbs')
+        <div class="bg-muted/30 border-b border-border/50">
+            <div class="container">
+                @yield('breadcrumbs')
+            </div>
         </div>
     @endif
 
-    <!-- Content -->
-    <main>
+    <!-- Main Content -->
+    <main class="flex-1">
         @yield('content')
     </main>
 
     <!-- Footer -->
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-inner">
-                <div class="footer-text">
-                    &copy; {{ date('Y') }} DartsArena. {{ __('Tous droits réservés.') }}
+    <footer class="bg-secondary text-secondary-foreground mt-auto">
+        <div class="container py-12 lg:py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-3xl">🎯</span>
+                        <span class="font-display text-xl font-bold">
+                            Darts<span class="text-primary">Arena</span>
+                        </span>
+                    </div>
+                    <p class="text-sm text-secondary-foreground/80 leading-relaxed mb-6">
+                        {{ __('Your premier destination for professional darts news, statistics, and coverage of the PDC circuit.') }}
+                    </p>
+                    <x-lang-switcher />
                 </div>
-                <x-lang-switcher />
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="font-display font-bold text-sm uppercase tracking-wider mb-4">{{ __('Quick Links') }}</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="{{ route('articles.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Latest News') }}</a></li>
+                        <li><a href="{{ route('players.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Players') }}</a></li>
+                        <li><a href="{{ route('rankings.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Rankings') }}</a></li>
+                        <li><a href="{{ route('calendar.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Fixtures') }}</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h3 class="font-display font-bold text-sm uppercase tracking-wider mb-4">{{ __('Resources') }}</h3>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="{{ route('guides.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Guides') }}</a></li>
+                        <li><a href="{{ route('competitions.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Competitions') }}</a></li>
+                        <li><a href="#" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('About Us') }}</a></li>
+                        <li><a href="#" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Contact') }}</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social -->
+                <div>
+                    <h3 class="font-display font-bold text-sm uppercase tracking-wider mb-4">{{ __('Connect') }}</h3>
+                    <div class="flex gap-3 mb-6">
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary-foreground/10 hover:bg-primary hover:text-primary-foreground transition-all duration-200" aria-label="Twitter">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary-foreground/10 hover:bg-primary hover:text-primary-foreground transition-all duration-200" aria-label="Facebook">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-lg bg-secondary-foreground/10 hover:bg-primary hover:text-primary-foreground transition-all duration-200" aria-label="YouTube">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                    </div>
+                    <p class="text-xs text-secondary-foreground/60">
+                        &copy; {{ date('Y') }} DartsArena. {{ __('All rights reserved.') }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="border-t border-border/20">
+            <div class="container py-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-secondary-foreground/60">
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-secondary-foreground transition-colors">{{ __('Privacy Policy') }}</a>
+                        <a href="#" class="hover:text-secondary-foreground transition-colors">{{ __('Terms of Service') }}</a>
+                        <a href="#" class="hover:text-secondary-foreground transition-colors">{{ __('Cookie Policy') }}</a>
+                    </div>
+                    <div>
+                        {{ __('Made with') }} ❤️ {{ __('for darts fans worldwide') }}
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Mobile Menu Script -->
     <script>
-        // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {
-            const btn = document.querySelector('.mobile-menu-btn');
-            if (btn) {
-                btn.addEventListener('click', function() {
-                    document.querySelector('.main-nav').classList.toggle('open');
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
                 });
             }
         });
     </script>
+
+    <style>
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 0;
+            font-size: 0.875rem;
+            color: var(--color-muted-foreground);
+        }
+
+        .breadcrumbs a {
+            color: var(--color-primary);
+            transition: color 0.2s;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--color-primary-hover);
+        }
+
+        .breadcrumbs .separator {
+            opacity: 0.5;
+        }
+    </style>
 </body>
 </html>
