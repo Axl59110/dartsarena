@@ -93,7 +93,113 @@
             </div>
         </div>
 
-        {{-- Vue Calendrier (Desktop) --}}
+        {{-- Tableau SEO (HTML table) - PRIORITAIRE pour SEO --}}
+        <section class="bg-card rounded-[var(--radius-lg)] border border-border overflow-hidden shadow-sm mb-12">
+            <div class="p-6 border-b border-border">
+                <h2 class="font-display text-2xl font-bold">
+                    {{ __('Tournaments Schedule') }}
+                </h2>
+                <p class="text-sm text-muted-foreground mt-1">
+                    {{ $filteredEvents->count() }} {{ __('events found') }}
+                </p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-muted/50 border-b border-border">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Date') }}</th>
+                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Tournament') }}</th>
+                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Federation') }}</th>
+                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Venue') }}</th>
+                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Status') }}</th>
+                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Tickets') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-border">
+                        @forelse($filteredEvents as $event)
+                            <tr class="hover:bg-muted/30 transition-colors">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-semibold text-foreground">
+                                        {{ $event->start_date->format('d M Y') }}
+                                    </div>
+                                    @if($event->start_date->format('Y-m-d') !== $event->end_date->format('Y-m-d'))
+                                        <div class="text-xs text-muted-foreground">
+                                            {{ __('to') }} {{ $event->end_date->format('d M Y') }}
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if($event->competition)
+                                        <a href="{{ route('competitions.show', $event->competition->slug) }}"
+                                           class="font-bold text-foreground hover:text-primary transition-colors">
+                                            {{ $event->title }}
+                                        </a>
+                                    @else
+                                        <span class="font-bold text-foreground">{{ $event->title }}</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if($event->competition?->federation)
+                                        <x-badge-category category="tournament">
+                                            {{ $event->competition->federation->name }}
+                                        </x-badge-category>
+                                    @else
+                                        <span class="text-sm text-muted-foreground">-</span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-muted-foreground flex items-center gap-2">
+                                        <span>📍</span>
+                                        <span>{{ $event->venue }}</span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if($event->end_date < now())
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground">
+                                            {{ __('Finished') }}
+                                        </span>
+                                    @elseif($event->start_date <= now() && $event->end_date >= now())
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-700 dark:text-green-400">
+                                            {{ __('Live') }}
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                                            {{ __('Upcoming') }}
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4">
+                                    @if($event->ticket_url)
+                                        <a href="{{ $event->ticket_url }}"
+                                           target="_blank"
+                                           rel="noopener"
+                                           class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary text-primary-foreground rounded-[var(--radius-base)] text-xs font-bold hover:bg-primary-hover transition-colors">
+                                            <span>🎟️</span>
+                                            <span>{{ __('Buy') }}</span>
+                                        </a>
+                                    @else
+                                        <span class="text-xs text-muted-foreground">-</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-12 text-center">
+                                    <div class="text-muted-foreground">
+                                        <div class="text-4xl mb-3">📅</div>
+                                        <p class="font-semibold">{{ __('No events found') }}</p>
+                                        <p class="text-sm mt-1">{{ __('Try changing your filters') }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        {{-- Vue Calendrier Visuel (Desktop uniquement) --}}
         <section class="hidden lg:block mb-12">
             <div class="bg-card rounded-[var(--radius-lg)] border border-border p-6 shadow-sm">
                 {{-- Header mois --}}
@@ -219,112 +325,6 @@
                         </div>
                     @endfor
                 </div>
-            </div>
-        </section>
-
-        {{-- Tableau SEO (HTML table) --}}
-        <section class="bg-card rounded-[var(--radius-lg)] border border-border overflow-hidden shadow-sm">
-            <div class="p-6 border-b border-border">
-                <h2 class="font-display text-2xl font-bold">
-                    {{ __('Tournaments Schedule') }}
-                </h2>
-                <p class="text-sm text-muted-foreground mt-1">
-                    {{ $filteredEvents->count() }} {{ __('events found') }}
-                </p>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead class="bg-muted/50 border-b border-border">
-                        <tr>
-                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Date') }}</th>
-                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Tournament') }}</th>
-                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Federation') }}</th>
-                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Venue') }}</th>
-                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Status') }}</th>
-                            <th class="px-6 py-4 text-left text-sm font-bold text-foreground">{{ __('Tickets') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border">
-                        @forelse($filteredEvents as $event)
-                            <tr class="hover:bg-muted/30 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-semibold text-foreground">
-                                        {{ $event->start_date->format('d M Y') }}
-                                    </div>
-                                    @if($event->start_date->format('Y-m-d') !== $event->end_date->format('Y-m-d'))
-                                        <div class="text-xs text-muted-foreground">
-                                            {{ __('to') }} {{ $event->end_date->format('d M Y') }}
-                                        </div>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if($event->competition)
-                                        <a href="{{ route('competitions.show', $event->competition->slug) }}"
-                                           class="font-bold text-foreground hover:text-primary transition-colors">
-                                            {{ $event->title }}
-                                        </a>
-                                    @else
-                                        <span class="font-bold text-foreground">{{ $event->title }}</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if($event->competition?->federation)
-                                        <x-badge-category category="tournament">
-                                            {{ $event->competition->federation->name }}
-                                        </x-badge-category>
-                                    @else
-                                        <span class="text-sm text-muted-foreground">-</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-muted-foreground flex items-center gap-2">
-                                        <span>📍</span>
-                                        <span>{{ $event->venue }}</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if($event->end_date < now())
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground">
-                                            {{ __('Finished') }}
-                                        </span>
-                                    @elseif($event->start_date <= now() && $event->end_date >= now())
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-700 dark:text-green-400">
-                                            {{ __('Live') }}
-                                        </span>
-                                    @else
-                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary">
-                                            {{ __('Upcoming') }}
-                                        </span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4">
-                                    @if($event->ticket_url)
-                                        <a href="{{ $event->ticket_url }}"
-                                           target="_blank"
-                                           rel="noopener"
-                                           class="inline-flex items-center gap-2 px-3 py-1.5 bg-primary text-primary-foreground rounded-[var(--radius-base)] text-xs font-bold hover:bg-primary-hover transition-colors">
-                                            <span>🎟️</span>
-                                            <span>{{ __('Buy') }}</span>
-                                        </a>
-                                    @else
-                                        <span class="text-xs text-muted-foreground">-</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-12 text-center">
-                                    <div class="text-muted-foreground">
-                                        <div class="text-4xl mb-3">📅</div>
-                                        <p class="font-semibold">{{ __('No events found') }}</p>
-                                        <p class="text-sm mt-1">{{ __('Try changing your filters') }}</p>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
             </div>
         </section>
 
