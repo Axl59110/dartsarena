@@ -72,7 +72,7 @@
                                 @if(isset($player->photo_url) && $player->photo_url)
                                     <div class="w-24 h-24 rounded-lg overflow-hidden border-4 border-primary shadow-xl ring-4 ring-primary/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                                         <img src="{{ $player->photo_url }}"
-                                             alt="{{ $player->full_name }}"
+                                             alt="{{ $player->first_name }} {{ $player->last_name }}"
                                              class="w-full h-full object-cover">
                                     </div>
                                 @else
@@ -87,7 +87,7 @@
                             {{-- Name + Info --}}
                             <div class="flex-1 min-w-0 pt-1">
                                 <h3 class="font-display text-xl font-black text-foreground leading-tight mb-1 group-hover:text-primary transition-colors line-clamp-2">
-                                    {{ strtoupper($player->full_name) }}
+                                    {{ strtoupper($player->first_name . ' ' . $player->last_name) }}
                                 </h3>
 
                                 @if($player->nickname)
@@ -156,7 +156,7 @@
 
         {{-- Pagination --}}
         @if($players->hasPages())
-            <nav class="flex justify-center items-center gap-2 mt-8" aria-label="{{ __('Pagination') }}">
+            <nav class="flex justify-center items-center gap-2 mt-8" aria-label="Pagination">
                 {{-- Previous --}}
                 @if ($players->onFirstPage())
                     <span class="px-4 py-2 rounded-[var(--radius-base)] border border-border text-muted-foreground cursor-not-allowed opacity-50">
