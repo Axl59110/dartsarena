@@ -160,48 +160,49 @@
 
                                         @if($event->competition)
                                             <a href="{{ route('competitions.show', $event->competition->slug) }}"
-                                               class="block border-l-4 {{ $colors['border'] }} {{ $colors['bg'] }} rounded-sm p-1.5 hover:shadow-sm hover:scale-[1.02] transition-all group">
-                                                {{-- Header: Badge fédération --}}
-                                                <div class="flex items-center justify-between mb-1">
-                                                    <span class="inline-block px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wide {{ $colors['badge'] }}">
-                                                        {{ $event->competition->federation?->name ?? 'Event' }}
+                                               class="block border-l-[3px] {{ $colors['border'] }} bg-card border border-border rounded-md p-2 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 group">
+                                                {{-- Header: Badge court fédération + Dates --}}
+                                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-tight {{ $colors['badge'] }}">
+                                                        {{ $event->competition->federation?->slug ? strtoupper($event->competition->federation->slug) : 'EVENT' }}
                                                     </span>
                                                     @if($event->start_date->format('Y-m-d') !== $event->end_date->format('Y-m-d'))
-                                                        <span class="text-[8px] text-muted-foreground font-semibold">
+                                                        <span class="text-[9px] text-muted-foreground font-bold tabular-nums">
                                                             {{ $event->start_date->format('d') }}-{{ $event->end_date->format('d') }}
                                                         </span>
                                                     @endif
                                                 </div>
 
-                                                {{-- Titre événement --}}
-                                                <h4 class="text-[10px] font-bold leading-tight mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                                                {{-- Titre événement - DOMINANT --}}
+                                                <h4 class="text-[11px] font-extrabold leading-tight mb-1.5 line-clamp-2 text-foreground group-hover:text-primary transition-colors">
                                                     {{ $event->title }}
                                                 </h4>
 
-                                                {{-- Lieu + Pays --}}
-                                                <div class="flex items-start gap-1 text-[9px] text-muted-foreground">
-                                                    <span class="flex-shrink-0">📍</span>
-                                                    <span class="truncate leading-tight">
+                                                {{-- Lieu + Pays - Discret --}}
+                                                <div class="flex items-center gap-1 text-[9px] text-muted-foreground leading-tight">
+                                                    <svg class="w-2.5 h-2.5 flex-shrink-0 opacity-60" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0z"/>
+                                                    </svg>
+                                                    <span class="truncate font-medium">
                                                         {{ $event->venue ?? $event->location ?? 'TBD' }}
-                                                        @if(isset($event->country_flag))
-                                                            <span class="ml-0.5">{{ $event->country_flag }}</span>
-                                                        @elseif(isset($event->country))
-                                                            <span class="ml-0.5 text-[8px] font-semibold">({{ $event->country }})</span>
-                                                        @endif
                                                     </span>
                                                 </div>
                                             </a>
                                         @else
-                                            <div class="border-l-4 {{ $colors['border'] }} {{ $colors['bg'] }} rounded-sm p-1.5">
-                                                <span class="inline-block px-1.5 py-0.5 rounded text-[8px] font-bold uppercase {{ $colors['badge'] }} mb-1">
-                                                    Event
-                                                </span>
-                                                <h4 class="text-[10px] font-bold leading-tight mb-1 line-clamp-2">
+                                            <div class="border-l-[3px] {{ $colors['border'] }} bg-card border border-border rounded-md p-2">
+                                                <div class="flex items-center justify-between gap-2 mb-1.5">
+                                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-tight {{ $colors['badge'] }}">
+                                                        EVENT
+                                                    </span>
+                                                </div>
+                                                <h4 class="text-[11px] font-extrabold leading-tight mb-1.5 line-clamp-2 text-foreground">
                                                     {{ $event->title }}
                                                 </h4>
-                                                <div class="flex items-start gap-1 text-[9px] text-muted-foreground">
-                                                    <span>📍</span>
-                                                    <span class="truncate">{{ $event->venue }}</span>
+                                                <div class="flex items-center gap-1 text-[9px] text-muted-foreground leading-tight">
+                                                    <svg class="w-2.5 h-2.5 flex-shrink-0 opacity-60" fill="currentColor" viewBox="0 0 16 16">
+                                                        <path d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0z"/>
+                                                    </svg>
+                                                    <span class="truncate font-medium">{{ $event->venue ?? 'TBD' }}</span>
                                                 </div>
                                             </div>
                                         @endif
