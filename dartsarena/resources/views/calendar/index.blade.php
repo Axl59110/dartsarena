@@ -19,9 +19,9 @@
          currentYear: {{ $currentYear }},
          applyFilters() {
              const params = new URLSearchParams();
-             if (this.selectedMonth !== 'all') params.set('month', this.selectedMonth);
-             if (this.selectedFederation !== 'all') params.set('federation', this.selectedFederation);
+             params.set('month', this.currentMonth);
              params.set('year', this.currentYear);
+             if (this.selectedFederation !== 'all') params.set('federation', this.selectedFederation);
              window.location.search = params.toString();
          },
          previousMonth() {

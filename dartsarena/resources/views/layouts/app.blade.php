@@ -84,7 +84,7 @@
                     </a>
                     <a href="{{ route('calendar.index') }}"
                        class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('calendar.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
-                        {{ __('Fixtures') }}
+                        {{ __('Calendar') }}
                     </a>
                     <a href="{{ route('guides.index') }}"
                        class="px-4 py-2.5 text-sm font-semibold rounded-[var(--radius-md)] transition-all duration-200 focus-visible:ring-4 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:outline-none {{ request()->routeIs('guides.*') ? 'bg-primary text-primary-foreground focus-visible:bg-primary-hover' : 'hover:bg-muted hover:text-foreground focus-visible:bg-muted' }}">
@@ -132,7 +132,7 @@
                 </a>
                 <a href="{{ route('calendar.index') }}"
                    class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('calendar.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
-                    {{ __('Fixtures') }}
+                    {{ __('Calendar') }}
                 </a>
                 <a href="{{ route('guides.index') }}"
                    class="px-4 py-3 text-base font-semibold rounded-lg transition-all duration-200 {{ request()->routeIs('guides.*') ? 'bg-primary/10 text-primary border border-primary/30' : 'hover:bg-muted hover:text-foreground border border-transparent' }}">
@@ -181,7 +181,7 @@
                         <li><a href="{{ route('articles.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Latest News') }}</a></li>
                         <li><a href="{{ route('players.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Players') }}</a></li>
                         <li><a href="{{ route('rankings.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Rankings') }}</a></li>
-                        <li><a href="{{ route('calendar.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Fixtures') }}</a></li>
+                        <li><a href="{{ route('calendar.index') }}" class="text-secondary-foreground/80 hover:text-secondary-foreground transition-colors">{{ __('Calendar') }}</a></li>
                     </ul>
                 </div>
 
