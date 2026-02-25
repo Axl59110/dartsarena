@@ -50,6 +50,9 @@ Route::group([
     Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
     Route::get('/guides/{guide:slug}', [GuideController::class, 'show'])->name('guides.show');
 
+    // Components Demo (Development only - remove in production)
+    Route::view('/components-demo', 'components-demo')->name('components.demo');
+
 });
 
 // Redirect root to default locale

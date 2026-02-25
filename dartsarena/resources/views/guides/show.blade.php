@@ -13,17 +13,17 @@
 @endsection
 
 @section('content')
-    <!-- Guide Hero -->
+    {{-- Guide Hero --}}
     <section class="bg-gradient-to-b from-muted/30 to-background">
         <div class="container py-12 lg:py-16">
             <div class="max-w-4xl">
-                <div class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+                <x-badge-category :category="$guide->category" class="mb-6">
                     @if($guide->category === 'rules') {{ __('Règles') }}
                     @elseif($guide->category === 'stats') {{ __('Statistiques') }}
                     @elseif($guide->category === 'competitions') {{ __('Compétitions') }}
                     @else {{ ucfirst($guide->category) }}
                     @endif
-                </div>
+                </x-badge-category>
 
                 <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
                     {{ $guide->title }}
@@ -40,16 +40,17 @@
 
     <div class="container py-8 lg:py-12">
         <div class="max-w-4xl mx-auto">
-            <!-- Guide Content -->
-            <div class="bg-card rounded-xl border border-card-border p-6 lg:p-8 mb-12 prose prose-invert prose-lg max-w-none">
+            {{-- Guide Content --}}
+            <x-card class="p-6 lg:p-8 mb-12 prose prose-invert prose-lg max-w-none">
                 <div class="guide-content">
                     {!! $guide->content !!}
                 </div>
-            </div>
+            </x-card>
 
-            <!-- Back Button -->
+            {{-- Back Button --}}
             <div class="text-center">
-                <a href="{{ route('guides.index') }}" class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border border-border rounded-lg font-semibold hover:bg-muted hover:border-primary transition-all hover:-translate-y-0.5 shadow-sm">
+                <a href="{{ route('guides.index') }}"
+                   class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border-2 border-primary rounded-[var(--radius-base)] font-semibold hover:bg-primary hover:text-primary-foreground transition-all hover:-translate-y-0.5 shadow-sm">
                     <span class="text-xl">←</span>
                     {{ __('Retour aux guides') }}
                 </a>

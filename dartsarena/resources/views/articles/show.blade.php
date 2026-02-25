@@ -15,10 +15,10 @@
 @section('content')
     <div class="container py-8 lg:py-12">
         <div class="max-w-4xl mx-auto">
-            <!-- Article Header -->
+            {{-- Article Header --}}
             <article class="mb-12">
-                <div class="bg-card rounded-xl border border-card-border overflow-hidden mb-8">
-                    <!-- Image -->
+                <x-card class="overflow-hidden mb-8">
+                    {{-- Featured Image with Category Badge --}}
                     <div class="aspect-video bg-gradient-to-br from-muted to-border flex items-center justify-center overflow-hidden relative">
                         <span class="text-9xl">
                             @if($article->category === 'results') 🏆
@@ -28,18 +28,18 @@
                             @endif
                         </span>
                         <div class="absolute top-4 left-4">
-                            <span class="inline-flex items-center px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider bg-card/90 backdrop-blur-sm text-foreground border border-border">
+                            <x-badge-category :category="$article->category" position="overlay">
                                 @if($article->category === 'results') {{ __('Résultats') }}
                                 @elseif($article->category === 'news') {{ __('News') }}
                                 @elseif($article->category === 'interview') {{ __('Interview') }}
                                 @elseif($article->category === 'analysis') {{ __('Analyse') }}
                                 @else {{ ucfirst($article->category) }}
                                 @endif
-                            </span>
+                            </x-badge-category>
                         </div>
                     </div>
 
-                    <!-- Content -->
+                    {{-- Article Meta & Title --}}
                     <div class="p-6 lg:p-8">
                         <div class="flex items-center gap-3 text-sm text-muted-foreground mb-4">
                             <span>📅 {{ $article->published_at?->format('d/m/Y') }}</span>
@@ -57,30 +57,28 @@
                             </p>
                         @endif
                     </div>
-                </div>
+                </x-card>
 
-                <!-- Article Body -->
-                <div class="bg-card rounded-xl border border-card-border p-6 lg:p-8 prose prose-invert prose-lg max-w-none">
+                {{-- Article Body --}}
+                <x-card class="p-6 lg:p-8 prose prose-invert prose-lg max-w-none">
                     <div class="article-content">
                         {!! $article->content !!}
                     </div>
-                </div>
+                </x-card>
             </article>
 
-            <!-- Related Articles -->
+            {{-- Related Articles --}}
             @if($relatedArticles->count() > 0)
                 <div class="mb-12">
-                    <h2 class="font-display text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
-                        <span>📰</span>
-                        {{ __('Articles similaires') }}
-                    </h2>
+                    <x-section-header title="{{ __('Articles similaires') }}" spacing="mb-6" />
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         @foreach($relatedArticles as $related)
                             <a href="{{ route('articles.show', $related->slug) }}"
-                               class="bg-card rounded-xl border border-card-border shadow-sm hover:shadow-lg hover:border-border-strong hover:-translate-y-1 transition-all duration-200 group overflow-hidden flex gap-4 p-4">
-                                <!-- Image -->
-                                <div class="w-24 h-24 flex-shrink-0 bg-gradient-to-br from-muted to-border rounded-lg flex items-center justify-center overflow-hidden relative">
+                               class="group bg-card border border-card-border rounded-[var(--radius-base)] shadow-sm hover:shadow-lg hover:border-primary hover:-translate-y-1 transition-all duration-200 overflow-hidden flex gap-4 p-4">
+
+                                {{-- Thumbnail --}}
+                                <div class="w-24 h-24 flex-shrink-0 bg-gradient-to-br from-muted to-border rounded-[var(--radius-base)] flex items-center justify-center overflow-hidden relative">
                                     <span class="text-3xl">
                                         @if($related->category === 'results') 🏆
                                         @elseif($related->category === 'interview') 🎤
@@ -90,16 +88,16 @@
                                     </span>
                                 </div>
 
-                                <!-- Content -->
+                                {{-- Content --}}
                                 <div class="flex-1 min-w-0">
                                     <div class="mb-2">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-primary/10 text-primary border border-primary/30">
+                                        <x-badge-category :category="$related->category">
                                             @if($related->category === 'results') {{ __('Résultats') }}
                                             @elseif($related->category === 'news') {{ __('News') }}
                                             @elseif($related->category === 'interview') {{ __('Interview') }}
                                             @else {{ ucfirst($related->category) }}
                                             @endif
-                                        </span>
+                                        </x-badge-category>
                                     </div>
                                     <h3 class="font-display text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight mb-1">
                                         {{ $related->title }}
@@ -114,9 +112,10 @@
                 </div>
             @endif
 
-            <!-- Back Button -->
+            {{-- Back Button --}}
             <div class="text-center">
-                <a href="{{ route('articles.index') }}" class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border border-border rounded-lg font-semibold hover:bg-muted hover:border-primary transition-all hover:-translate-y-0.5 shadow-sm">
+                <a href="{{ route('articles.index') }}"
+                   class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border-2 border-primary rounded-[var(--radius-base)] font-semibold hover:bg-primary hover:text-primary-foreground transition-all hover:-translate-y-0.5 shadow-sm">
                     <span class="text-xl">←</span>
                     {{ __('Retour aux actualités') }}
                 </a>

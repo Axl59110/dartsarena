@@ -13,11 +13,11 @@
 @endsection
 
 @section('content')
-    <!-- Player Hero -->
+    {{-- Player Hero --}}
     <section class="bg-gradient-to-b from-muted/30 to-background">
         <div class="container py-12 lg:py-16">
             <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
-                <!-- Avatar -->
+                {{-- Avatar with Ranking Badge --}}
                 <div class="relative flex-shrink-0">
                     <div class="w-32 h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center border-4 border-primary/40">
                         <span class="text-7xl lg:text-8xl">🎯</span>
@@ -29,7 +29,7 @@
                     @endif
                 </div>
 
-                <!-- Info -->
+                {{-- Player Info --}}
                 <div class="flex-1 text-center lg:text-left">
                     <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-3">
                         {{ $player->full_name }}
@@ -62,57 +62,55 @@
 
     <div class="container py-8 lg:py-12">
         <div class="max-w-5xl mx-auto">
-            <!-- Stats Grid -->
+            {{-- Stats Grid --}}
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-12">
                 @if($latestRanking)
-                    <div class="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl border border-primary/30 p-6 text-center">
+                    <x-card class="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/30 p-6 text-center">
                         <div class="text-4xl mb-2">🏆</div>
                         <div class="font-display text-4xl font-bold text-primary mb-1">#{{ $latestRanking->position }}</div>
                         <div class="text-sm text-muted-foreground font-semibold uppercase tracking-wide">{{ __('Classement Actuel') }}</div>
-                    </div>
+                    </x-card>
                 @endif
 
                 @if($player->career_titles > 0)
-                    <div class="bg-card rounded-xl border border-card-border p-6 text-center hover:shadow-lg hover:border-border-strong transition-all">
+                    <x-card class="p-6 text-center hover:shadow-lg hover:border-primary transition-all">
                         <div class="text-4xl mb-2">🏅</div>
                         <div class="font-display text-4xl font-bold text-foreground mb-1">{{ $player->career_titles }}</div>
                         <div class="text-sm text-muted-foreground font-semibold uppercase tracking-wide">{{ __('Titres en Carrière') }}</div>
-                    </div>
+                    </x-card>
                 @endif
 
                 @if($player->career_9darters > 0)
-                    <div class="bg-card rounded-xl border border-card-border p-6 text-center hover:shadow-lg hover:border-border-strong transition-all">
+                    <x-card class="p-6 text-center hover:shadow-lg hover:border-primary transition-all">
                         <div class="text-4xl mb-2">🎯</div>
                         <div class="font-display text-4xl font-bold text-foreground mb-1">{{ $player->career_9darters }}</div>
                         <div class="text-sm text-muted-foreground font-semibold uppercase tracking-wide">{{ __('9-Darters') }}</div>
-                    </div>
+                    </x-card>
                 @endif
 
                 @if($player->career_highest_average)
-                    <div class="bg-card rounded-xl border border-card-border p-6 text-center hover:shadow-lg hover:border-border-strong transition-all">
+                    <x-card class="p-6 text-center hover:shadow-lg hover:border-primary transition-all">
                         <div class="text-4xl mb-2">📈</div>
                         <div class="font-display text-4xl font-bold text-foreground mb-1">{{ $player->career_highest_average }}</div>
                         <div class="text-sm text-muted-foreground font-semibold uppercase tracking-wide">{{ __('Meilleure Moyenne') }}</div>
-                    </div>
+                    </x-card>
                 @endif
             </div>
 
-            <!-- Bio Section -->
+            {{-- Bio Section --}}
             @if($player->bio)
                 <div class="mb-12">
-                    <h2 class="font-display text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
-                        <span>📖</span>
-                        {{ __('Biographie') }}
-                    </h2>
-                    <div class="bg-card rounded-xl border border-card-border p-6 lg:p-8">
+                    <x-section-header title="{{ __('Biographie') }}" spacing="mb-6" />
+                    <x-card class="p-6 lg:p-8">
                         <p class="text-lg leading-relaxed text-muted-foreground">{{ $player->bio }}</p>
-                    </div>
+                    </x-card>
                 </div>
             @endif
 
-            <!-- Back Button -->
+            {{-- Back Button --}}
             <div class="text-center">
-                <a href="{{ route('players.index') }}" class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border border-border rounded-lg font-semibold hover:bg-muted hover:border-primary transition-all hover:-translate-y-0.5 shadow-sm">
+                <a href="{{ route('players.index') }}"
+                   class="inline-flex items-center gap-3 px-6 py-3 bg-card text-foreground border-2 border-primary rounded-[var(--radius-base)] font-semibold hover:bg-primary hover:text-primary-foreground transition-all hover:-translate-y-0.5 shadow-sm">
                     <span class="text-xl">←</span>
                     {{ __('Retour aux joueurs') }}
                 </a>
