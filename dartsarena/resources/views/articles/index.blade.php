@@ -1,240 +1,204 @@
 @extends('layouts.app')
 
-@section('title', __('Actualités Fléchettes') . ' - DartsArena')
-
-@section('breadcrumbs')
-    <div class="breadcrumbs py-3">
-        <a href="{{ route('home') }}">{{ __('Accueil') }}</a>
-        <span class="text-muted-foreground mx-2">/</span>
-        <span class="text-foreground">{{ __('Actualités') }}</span>
-    </div>
-@endsection
+@section('title', __('News & Articles') . ' - DartsArena')
 
 @section('content')
-    {{-- Hero Section --}}
-    <section class="bg-gradient-to-b from-muted/30 to-background">
-        <div class="container py-12 lg:py-16">
-            <h1 class="font-display text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                {{ __('Actualités') }}
+<div class="bg-muted py-8 lg:py-12">
+    <div class="container">
+        {{-- Page Header --}}
+        <div class="mb-8">
+            <h1 class="font-display text-3xl lg:text-4xl font-bold text-foreground mb-3">
+                {{ __('News & Articles') }}
             </h1>
-            <p class="text-lg text-muted-foreground max-w-3xl">
-                {{ __('Toute l\'actualité des fléchettes : résultats, interviews, analyses et news du circuit PDC.') }}
+            <p class="text-muted-foreground text-lg">
+                {{ __('Latest news, results, and analysis from the world of professional darts') }}
             </p>
         </div>
-    </section>
 
-    <div class="container py-8 lg:py-12">
-        {{-- Filters Section --}}
-        @if($categories->count() > 1)
-            <div class="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
-                <a href="{{ route('articles.index') }}"
-                   class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold whitespace-nowrap transition-colors {{ !$category ? 'bg-primary text-primary-foreground' : 'bg-card text-foreground hover:bg-muted border border-border' }}">
-                    {{ __('Tous') }}
-                </a>
-                @foreach($categories as $cat)
-                    <a href="{{ route('articles.index', ['category' => $cat]) }}"
-                       class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold whitespace-nowrap transition-colors {{ $category === $cat ? 'bg-primary text-primary-foreground' : 'bg-card text-foreground hover:bg-muted border border-border' }}">
-                        @if($cat === 'results') {{ __('Résultats') }}
-                        @elseif($cat === 'news') {{ __('News') }}
-                        @elseif($cat === 'interview') {{ __('Interviews') }}
-                        @elseif($cat === 'analysis') {{ __('Analyses') }}
-                        @else {{ ucfirst($cat) }}
-                        @endif
-                    </a>
-                @endforeach
-            </div>
-        @endif
+        {{-- EXACTEMENT comme Homepage: Section avec filtres + grille --}}
+        <section class="bg-card rounded-[var(--radius-base)] border border-card-border p-6 shadow-sm">
 
-        {{-- Articles Grid --}}
-        @if($articles->count() > 0)
-            {{-- Featured Article Hero (Premier article) --}}
-            @if($articles->isNotEmpty() && $articles->currentPage() === 1)
-                @php $featuredArticle = $articles->first(); @endphp
-                <article class="grid lg:grid-cols-3 gap-8 mb-12 p-6 lg:p-8 bg-card border border-card-border rounded-[var(--radius-base)] hover:border-primary transition-colors">
-                    {{-- Image 2/3 --}}
-                    <a href="{{ route('articles.show', $featuredArticle->slug) }}" class="lg:col-span-2 group">
-                        <div class="aspect-video rounded-[var(--radius-base)] overflow-hidden relative bg-gradient-to-br from-primary/20 via-muted to-accent/20">
-                            {{-- Fallback Image avec icône catégorie --}}
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="text-8xl opacity-20">
-                                    @if($featuredArticle->category === 'results') 🏆
-                                    @elseif($featuredArticle->category === 'interview') 🎤
-                                    @elseif($featuredArticle->category === 'analysis') 📊
-                                    @else 📰
-                                    @endif
-                                </div>
-                            </div>
+            {{-- Federation Filter (copié identique de homepage) --}}
+            <div class="mb-6" x-data="{
+                activeFederation: 'all',
+                isLoading: false,
+                visibleCount: 0,
+                async changeFederation(fed) {
+                    if (this.isLoading) return;
+                    this.isLoading = true;
+                    this.activeFederation = fed;
+                    await new Promise(resolve => setTimeout(resolve, 150));
+                    this.isLoading = false;
+                }
+            }" x-init="$watch('activeFederation', () => { setTimeout(() => { visibleCount = $el.querySelectorAll('[x-show]:not([style*=\'display: none\'])').length }, 200) })">
 
-                            {{-- Badge catégorie avec backdrop-blur --}}
-                            <div class="absolute top-4 left-4 backdrop-blur-md bg-background/80 rounded-[var(--radius-base)] px-3 py-1.5 border border-card-border">
-                                <x-badge-category :category="$featuredArticle->category">
-                                    @if($featuredArticle->category === 'results') {{ __('Résultats') }}
-                                    @elseif($featuredArticle->category === 'news') {{ __('News') }}
-                                    @elseif($featuredArticle->category === 'interview') {{ __('Interview') }}
-                                    @else {{ __('Analyse') }}
-                                    @endif
-                                </x-badge-category>
-                            </div>
+                {{-- Filter Tabs --}}
+                <div class="flex flex-wrap gap-2 mb-4" role="tablist" aria-label="{{ __('Filter by federation') }}">
+                    <button @click="changeFederation('all')"
+                            :disabled="isLoading"
+                            :class="activeFederation === 'all' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                            class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                            role="tab"
+                            :aria-selected="activeFederation === 'all'"
+                            aria-label="{{ __('Show all federations') }}">
+                        {{ __('All') }}
+                    </button>
+                    <button @click="changeFederation('pdc')"
+                            :disabled="isLoading"
+                            :class="activeFederation === 'pdc' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                            class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                            role="tab"
+                            :aria-selected="activeFederation === 'pdc'"
+                            aria-label="{{ __('Show PDC federation') }}">
+                        PDC
+                    </button>
+                    <button @click="changeFederation('wdf')"
+                            :disabled="isLoading"
+                            :class="activeFederation === 'wdf' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                            class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                            role="tab"
+                            :aria-selected="activeFederation === 'wdf'"
+                            aria-label="{{ __('Show WDF federation') }}">
+                        WDF
+                    </button>
+                    <button @click="changeFederation('bdo')"
+                            :disabled="isLoading"
+                            :class="activeFederation === 'bdo' ? 'bg-primary text-primary-foreground' : 'bg-muted hover:bg-muted/80'"
+                            class="px-4 py-2 rounded-[var(--radius-base)] text-sm font-semibold transition-colors disabled:opacity-50"
+                            role="tab"
+                            :aria-selected="activeFederation === 'bdo'"
+                            aria-label="{{ __('Show BDO federation') }}">
+                        BDO
+                    </button>
+                </div>
 
-                            {{-- Hover effect --}}
-                            <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors"></div>
-                        </div>
-                    </a>
-
-                    {{-- Contenu 1/3 --}}
-                    <div class="flex flex-col justify-center space-y-4">
-                        <div class="flex items-center gap-3 text-sm text-muted-foreground">
-                            <time>{{ $featuredArticle->published_at?->diffForHumans() }}</time>
-                        </div>
-
-                        <a href="{{ route('articles.show', $featuredArticle->slug) }}" class="group">
-                            <h2 class="font-display text-3xl lg:text-4xl font-bold text-foreground group-hover:text-primary transition-colors leading-[1.1] mb-4">
-                                {{ $featuredArticle->title }}
-                            </h2>
-                        </a>
-
-                        <p class="text-base text-muted-foreground leading-relaxed">
-                            {{ $featuredArticle->excerpt }}
-                        </p>
-
-                        <div class="pt-2">
-                            <x-link-arrow href="{{ route('articles.show', $featuredArticle->slug) }}">
-                                {{ __('Lire l\'article') }}
-                            </x-link-arrow>
-                        </div>
+                {{-- Loading State --}}
+                <div class="min-h-[24px] mb-4">
+                    <div x-show="isLoading" class="flex items-center gap-2 text-sm text-muted-foreground">
+                        <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>{{ __('Loading...') }}</span>
                     </div>
-                </article>
-            @endif
+                    <div x-show="!isLoading && visibleCount > 0" class="text-sm text-muted-foreground">
+                        <span x-text="visibleCount"></span> <span x-text="visibleCount > 1 ? '{{ __('articles') }}' : 'article'"></span>
+                    </div>
+                </div>
 
-            {{-- Regular Articles Grid --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
-                @foreach($articles as $index => $article)
-                    {{-- Skip first article on first page (already featured) --}}
-                    @if($articles->currentPage() === 1 && $index === 0)
-                        @continue
-                    @endif
+                {{-- Articles Grid - 3 colonnes desktop (CODE IDENTIQUE homepage) --}}
+                @if($articles->count() > 0)
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        @foreach($articles as $article)
+                            <a href="{{ route('articles.show', $article->slug) }}"
+                               class="group bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden hover:border-primary hover:shadow-md transition-all"
+                               x-show="activeFederation === 'all' || '{{ $article->federation?->slug ?? 'pdc' }}' === activeFederation"
+                               x-transition:enter="transition ease-out duration-200"
+                               x-transition:enter-start="opacity-0"
+                               x-transition:enter-end="opacity-100">
 
-                    <a href="{{ route('articles.show', $article->slug) }}"
-                       class="group bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden hover:border-primary hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
-
-                        {{-- Image with Category Badge --}}
-                        <div class="aspect-video bg-gradient-to-br from-primary/10 via-muted to-accent/10 flex items-center justify-center overflow-hidden relative group-hover:scale-105 transition-transform duration-300">
-                            {{-- Fallback icon --}}
-                            <div class="text-5xl opacity-30">
-                                @if($article->category === 'results') 🏆
-                                @elseif($article->category === 'interview') 🎤
-                                @elseif($article->category === 'analysis') 📊
-                                @else 📰
-                                @endif
-                            </div>
-
-                            {{-- Badge with backdrop-blur --}}
-                            <div class="absolute top-3 left-3 backdrop-blur-sm bg-background/70 rounded-[var(--radius-base)] px-2.5 py-1 border border-card-border/50">
-                                <x-badge-category :category="$article->category" size="sm">
-                                    @if($article->category === 'results') {{ __('Résultats') }}
-                                    @elseif($article->category === 'news') {{ __('News') }}
-                                    @elseif($article->category === 'interview') {{ __('Interview') }}
-                                    @else {{ __('Analyse') }}
+                                {{-- Image --}}
+                                <div class="aspect-[16/9] bg-gradient-to-br from-primary/30 via-accent/20 to-darker/40 relative overflow-hidden group-hover:scale-[1.02] transition-transform duration-300">
+                                    @if($article->featured_image)
+                                        <img src="{{ $article->featured_image }}"
+                                             alt="{{ $article->title }}"
+                                             class="w-full h-full object-cover"
+                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        {{-- Placeholder fallback (hidden by default) --}}
+                                        <div class="w-full h-full flex items-center justify-center" style="display: none;">
+                                            <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                            </svg>
+                                        </div>
+                                    @else
+                                        {{-- Placeholder par défaut --}}
+                                        <div class="w-full h-full flex items-center justify-center">
+                                            <svg class="w-16 h-16 text-white/30" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                                            </svg>
+                                        </div>
                                     @endif
-                                </x-badge-category>
-                            </div>
-                        </div>
 
-                        {{-- Content --}}
-                        <div class="p-5 space-y-3">
-                            <p class="text-sm text-muted-foreground">
-                                {{ $article->published_at?->diffForHumans() }}
-                            </p>
+                                    {{-- Category Badge --}}
+                                    <div class="absolute top-2 left-2 z-10">
+                                        <span class="inline-flex px-2 py-1 text-xs font-bold bg-white/90 backdrop-blur-sm rounded-[var(--radius-base)]
+                                            @if($article->category === 'results') text-primary
+                                            @elseif($article->category === 'interview') text-warning
+                                            @elseif($article->category === 'analysis') text-info
+                                            @else text-secondary
+                                            @endif">
+                                            @if($article->category === 'results') {{ __('Results') }}
+                                            @elseif($article->category === 'news') {{ __('News') }}
+                                            @elseif($article->category === 'interview') {{ __('Interview') }}
+                                            @else {{ __('Analysis') }}
+                                            @endif
+                                        </span>
+                                    </div>
+                                </div>
 
-                            <h3 class="font-display text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-[1.2]">
-                                {{ $article->title }}
-                            </h3>
+                                {{-- Content --}}
+                                <div class="p-4 space-y-2">
+                                    <time class="text-xs font-semibold text-muted-foreground uppercase">
+                                        {{ $article->published_at?->format('M d, Y') }}
+                                    </time>
 
-                            <p class="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
-                                {{ $article->excerpt }}
-                            </p>
+                                    <h3 class="font-display text-base font-bold leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                        {{ $article->title }}
+                                    </h3>
 
-                            <x-link-arrow href="{{ route('articles.show', $article->slug) }}" size="sm" class="pt-2">
-                                {{ __('Lire l\'article') }}
-                            </x-link-arrow>
-                        </div>
-                    </a>
-                @endforeach
-            </div>
-
-            {{-- Pagination Améliorée avec numéros cliquables --}}
-            @if($articles->hasPages())
-                <nav class="flex justify-center items-center gap-2">
-                    {{-- Previous --}}
-                    @if($articles->onFirstPage())
-                        <span class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-muted-foreground border border-border opacity-50 cursor-not-allowed">
-                            ←
-                        </span>
-                    @else
-                        <a href="{{ $articles->previousPageUrl() }}" class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-                            ←
-                        </a>
-                    @endif
-
-                    {{-- Page Numbers --}}
-                    @php
-                        $currentPage = $articles->currentPage();
-                        $lastPage = $articles->lastPage();
-                        $start = max(1, $currentPage - 2);
-                        $end = min($lastPage, $currentPage + 2);
-                    @endphp
-
-                    {{-- First page --}}
-                    @if($start > 1)
-                        <a href="{{ $articles->url(1) }}" class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-                            1
-                        </a>
-                        @if($start > 2)
-                            <span class="px-2 text-muted-foreground">...</span>
-                        @endif
-                    @endif
-
-                    {{-- Page range --}}
-                    @for($page = $start; $page <= $end; $page++)
-                        @if($page === $currentPage)
-                            <span class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-bold bg-primary text-primary-foreground border border-primary">
-                                {{ $page }}
-                            </span>
-                        @else
-                            <a href="{{ $articles->url($page) }}" class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-                                {{ $page }}
+                                    <p class="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                                        {{ Str::limit($article->excerpt, 80) }}
+                                    </p>
+                                </div>
                             </a>
-                        @endif
-                    @endfor
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </section>
 
-                    {{-- Last page --}}
-                    @if($end < $lastPage)
-                        @if($end < $lastPage - 1)
-                            <span class="px-2 text-muted-foreground">...</span>
-                        @endif
-                        <a href="{{ $articles->url($lastPage) }}" class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-                            {{ $lastPage }}
-                        </a>
-                    @endif
+        {{-- Pagination Simple --}}
+        @if($articles->hasPages())
+            <nav class="flex justify-center items-center gap-2 mt-8" aria-label="{{ __('Pagination') }}">
+                {{-- Previous --}}
+                @if ($articles->onFirstPage())
+                    <span class="px-3 py-2 rounded-[var(--radius-base)] border border-border text-muted-foreground cursor-not-allowed opacity-50">
+                        ← {{ __('Prev') }}
+                    </span>
+                @else
+                    <a href="{{ $articles->previousPageUrl() }}"
+                       class="px-3 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted transition-colors">
+                        ← {{ __('Prev') }}
+                    </a>
+                @endif
 
-                    {{-- Next --}}
-                    @if($articles->hasMorePages())
-                        <a href="{{ $articles->nextPageUrl() }}" class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all">
-                            →
-                        </a>
-                    @else
-                        <span class="px-3 py-2 rounded-[var(--radius-base)] text-sm font-semibold bg-card text-muted-foreground border border-border opacity-50 cursor-not-allowed">
-                            →
+                {{-- Page Numbers --}}
+                @for($i = 1; $i <= $articles->lastPage(); $i++)
+                    @if($i === $articles->currentPage())
+                        <span class="px-3 py-2 rounded-[var(--radius-base)] bg-primary text-primary-foreground font-semibold">
+                            {{ $i }}
                         </span>
+                    @else
+                        <a href="{{ $articles->url($i) }}"
+                           class="px-3 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted transition-colors">
+                            {{ $i }}
+                        </a>
                     @endif
-                </nav>
-            @endif
-        @else
-            <x-card class="p-12 text-center">
-                <p class="text-muted-foreground">
-                    {{ __('Aucun article disponible pour le moment.') }}
-                </p>
-            </x-card>
+                @endfor
+
+                {{-- Next --}}
+                @if ($articles->hasMorePages())
+                    <a href="{{ $articles->nextPageUrl() }}"
+                       class="px-3 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted transition-colors">
+                        {{ __('Next') }} →
+                    </a>
+                @else
+                    <span class="px-3 py-2 rounded-[var(--radius-base)] border border-border text-muted-foreground cursor-not-allowed opacity-50">
+                        {{ __('Next') }} →
+                    </span>
+                @endif
+            </nav>
         @endif
     </div>
+</div>
 @endsection
