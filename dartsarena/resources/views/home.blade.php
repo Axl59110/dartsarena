@@ -399,28 +399,29 @@
     </div>
 
     <!-- SEO Content Section -->
-    <section class="bg-background border-t-2 border-border py-12 lg:py-16">
+    <section class="bg-muted py-12 lg:py-16">
         <div class="container">
-            <div class="max-w-5xl mx-auto space-y-10">
+            <div class="space-y-10">
                 <!-- Main SEO Content -->
-                <div class="prose prose-lg max-w-none">
-                    <h2 class="font-display text-2xl lg:text-3xl font-bold text-foreground mb-6">
+                <div class="bg-card rounded-[var(--radius-base)] border border-card-border p-8 lg:p-10 shadow-sm">
+                    <h2 class="font-display text-2xl lg:text-3xl font-bold text-foreground mb-6 pb-4 border-b border-border flex items-center gap-3">
+                        <div class="w-1 h-10 bg-primary"></div>
                         {{ __('DartsArena: Your Complete Professional Darts Hub') }}
                     </h2>
-                    <div class="text-muted-foreground leading-relaxed space-y-4">
+                    <div class="text-muted-foreground leading-relaxed space-y-4 text-base">
                         <p>
                             {{ __('Welcome to DartsArena, the ultimate destination for professional darts enthusiasts. Whether you\'re following the') }}
-                            <a href="{{ route('federations.show', 'pdc') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('PDC (Professional Darts Corporation)') }}</a>,
-                            <a href="{{ route('federations.show', 'wdf') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('WDF (World Darts Federation)') }}</a>,
+                            <a href="{{ route('federations.show', 'pdc') }}" class="text-primary hover:text-primary-hover font-semibold transition-colors">{{ __('PDC (Professional Darts Corporation)') }}</a>,
+                            <a href="{{ route('federations.show', 'wdf') }}" class="text-primary hover:text-primary-hover font-semibold transition-colors">{{ __('WDF (World Darts Federation)') }}</a>,
                             {{ __('or the') }}
-                            <a href="{{ route('federations.show', 'bdo') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('BDO (British Darts Organisation)') }}</a>,
+                            <a href="{{ route('federations.show', 'bdo') }}" class="text-primary hover:text-primary-hover font-semibold transition-colors">{{ __('BDO (British Darts Organisation)') }}</a>,
                             {{ __('we provide comprehensive coverage of all major darts competitions and events worldwide.') }}
                         </p>
                         <p>
                             {{ __('Track your favorite players, follow live scores, and stay updated with breaking news from the world of professional darts. From the prestigious') }}
-                            <a href="{{ route('competitions.index') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('PDC World Championship') }}</a>
+                            <a href="{{ route('competitions.index') }}" class="text-primary hover:text-primary-hover font-semibold transition-colors">{{ __('PDC World Championship') }}</a>
                             {{ __('to the exciting') }}
-                            <a href="{{ route('competitions.index') }}" class="text-primary hover:text-primary-hover font-semibold">{{ __('Premier League Darts') }}</a>,
+                            <a href="{{ route('competitions.index') }}" class="text-primary hover:text-primary-hover font-semibold transition-colors">{{ __('Premier League Darts') }}</a>,
                             {{ __('we cover every major tournament with detailed statistics, player profiles, and expert analysis.') }}
                         </p>
                     </div>
@@ -429,177 +430,216 @@
                 <!-- Internal Links Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Major Federations -->
-                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
-                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                            🏛️ {{ __('Major Federations') }}
-                        </h3>
-                        <ul class="space-y-2">
-                            <li>
-                                <a href="{{ route('federations.show', 'pdc') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                    {{ __('PDC - Professional Darts Corporation') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('federations.show', 'wdf') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                    {{ __('WDF - World Darts Federation') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('federations.show', 'bdo') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                    {{ __('BDO - British Darts Organisation') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('federations.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                    {{ __('View All Federations') }} →
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-primary/5 border-b border-card-border px-6 py-4">
+                            <h3 class="font-display text-lg font-bold text-foreground flex items-center gap-2">
+                                <span class="text-2xl">🏛️</span>
+                                {{ __('Major Federations') }}
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3">
+                                <li>
+                                    <a href="{{ route('federations.show', 'pdc') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
+                                        {{ __('PDC - Professional Darts Corporation') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('federations.show', 'wdf') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
+                                        {{ __('WDF - World Darts Federation') }}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('federations.show', 'bdo') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
+                                        {{ __('BDO - British Darts Organisation') }}
+                                    </a>
+                                </li>
+                                <li class="pt-3 mt-1 border-t border-border">
+                                    <a href="{{ route('federations.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold group">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>
+                                        {{ __('View All Federations') }}
+                                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- Major Competitions -->
-                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
-                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                            🏆 {{ __('Major Competitions') }}
-                        </h3>
-                        <ul class="space-y-2">
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-accent/5 border-b border-card-border px-6 py-4">
+                            <h3 class="font-display text-lg font-bold text-foreground flex items-center gap-2">
+                                <span class="text-2xl">🏆</span>
+                                {{ __('Major Competitions') }}
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3">
                             @foreach($majorCompetitions->take(4) as $competition)
                                 <li>
-                                    <a href="{{ route('competitions.show', $competition->slug) }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                    <a href="{{ route('competitions.show', $competition->slug) }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform"></span>
                                         {{ $competition->name }}
                                     </a>
                                 </li>
                             @endforeach
-                            <li>
-                                <a href="{{ route('competitions.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                    {{ __('View All Competitions') }} →
+                            <li class="pt-3 mt-1 border-t border-border">
+                                <a href="{{ route('competitions.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>
+                                    {{ __('View All Competitions') }}
+                                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
                                 </a>
                             </li>
                         </ul>
+                        </div>
                     </div>
 
                     <!-- Top Players -->
-                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
-                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                            ⭐ {{ __('Top Players') }}
-                        </h3>
-                        <ul class="space-y-2">
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-warning/5 border-b border-card-border px-6 py-4">
+                            <h3 class="font-display text-lg font-bold text-foreground flex items-center gap-2">
+                                <span class="text-2xl">⭐</span>
+                                {{ __('Top Players') }}
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3">
                             @foreach($featuredPlayers->take(4) as $player)
                                 <li>
-                                    <a href="{{ route('players.show', $player->slug) }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                        {{ $player->full_name }} <span class="text-xs">({{ $player->nationality }})</span>
+                                    <a href="{{ route('players.show', $player->slug) }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group">
+                                        <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform"></span>
+                                        <span class="truncate">{{ $player->full_name }}</span>
+                                        <span class="text-xs text-muted-foreground/70">({{ $player->nationality }})</span>
                                     </a>
                                 </li>
                             @endforeach
-                            <li>
-                                <a href="{{ route('players.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
-                                    {{ __('View All Players') }} →
+                            <li class="pt-3 mt-1 border-t border-border">
+                                <a href="{{ route('players.index') }}" class="text-sm text-primary hover:text-primary-hover transition-colors flex items-center gap-2 font-semibold group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>
+                                    {{ __('View All Players') }}
+                                    <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
                                 </a>
                             </li>
                         </ul>
+                        </div>
                     </div>
 
                     <!-- Quick Links -->
-                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
-                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                            🔗 {{ __('Quick Links') }}
-                        </h3>
-                        <ul class="space-y-2">
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-info/5 border-b border-card-border px-6 py-4">
+                            <h3 class="font-display text-lg font-bold text-foreground flex items-center gap-2">
+                                <span class="text-2xl">🔗</span>
+                                {{ __('Quick Links') }}
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('rankings.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('rankings.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('PDC Order of Merit') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('calendar.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('calendar.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Darts Calendar & Fixtures') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Latest Darts News') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('guides.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('guides.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Darts Rules & Guides') }}
                                 </a>
                             </li>
                         </ul>
+                        </div>
                     </div>
 
                     <!-- Statistics & Analysis -->
-                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
-                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                            📊 {{ __('Statistics & Analysis') }}
-                        </h3>
-                        <ul class="space-y-2">
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-success/5 border-b border-card-border px-6 py-4">
+                            <h3 class="font-display text-lg font-bold text-foreground flex items-center gap-2">
+                                <span class="text-2xl">📊</span>
+                                {{ __('Statistics & Analysis') }}
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('players.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('players.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Player Statistics & Averages') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Match Results & Archives') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('rankings.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('rankings.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('World Rankings') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Expert Analysis & Predictions') }}
                                 </a>
                             </li>
                         </ul>
+                        </div>
                     </div>
 
                     <!-- Special Features -->
-                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-6 shadow-sm">
-                        <h3 class="font-display text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-                            ✨ {{ __('Special Features') }}
-                        </h3>
-                        <ul class="space-y-2">
+                    <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="bg-secondary/5 border-b border-card-border px-6 py-4">
+                            <h3 class="font-display text-lg font-bold text-foreground flex items-center gap-2">
+                                <span class="text-2xl">✨</span>
+                                {{ __('Special Features') }}
+                            </h3>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-3">
                             <li>
-                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Live Match Coverage') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('calendar.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('calendar.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Tournament Schedules') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('articles.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Player Interviews') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('guides.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                                <a href="{{ route('guides.index') }}" class="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-3 group">
+                                    <span class="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-125 transition-transform flex-shrink-0"></span>
                                     {{ __('Beginner\'s Guide to Darts') }}
                                 </a>
                             </li>
@@ -608,12 +648,15 @@
                 </div>
 
                 <!-- Additional SEO Text -->
-                <div class="bg-card border border-card-border rounded-[var(--radius-base)] p-8 shadow-sm">
-                    <div class="prose max-w-none">
-                        <h3 class="font-display text-xl font-bold text-foreground mb-4">
+                <div class="bg-card border border-card-border rounded-[var(--radius-base)] overflow-hidden shadow-sm">
+                    <div class="bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border-b border-card-border px-8 py-5">
+                        <h3 class="font-display text-xl font-bold text-foreground flex items-center gap-3">
+                            <div class="w-1 h-8 bg-primary"></div>
                             {{ __('Why Choose DartsArena?') }}
                         </h3>
-                        <div class="text-sm text-muted-foreground leading-relaxed space-y-3">
+                    </div>
+                    <div class="p-8 lg:p-10">
+                        <div class="text-sm text-muted-foreground leading-relaxed space-y-4">
                             <p>
                                 {{ __('DartsArena offers the most comprehensive coverage of professional darts worldwide. Our platform aggregates real-time results, detailed player statistics, and exclusive insights from all major darts organizations including the PDC, WDF, and BDO.') }}
                             </p>
