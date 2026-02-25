@@ -45,14 +45,15 @@ class CalendarController extends Controller
         $daysInMonth = $calendarDate->daysInMonth;
         $firstDayOfWeek = $calendarDate->dayOfWeek; // 0 = Sunday
 
-        // Get events grouped by day for visual calendar (only for displayed month)
+        // Get events grouped by day for visual calendar (AVEC filtres appliqués)
         $eventsByDay = collect();
-        foreach($allEvents as $event) {
+        $monthStart = Carbon::create($currentYear, $currentMonth, 1);
+        $monthEnd = $monthStart->copy()->endOfMonth();
+
+        foreach($filteredEvents as $event) {
             // Check if event overlaps with current month
             $eventStart = $event->start_date;
             $eventEnd = $event->end_date;
-            $monthStart = Carbon::create($currentYear, $currentMonth, 1);
-            $monthEnd = $monthStart->copy()->endOfMonth();
 
             // If event overlaps this month, add it to relevant days
             if ($eventStart <= $monthEnd && $eventEnd >= $monthStart) {
