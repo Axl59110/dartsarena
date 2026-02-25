@@ -58,12 +58,11 @@
         {{-- Filtres --}}
         <div class="flex gap-3 mb-8 flex-wrap items-center">
             {{-- Mois --}}
-            <select x-model="selectedMonth"
+            <select x-model="currentMonth"
                     @change="applyFilters"
                     class="px-4 py-2.5 rounded-[var(--radius-base)] border border-border bg-card text-foreground font-medium text-sm hover:bg-muted transition-colors focus:ring-2 focus:ring-primary focus:outline-none">
-                <option value="all">{{ __('All months') }}</option>
                 @foreach(range(1, 12) as $month)
-                    <option value="{{ $month }}" {{ $currentMonth == $month && request('month') !== 'all' ? 'selected' : '' }}>
+                    <option value="{{ $month }}" {{ $currentMonth == $month ? 'selected' : '' }}>
                         {{ \Carbon\Carbon::create()->month($month)->translatedFormat('F') }}
                     </option>
                 @endforeach
@@ -148,8 +147,16 @@
                             @if($dayEvents->count() > 0)
                                 <div class="flex gap-1 mt-1 flex-wrap">
                                     @foreach($dayEvents->take(3) as $event)
-                                        <span class="w-2 h-2 rounded-full"
-                                              style="background-color: {{ $event->competition?->federation?->slug === 'pdc' ? 'hsl(var(--primary))' : ($event->competition?->federation?->slug === 'wdf' ? 'hsl(var(--accent))' : 'hsl(var(--muted-foreground))') }}"
+                                        <span class="w-2 h-2 rounded-full flex-shrink-0
+                                              @if($event->competition?->federation?->slug === 'pdc')
+                                                  bg-primary
+                                              @elseif($event->competition?->federation?->slug === 'wdf')
+                                                  bg-accent
+                                              @elseif($event->competition?->federation?->slug === 'bdo')
+                                                  bg-warning
+                                              @else
+                                                  bg-muted-foreground
+                                              @endif"
                                               title="{{ $event->title }}"></span>
                                     @endforeach
                                 </div>

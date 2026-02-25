@@ -46,15 +46,39 @@ class CalendarController extends Controller
         $firstDayOfWeek = $calendarDate->dayOfWeek; // 0 = Sunday
 
         // Get events grouped by day for visual calendar (only for displayed month)
-        $eventsByDay = $allEvents
-            ->filter(function($event) use ($currentYear, $currentMonth) {
-                // Show event if it starts OR ends in the current month
-                return ($event->start_date->year == $currentYear && $event->start_date->month == $currentMonth) ||
-                       ($event->end_date->year == $currentYear && $event->end_date->month == $currentMonth);
-            })
-            ->groupBy(function($event) {
-                return $event->start_date->day;
-            });
+        $eventsByDay = collect();
+        foreach($allEvents as $event) {
+            // Check if event overlaps with current month
+            $eventStart = $event->start_date;
+            $eventEnd = $event->end_date;
+            $monthStart = Carbon::create($currentYear, $currentMonth, 1);
+            $monthEnd = $monthStart->copy()->endOfMonth();
+
+            // If event overlaps this month, add it to relevant days
+            if ($eventStart <= $monthEnd && $eventEnd >= $monthStart) {
+                // Determine which day(s) to show the event on
+                if ($eventStart->year == $currentYear && $eventStart->month == $currentMonth) {
+                    // Event starts this month - show on start day
+                    $day = $eventStart->day;
+                    if (!$eventsByDay->has($day)) {
+                        $eventsByDay[$day] = collect();
+                    }
+                    $eventsByDay[$day]->push($event);
+                } elseif ($eventEnd->year == $currentYear && $eventEnd->month == $currentMonth) {
+                    // Event ends this month but started earlier - show on day 1
+                    if (!$eventsByDay->has(1)) {
+                        $eventsByDay[1] = collect();
+                    }
+                    $eventsByDay[1]->push($event);
+                } else {
+                    // Event spans entire month - show on day 1
+                    if (!$eventsByDay->has(1)) {
+                        $eventsByDay[1] = collect();
+                    }
+                    $eventsByDay[1]->push($event);
+                }
+            }
+        }
 
         return view('calendar.index', compact(
             'allEvents',
