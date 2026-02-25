@@ -138,42 +138,79 @@
                             $dayEvents = $eventsByDay->get($day, collect());
                             $isToday = $calendarDate->copy()->day($day)->isToday();
                         @endphp
-                        <div class="min-h-[120px] border rounded-[var(--radius-base)] p-2 hover:bg-muted/30 transition-colors {{ $isToday ? 'border-primary bg-primary/5' : 'border-border' }}">
-                            <div class="text-sm font-semibold mb-1 {{ $isToday ? 'text-primary' : 'text-foreground' }}">
+                        <div class="min-h-[140px] border rounded-[var(--radius-base)] p-1.5 bg-card hover:bg-muted/20 transition-colors {{ $isToday ? 'border-primary border-2 bg-primary/5' : 'border-border' }}">
+                            <div class="text-xs font-bold mb-1.5 px-1 {{ $isToday ? 'text-primary' : 'text-foreground' }}">
                                 {{ $day }}
                             </div>
 
-                            {{-- Event badges cliquables --}}
+                            {{-- Event cards riches --}}
                             @if($dayEvents->count() > 0)
                                 <div class="space-y-1">
-                                    @foreach($dayEvents->take(3) as $event)
+                                    @foreach($dayEvents->take(2) as $event)
+                                        @php
+                                            $fedSlug = $event->competition?->federation?->slug ?? 'other';
+                                            $fedColors = [
+                                                'pdc' => ['border' => 'border-l-primary', 'bg' => 'bg-primary/5', 'badge' => 'bg-primary text-primary-foreground'],
+                                                'wdf' => ['border' => 'border-l-accent', 'bg' => 'bg-accent/5', 'badge' => 'bg-accent text-accent-foreground'],
+                                                'bdo' => ['border' => 'border-l-warning', 'bg' => 'bg-warning/5', 'badge' => 'bg-warning text-warning-foreground'],
+                                                'other' => ['border' => 'border-l-muted-foreground', 'bg' => 'bg-muted/30', 'badge' => 'bg-muted text-muted-foreground']
+                                            ];
+                                            $colors = $fedColors[$fedSlug];
+                                        @endphp
+
                                         @if($event->competition)
                                             <a href="{{ route('competitions.show', $event->competition->slug) }}"
-                                               class="block px-1.5 py-0.5 rounded text-[10px] font-semibold leading-tight hover:opacity-80 transition-opacity
-                                                      @if($event->competition?->federation?->slug === 'pdc')
-                                                          bg-primary text-primary-foreground
-                                                      @elseif($event->competition?->federation?->slug === 'wdf')
-                                                          bg-accent text-accent-foreground
-                                                      @elseif($event->competition?->federation?->slug === 'bdo')
-                                                          bg-warning text-warning-foreground
-                                                      @else
-                                                          bg-muted text-muted-foreground
-                                                      @endif"
-                                               title="{{ $event->title }} - {{ $event->start_date->format('d/m') }} au {{ $event->end_date->format('d/m') }}">
-                                                <div class="truncate">{{ Str::limit($event->title, 18) }}</div>
+                                               class="block border-l-4 {{ $colors['border'] }} {{ $colors['bg'] }} rounded-sm p-1.5 hover:shadow-sm hover:scale-[1.02] transition-all group">
+                                                {{-- Header: Badge fédération --}}
+                                                <div class="flex items-center justify-between mb-1">
+                                                    <span class="inline-block px-1.5 py-0.5 rounded text-[8px] font-bold uppercase tracking-wide {{ $colors['badge'] }}">
+                                                        {{ $event->competition->federation?->name ?? 'Event' }}
+                                                    </span>
+                                                    @if($event->start_date->format('Y-m-d') !== $event->end_date->format('Y-m-d'))
+                                                        <span class="text-[8px] text-muted-foreground font-semibold">
+                                                            {{ $event->start_date->format('d') }}-{{ $event->end_date->format('d') }}
+                                                        </span>
+                                                    @endif
+                                                </div>
+
+                                                {{-- Titre événement --}}
+                                                <h4 class="text-[10px] font-bold leading-tight mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                                                    {{ $event->title }}
+                                                </h4>
+
+                                                {{-- Lieu + Pays --}}
+                                                <div class="flex items-start gap-1 text-[9px] text-muted-foreground">
+                                                    <span class="flex-shrink-0">📍</span>
+                                                    <span class="truncate leading-tight">
+                                                        {{ $event->venue ?? $event->location ?? 'TBD' }}
+                                                        @if(isset($event->country_flag))
+                                                            <span class="ml-0.5">{{ $event->country_flag }}</span>
+                                                        @elseif(isset($event->country))
+                                                            <span class="ml-0.5 text-[8px] font-semibold">({{ $event->country }})</span>
+                                                        @endif
+                                                    </span>
+                                                </div>
                                             </a>
                                         @else
-                                            <div class="px-1.5 py-0.5 rounded text-[10px] font-semibold leading-tight bg-muted text-muted-foreground"
-                                                 title="{{ $event->title }}">
-                                                <div class="truncate">{{ Str::limit($event->title, 18) }}</div>
+                                            <div class="border-l-4 {{ $colors['border'] }} {{ $colors['bg'] }} rounded-sm p-1.5">
+                                                <span class="inline-block px-1.5 py-0.5 rounded text-[8px] font-bold uppercase {{ $colors['badge'] }} mb-1">
+                                                    Event
+                                                </span>
+                                                <h4 class="text-[10px] font-bold leading-tight mb-1 line-clamp-2">
+                                                    {{ $event->title }}
+                                                </h4>
+                                                <div class="flex items-start gap-1 text-[9px] text-muted-foreground">
+                                                    <span>📍</span>
+                                                    <span class="truncate">{{ $event->venue }}</span>
+                                                </div>
                                             </div>
                                         @endif
                                     @endforeach
 
                                     {{-- Indicator pour events additionnels --}}
-                                    @if($dayEvents->count() > 3)
-                                        <div class="text-[9px] text-muted-foreground font-semibold px-1">
-                                            +{{ $dayEvents->count() - 3 }} {{ __('more') }}
+                                    @if($dayEvents->count() > 2)
+                                        <div class="text-[9px] text-muted-foreground font-bold px-1.5 py-0.5 text-center bg-muted/50 rounded">
+                                            +{{ $dayEvents->count() - 2 }} {{ __('more') }}
                                         </div>
                                     @endif
                                 </div>

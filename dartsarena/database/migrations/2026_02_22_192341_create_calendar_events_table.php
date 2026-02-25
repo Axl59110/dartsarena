@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->string('venue')->nullable();
             $table->string('location')->nullable();
+            $table->string('country')->nullable();
+            $table->string('country_flag')->nullable();
             $table->string('ticket_url')->nullable();
             $table->string('tv_channel')->nullable();
             $table->timestamps();
