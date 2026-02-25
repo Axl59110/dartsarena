@@ -138,27 +138,44 @@
                             $dayEvents = $eventsByDay->get($day, collect());
                             $isToday = $calendarDate->copy()->day($day)->isToday();
                         @endphp
-                        <div class="aspect-square border rounded-[var(--radius-base)] p-2 hover:bg-muted/50 cursor-pointer transition-colors {{ $isToday ? 'border-primary bg-primary/5' : 'border-border' }}"
-                             title="{{ $dayEvents->pluck('title')->join(', ') }}">
-                            <div class="text-sm font-semibold {{ $isToday ? 'text-primary' : 'text-foreground' }}">
+                        <div class="min-h-[120px] border rounded-[var(--radius-base)] p-2 hover:bg-muted/30 transition-colors {{ $isToday ? 'border-primary bg-primary/5' : 'border-border' }}">
+                            <div class="text-sm font-semibold mb-1 {{ $isToday ? 'text-primary' : 'text-foreground' }}">
                                 {{ $day }}
                             </div>
-                            {{-- Dots pour events --}}
+
+                            {{-- Event badges cliquables --}}
                             @if($dayEvents->count() > 0)
-                                <div class="flex gap-1 mt-1 flex-wrap">
+                                <div class="space-y-1">
                                     @foreach($dayEvents->take(3) as $event)
-                                        <span class="w-2 h-2 rounded-full flex-shrink-0
-                                              @if($event->competition?->federation?->slug === 'pdc')
-                                                  bg-primary
-                                              @elseif($event->competition?->federation?->slug === 'wdf')
-                                                  bg-accent
-                                              @elseif($event->competition?->federation?->slug === 'bdo')
-                                                  bg-warning
-                                              @else
-                                                  bg-muted-foreground
-                                              @endif"
-                                              title="{{ $event->title }}"></span>
+                                        @if($event->competition)
+                                            <a href="{{ route('competitions.show', $event->competition->slug) }}"
+                                               class="block px-1.5 py-0.5 rounded text-[10px] font-semibold leading-tight hover:opacity-80 transition-opacity
+                                                      @if($event->competition?->federation?->slug === 'pdc')
+                                                          bg-primary text-primary-foreground
+                                                      @elseif($event->competition?->federation?->slug === 'wdf')
+                                                          bg-accent text-accent-foreground
+                                                      @elseif($event->competition?->federation?->slug === 'bdo')
+                                                          bg-warning text-warning-foreground
+                                                      @else
+                                                          bg-muted text-muted-foreground
+                                                      @endif"
+                                               title="{{ $event->title }} - {{ $event->start_date->format('d/m') }} au {{ $event->end_date->format('d/m') }}">
+                                                <div class="truncate">{{ Str::limit($event->title, 18) }}</div>
+                                            </a>
+                                        @else
+                                            <div class="px-1.5 py-0.5 rounded text-[10px] font-semibold leading-tight bg-muted text-muted-foreground"
+                                                 title="{{ $event->title }}">
+                                                <div class="truncate">{{ Str::limit($event->title, 18) }}</div>
+                                            </div>
+                                        @endif
                                     @endforeach
+
+                                    {{-- Indicator pour events additionnels --}}
+                                    @if($dayEvents->count() > 3)
+                                        <div class="text-[9px] text-muted-foreground font-semibold px-1">
+                                            +{{ $dayEvents->count() - 3 }} {{ __('more') }}
+                                        </div>
+                                    @endif
                                 </div>
                             @endif
                         </div>
