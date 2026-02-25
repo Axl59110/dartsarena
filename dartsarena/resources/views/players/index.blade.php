@@ -50,8 +50,8 @@
         </div>
 
         {{-- Players Grid --}}
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            @foreach($players as $index => $player)
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+            @forelse($players as $index => $player)
                 <a href="{{ route('players.show', $player->slug) }}"
                    class="group bg-card border border-card-border rounded-[var(--radius-base)] shadow-sm hover:shadow-lg hover:border-primary hover:-translate-y-1 transition-all duration-200 overflow-hidden">
 
@@ -128,7 +128,87 @@
                         </div>
                     </div>
                 </a>
-            @endforeach
+            @empty
+                {{-- État vide --}}
+                <div class="col-span-full text-center py-16">
+                    <div class="text-6xl mb-4">🎯</div>
+                    <h3 class="font-display text-2xl font-bold text-foreground mb-2">
+                        {{ __('Aucun joueur trouvé') }}
+                    </h3>
+                    <p class="text-muted-foreground">
+                        {{ __('Essayez de modifier vos critères de recherche') }}
+                    </p>
+                </div>
+            @endforelse
         </div>
+
+        {{-- Pagination --}}
+        @if($players->hasPages())
+            <nav class="flex justify-center items-center gap-2 mt-8" aria-label="{{ __('Pagination') }}">
+                {{-- Previous --}}
+                @if ($players->onFirstPage())
+                    <span class="px-4 py-2 rounded-[var(--radius-base)] border border-border text-muted-foreground cursor-not-allowed opacity-50">
+                        ← {{ __('Précédent') }}
+                    </span>
+                @else
+                    <a href="{{ $players->previousPageUrl() }}"
+                       class="px-4 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted hover:border-primary transition-colors">
+                        ← {{ __('Précédent') }}
+                    </a>
+                @endif
+
+                {{-- Page Numbers --}}
+                @php
+                    $start = max($players->currentPage() - 2, 1);
+                    $end = min($start + 4, $players->lastPage());
+                    $start = max($end - 4, 1);
+                @endphp
+
+                @if($start > 1)
+                    <a href="{{ $players->url(1) }}"
+                       class="px-4 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted hover:border-primary transition-colors">
+                        1
+                    </a>
+                    @if($start > 2)
+                        <span class="px-2 text-muted-foreground">...</span>
+                    @endif
+                @endif
+
+                @for($i = $start; $i <= $end; $i++)
+                    @if($i === $players->currentPage())
+                        <span class="px-4 py-2 rounded-[var(--radius-base)] bg-primary text-primary-foreground font-semibold">
+                            {{ $i }}
+                        </span>
+                    @else
+                        <a href="{{ $players->url($i) }}"
+                           class="px-4 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted hover:border-primary transition-colors">
+                            {{ $i }}
+                        </a>
+                    @endif
+                @endfor
+
+                @if($end < $players->lastPage())
+                    @if($end < $players->lastPage() - 1)
+                        <span class="px-2 text-muted-foreground">...</span>
+                    @endif
+                    <a href="{{ $players->url($players->lastPage()) }}"
+                       class="px-4 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted hover:border-primary transition-colors">
+                        {{ $players->lastPage() }}
+                    </a>
+                @endif
+
+                {{-- Next --}}
+                @if ($players->hasMorePages())
+                    <a href="{{ $players->nextPageUrl() }}"
+                       class="px-4 py-2 rounded-[var(--radius-base)] border border-border hover:bg-muted hover:border-primary transition-colors">
+                        {{ __('Suivant') }} →
+                    </a>
+                @else
+                    <span class="px-4 py-2 rounded-[var(--radius-base)] border border-border text-muted-foreground cursor-not-allowed opacity-50">
+                        {{ __('Suivant') }} →
+                    </span>
+                @endif
+            </nav>
+        @endif
     </div>
 @endsection
