@@ -322,8 +322,15 @@
                                 @php
                                     $isPlayer1 = $match->player1_id === $player->id;
                                     $opponent = $isPlayer1 ? $match->player2 : $match->player1;
-                                    $playerScore = $isPlayer1 ? ($match->best_of_sets ? $match->player1_score_sets : $match->player1_score_legs) : ($match->best_of_sets ? $match->player2_score_sets : $match->player2_score_legs);
-                                    $opponentScore = $isPlayer1 ? ($match->best_of_sets ? $match->player2_score_sets : $match->best_of_sets ? $match->player1_score_legs) : ($match->best_of_sets ? $match->player1_score_sets : $match->player1_score_legs);
+
+                                    if ($isPlayer1) {
+                                        $playerScore = $match->best_of_sets ? $match->player1_score_sets : $match->player1_score_legs;
+                                        $opponentScore = $match->best_of_sets ? $match->player2_score_sets : $match->player2_score_legs;
+                                    } else {
+                                        $playerScore = $match->best_of_sets ? $match->player2_score_sets : $match->player2_score_legs;
+                                        $opponentScore = $match->best_of_sets ? $match->player1_score_sets : $match->player1_score_legs;
+                                    }
+
                                     $won = $match->winner_id === $player->id;
                                 @endphp
 
