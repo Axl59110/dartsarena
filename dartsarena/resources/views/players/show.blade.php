@@ -138,7 +138,26 @@
     </section>
 
     {{-- Tabs Section --}}
-    <div class="container py-8 lg:py-12" x-data="{ activeTab: window.location.hash ? window.location.hash.substring(1) : 'profil' }">
+    <div class="container py-8 lg:py-12" x-data="{
+        activeTab: window.location.hash ? window.location.hash.substring(1) : 'profil',
+        videoModal: {
+            isOpen: false,
+            videoUrl: '',
+            title: '',
+            open(url, title) {
+                this.videoUrl = url;
+                this.title = title;
+                this.isOpen = true;
+                document.body.style.overflow = 'hidden';
+            },
+            close() {
+                this.isOpen = false;
+                this.videoUrl = '';
+                this.title = '';
+                document.body.style.overflow = '';
+            }
+        }
+    }">
         <div class="max-w-6xl mx-auto">
             {{-- Tabs Navigation --}}
             <div class="border-b border-border mb-8 overflow-x-auto">
@@ -174,6 +193,27 @@
                         role="tab"
                     >
                         {{ __('Matchs Récents') }}
+                    </button>
+                    <button
+                        @click="activeTab = 'nine-darters'; window.location.hash = 'nine-darters'"
+                        :class="activeTab === 'nine-darters' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted'"
+                        class="px-6 py-3 border-b-2 font-semibold transition-colors whitespace-nowrap relative"
+                        role="tab"
+                    >
+                        {{ __('Nine Darters') }}
+                        @if($nineDarters->count() > 0)
+                            <span class="ml-2 inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-primary-foreground bg-primary rounded-full">
+                                {{ $nineDarters->count() }}
+                            </span>
+                        @endif
+                    </button>
+                    <button
+                        @click="activeTab = 'equipement'; window.location.hash = 'equipement'"
+                        :class="activeTab === 'equipement' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted'"
+                        class="px-6 py-3 border-b-2 font-semibold transition-colors whitespace-nowrap"
+                        role="tab"
+                    >
+                        {{ __('Équipement') }}
                     </button>
                 </nav>
             </div>
@@ -378,6 +418,135 @@
                         <p class="text-muted-foreground italic">{{ __('Aucun match récent disponible.') }}</p>
                     @endif
                 </x-card>
+            </div>
+
+            {{-- Tab: Équipement --}}
+            <div x-show="activeTab === 'equipement'" x-transition role="tabpanel">
+                @if($currentEquipments->count() > 0 || $previousEquipments->count() > 0)
+                    {{-- Current Equipment Section --}}
+                    @if($currentEquipments->count() > 0)
+                        <div class="mb-8">
+                            <h2 class="font-display text-2xl font-bold text-foreground mb-6">{{ __('Équipement Actuel') }}</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                @foreach($currentEquipments as $equipment)
+                                    <x-card class="p-6 hover:shadow-lg transition-shadow">
+                                        {{-- Equipment Photo --}}
+                                        @if($equipment->photo_url)
+                                            <div class="mb-4 bg-muted/30 rounded-[var(--radius-base)] p-4 flex items-center justify-center h-48">
+                                                <img
+                                                    src="{{ $equipment->photo_url }}"
+                                                    alt="{{ $equipment->full_name }}"
+                                                    loading="lazy"
+                                                    class="max-h-full max-w-full object-contain"
+                                                />
+                                            </div>
+                                        @endif
+
+                                        {{-- Equipment Type Badge --}}
+                                        <div class="mb-3">
+                                            <span class="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wide rounded-full">
+                                                {{ __($equipment->equipment_type) }}
+                                            </span>
+                                        </div>
+
+                                        {{-- Equipment Details --}}
+                                        <h3 class="font-display text-xl font-bold text-foreground mb-2">
+                                            {{ $equipment->brand }}
+                                        </h3>
+                                        <p class="text-lg text-muted-foreground font-medium mb-3">
+                                            {{ $equipment->model }}
+                                        </p>
+
+                                        @if($equipment->description)
+                                            <p class="text-sm text-muted-foreground mb-4 line-clamp-3">
+                                                {{ $equipment->description }}
+                                            </p>
+                                        @endif
+
+                                        {{-- Period --}}
+                                        @if($equipment->period)
+                                            <p class="text-xs text-muted-foreground mb-4 italic">
+                                                {{ $equipment->period }}
+                                            </p>
+                                        @endif
+
+                                        {{-- Affiliate CTA --}}
+                                        @if($equipment->affiliate_link)
+                                            <a
+                                                href="{{ $equipment->affiliate_link }}"
+                                                target="_blank"
+                                                rel="noopener noreferrer nofollow sponsored"
+                                                class="inline-flex items-center justify-center w-full px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-[var(--radius-base)] hover:bg-primary/90 transition-colors"
+                                            >
+                                                {{ __('Voir le produit') }}
+                                                <span class="ml-2">→</span>
+                                            </a>
+                                        @endif
+                                    </x-card>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Previous Equipment Timeline --}}
+                    @if($previousEquipments->count() > 0)
+                        <div>
+                            <h2 class="font-display text-2xl font-bold text-foreground mb-6">{{ __('Équipements Précédents') }}</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                @foreach($previousEquipments as $equipment)
+                                    <x-card class="p-6 opacity-75 hover:opacity-100 transition-opacity">
+                                        {{-- Equipment Photo --}}
+                                        @if($equipment->photo_url)
+                                            <div class="mb-4 bg-muted/30 rounded-[var(--radius-base)] p-4 flex items-center justify-center h-40">
+                                                <img
+                                                    src="{{ $equipment->photo_url }}"
+                                                    alt="{{ $equipment->full_name }}"
+                                                    loading="lazy"
+                                                    class="max-h-full max-w-full object-contain"
+                                                />
+                                            </div>
+                                        @endif
+
+                                        {{-- Equipment Type Badge --}}
+                                        <div class="mb-3">
+                                            <span class="inline-block px-3 py-1 bg-muted text-muted-foreground text-xs font-semibold uppercase tracking-wide rounded-full">
+                                                {{ __($equipment->equipment_type) }}
+                                            </span>
+                                        </div>
+
+                                        {{-- Equipment Details --}}
+                                        <h3 class="font-display text-lg font-bold text-foreground mb-2">
+                                            {{ $equipment->brand }}
+                                        </h3>
+                                        <p class="text-base text-muted-foreground font-medium mb-3">
+                                            {{ $equipment->model }}
+                                        </p>
+
+                                        {{-- Period --}}
+                                        @if($equipment->period)
+                                            <p class="text-xs text-muted-foreground italic">
+                                                {{ $equipment->period }}
+                                            </p>
+                                        @endif
+                                    </x-card>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    {{-- Empty State --}}
+                    <x-card class="p-8 lg:p-12 text-center">
+                        <div class="max-w-md mx-auto">
+                            <div class="text-6xl mb-4">🎯</div>
+                            <h2 class="font-display text-2xl font-bold text-foreground mb-3">
+                                {{ __('Aucun équipement référencé') }}
+                            </h2>
+                            <p class="text-muted-foreground">
+                                {{ __('Les informations sur l\'équipement de ce joueur seront bientôt disponibles.') }}
+                            </p>
+                        </div>
+                    </x-card>
+                @endif
             </div>
 
             {{-- Back Button --}}
