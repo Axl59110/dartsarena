@@ -3,19 +3,20 @@
 # Project: DartsArena
 
 project_name: "DartsArena"
-last_updated: "2026-02-22"
+last_updated: "2026-02-26"
 
 sprints:
   - number: 1
     goal: "Fondations — Architecture, modeles, donnees, silos SEO, fiches joueurs"
-    status: "not-started"
+    status: "in-progress"
     total_points: 19
     stories:
       - id: "STORY-001"
         name: "Setup Laravel + TailwindCSS + Architecture de base + i18n"
         points: 3
-        status: "not-started"
+        status: "completed"
         file: "docs/stories/STORY-001.md"
+        completion_date: "2026-02-22"
       - id: "STORY-002"
         name: "Modeles & Migrations"
         points: 5
@@ -29,23 +30,29 @@ sprints:
       - id: "STORY-004"
         name: "Pages Federation + Competition (Silos SEO)"
         points: 5
-        status: "not-started"
+        status: "in-progress"
+        progress: "25%"
+        notes: "UX/UI page Competitions done (score 9/10). Reste: pages show, breadcrumbs, SEO"
         file: "docs/stories/STORY-004.md"
       - id: "STORY-005"
         name: "Fiches Joueurs"
         points: 3
-        status: "not-started"
+        status: "completed"
+        completion_date: "2026-02-26"
+        notes: "Page show complète avec tabs (Profil, Stats, Palmares, Matchs). Schema.org Person, lazy loading, responsive. Tous AC validés."
         file: "docs/stories/STORY-005.md"
 
   - number: 2
     goal: "Core — Matchs, classements, calendrier, scraping automatise"
-    status: "not-started"
+    status: "in-progress"
     total_points: 21
     stories:
       - id: "STORY-006"
         name: "Page Classement Filtrable + Page Calendrier"
         points: 5
-        status: "not-started"
+        status: "in-progress"
+        progress: "50%"
+        notes: "Calendar page done (visuel, filtres, SEO). Reste: page classement"
         file: "docs/stories/STORY-006.md"
       - id: "STORY-007"
         name: "Pages de Match (Resultats, Stats, Score)"
@@ -97,6 +104,9 @@ sprints:
 metrics:
   total_stories: 14
   total_points: 59
-  stories_completed: 0
-  stories_in_progress: 0
-  stories_not_started: 14
+  stories_completed: 2
+  stories_in_progress: 2
+  stories_not_started: 10
+  points_completed: 6
+  points_in_progress: 10
+  completion_percentage: 10
