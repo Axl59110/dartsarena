@@ -1,6 +1,10 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;700&display=swap');
 
+    :root {
+        --primary-rgb: 215, 60, 50; /* Approximation of oklch(58% 0.24 25) */
+    }
+
     .font-gaming { font-family: 'Archivo Black', sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
