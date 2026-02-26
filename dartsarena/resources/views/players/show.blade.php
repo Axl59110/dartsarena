@@ -14,23 +14,28 @@
 
 @section('content')
     {{-- Schema.org Person Markup --}}
+    @php
+        $schema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Person',
+            'name' => $player->full_name,
+            'alternateName' => $player->nickname,
+            'nationality' => $player->nationality,
+            'description' => strip_tags($player->bio ?? 'Professional darts player'),
+            'jobTitle' => 'Professional Darts Player',
+            'award' => $player->career_titles . ' career titles'
+        ];
+
+        if ($player->photo_url) {
+            $schema['image'] = asset($player->photo_url);
+        }
+
+        if ($player->date_of_birth) {
+            $schema['birthDate'] = $player->date_of_birth->format('Y-m-d');
+        }
+    @endphp
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "{{ $player->full_name }}",
-        "alternateName": "{{ $player->nickname }}",
-        "nationality": "{{ $player->nationality }}",
-        @if($player->photo_url)
-        "image": "{{ asset($player->photo_url) }}",
-        @endif
-        @if($player->date_of_birth)
-        "birthDate": "{{ $player->date_of_birth->format('Y-m-d') }}",
-        @endif
-        "description": "{{ strip_tags($player->bio ?? 'Professional darts player') }}",
-        "jobTitle": "Professional Darts Player",
-        "award": "{{ $player->career_titles }} career titles"
-    }
+    {!! json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) !!}
     </script>
 
     {{-- Player Hero Section --}}
