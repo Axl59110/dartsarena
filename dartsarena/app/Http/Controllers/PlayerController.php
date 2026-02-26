@@ -73,6 +73,22 @@ class PlayerController extends Controller
             'total_180s' => $total180s,
         ];
 
-        return view('players.show', compact('player', 'latestRanking', 'recentMatches', 'careerStats'));
+        // Load equipment and nine darters data
+        $currentEquipments = $player->equipments()->current()->get();
+        $previousEquipments = $player->equipments()->previous()->get();
+        $nineDarters = $player->nineDarters()
+            ->with(['competition', 'match.player1', 'match.player2'])
+            ->orderBy('order_number')
+            ->get();
+
+        return view('players.show', compact(
+            'player',
+            'latestRanking',
+            'recentMatches',
+            'careerStats',
+            'currentEquipments',
+            'previousEquipments',
+            'nineDarters'
+        ));
     }
 }

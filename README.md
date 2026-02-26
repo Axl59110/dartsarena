@@ -199,9 +199,33 @@ Config dans `config/laravellocalization.php` :
 
 ## 📝 Documentation
 
-- **[POC_SETUP.md](POC_SETUP.md)** - Instructions complètes de setup
-- **[SITE_NEWS_READY.md](SITE_NEWS_READY.md)** - Vue d'ensemble du site
-- **[VERIFICATION_POC.md](VERIFICATION_POC.md)** - Checklist de vérification
+### 📚 Documentation BMAD Method (Principale)
+
+**Toute la documentation du projet est organisée selon la BMAD Method v6 :**
+
+- **[docs/CHANGELOG.md](docs/CHANGELOG.md)** - 📜 Historique complet des modifications
+- **[docs/LEARNINGS.md](docs/LEARNINGS.md)** - 🎓 Best practices & patterns à suivre
+- **[docs/sprint-status.yaml](docs/sprint-status.yaml)** - 📊 État d'avancement des sprints
+- **[docs/bmm-workflow-status.yaml](docs/bmm-workflow-status.yaml)** - 🔄 Statut workflow BMAD
+- **[docs/stories/](docs/stories/)** - 📋 User stories détaillées (STORY-001 à STORY-014)
+
+### 📂 Archives Documentation (Historique)
+
+Documentation détaillée archivée par thème :
+
+- **[docs/archive/ux/](docs/archive/ux/)** - Corrections UX/UI, analyses, validations (10 docs)
+- **[docs/archive/calendar/](docs/archive/calendar/)** - Refonte calendrier, guides tests (4 docs)
+- **[docs/archive/setup/](docs/archive/setup/)** - Setup POC, vérifications, structure (5 docs)
+- **[docs/archive/corrections/](docs/archive/corrections/)** - Historique corrections (2 docs)
+- **[docs/archive/analysis/](docs/archive/analysis/)** - Analyses techniques (2 docs)
+- **[docs/archive/testing/](docs/archive/testing/)** - Scripts et guides tests
+
+### 🚀 Quick Start
+
+1. **Pour développer :** Lire [docs/LEARNINGS.md](docs/LEARNINGS.md) pour les best practices
+2. **Pour comprendre l'état :** Consulter [docs/sprint-status.yaml](docs/sprint-status.yaml)
+3. **Pour l'historique :** Parcourir [docs/CHANGELOG.md](docs/CHANGELOG.md)
+4. **Pour une feature :** Lire la story correspondante dans [docs/stories/](docs/stories/)
 
 ## 🤝 Contribution
 

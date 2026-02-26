@@ -32,7 +32,11 @@
       "WebSearch",
       "WebFetch(domain:www.flashscore.fr)",
       "WebFetch(domain:brandfetch.com)",
-      "WebFetch(domain:dribbble.com)"
+      "WebFetch(domain:dribbble.com)",
+      "WebFetch(domain:www.darts-nerd.com)",
+      "Bash(\"C:\\\\Users\\\\axel\\\\.config\\\\herd\\\\bin\\\\php.bat\" artisan migrate)",
+      "Bash(\"C:\\\\Users\\\\axel\\\\.config\\\\herd\\\\bin\\\\php.bat\" artisan db:seed --class=PlayerEquipmentSeeder)",
+      "Bash(\"C:\\\\Users\\\\axel\\\\.config\\\\herd\\\\bin\\\\php.bat\" artisan db:seed --class=NineDarterSeeder)"
     ]
   }
 }
