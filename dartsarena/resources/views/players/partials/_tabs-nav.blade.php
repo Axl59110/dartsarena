@@ -17,7 +17,7 @@
         🎯 9-Darters
         @if($nineDarters->count() > 0)
             <span style="margin-left:6px; display:inline-flex; align-items:center; justify-content:center;
-                         width:18px; height:18px; background:#a78bfa; color:white; border-radius:50%;
+                         width:18px; height:18px; background:#f59e0b; color:#0f172a; border-radius:50%;
                          font-size:10px; font-weight:700;">
                 {{ $nineDarters->count() }}
             </span>

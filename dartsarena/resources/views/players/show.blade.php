@@ -67,9 +67,16 @@
                 'chartSeasons' => $chartSeasons,
                 'chartAverages' => $chartAverages,
                 'chart180s' => $chart180s,
+                'chartWinRates' => $chartWinRates,
+                'nineDarters' => $nineDarters,
             ])
 
-            @include('players.partials._tab-palmares', ['player' => $player, 'latestRanking' => $latestRanking])
+            @include('players.partials._tab-palmares', [
+                'player' => $player,
+                'latestRanking' => $latestRanking,
+                'chartSeasons' => $chartSeasons,
+                'chartWinRates' => $chartWinRates,
+            ])
 
             @include('players.partials._tab-matchs', ['player' => $player, 'recentMatches' => $recentMatches, 'upcomingMatches' => $upcomingMatches])
 
