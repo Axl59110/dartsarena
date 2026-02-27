@@ -8,10 +8,10 @@
        aux variables Tailwind/CSS du thème global
        ============================================= */
 
-    /* Wrapper principal — isole le dark theme */
+    /* Wrapper principal */
     .player-page {
-        background-color: #0f172a;
-        color: #f1f5f9;
+        background-color: #f1f5f9;
+        color: #0f172a;
         min-height: 100vh;
     }
 
@@ -21,12 +21,10 @@
        ============================================= */
 
     .pg-tabs-content {
-        background-color: #f1f5f9;
-        border-radius: 12px;
-        padding: 28px;
+        padding: 28px 0;
     }
     @media (max-width: 640px) {
-        .pg-tabs-content { padding: 16px; }
+        .pg-tabs-content { padding: 16px 0; }
     }
 
     /* Dark card — blocs mis en avant, graphiques */

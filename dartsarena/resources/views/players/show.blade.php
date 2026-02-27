@@ -56,8 +56,7 @@
 
         @include('players.partials._tabs-nav')
 
-        <div style="margin-top:24px;">
-        <div class="pg-tabs-content">
+        <div class="pg-tabs-content" style="margin-top:24px;">
 
             @include('players.partials._tab-profil', ['player' => $player, 'latestRanking' => $latestRanking])
 
@@ -86,8 +85,6 @@
                 'currentEquipments' => $currentEquipments,
                 'previousEquipments' => $previousEquipments
             ])
-
-        </div>
 
         <div style="text-align:center; margin-top:32px; padding-bottom:48px;">
             <a href="{{ route('players.index') }}"
