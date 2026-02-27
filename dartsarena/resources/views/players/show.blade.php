@@ -57,6 +57,7 @@
         @include('players.partials._tabs-nav')
 
         <div style="margin-top:24px;">
+        <div class="pg-tabs-content">
 
             @include('players.partials._tab-profil', ['player' => $player, 'latestRanking' => $latestRanking])
 
@@ -70,7 +71,7 @@
 
             @include('players.partials._tab-palmares', ['player' => $player, 'latestRanking' => $latestRanking])
 
-            @include('players.partials._tab-matchs', ['player' => $player, 'recentMatches' => $recentMatches])
+            @include('players.partials._tab-matchs', ['player' => $player, 'recentMatches' => $recentMatches, 'upcomingMatches' => $upcomingMatches])
 
             @include('players.partials._tab-nine-darters', ['player' => $player, 'nineDarters' => $nineDarters])
 
@@ -79,18 +80,20 @@
                 'previousEquipments' => $previousEquipments
             ])
 
-            <div style="text-align:center; margin-top:48px;">
-                <a href="{{ route('players.index') }}"
-                   style="display:inline-flex; align-items:center; gap:10px; padding:14px 32px;
-                          background:#1e293b; color:#f1f5f9; border:1px solid #334155;
-                          border-radius:10px; font-family:'Archivo Black',sans-serif;
-                          font-size:14px; text-transform:uppercase; letter-spacing:0.05em;
-                          text-decoration:none; transition:background 0.15s, border-color 0.15s;"
-                   onmouseover="this.style.background='#ef4444';this.style.borderColor='#ef4444';"
-                   onmouseout="this.style.background='#1e293b';this.style.borderColor='#334155';">
-                    ← {{ __('Retour aux joueurs') }}
-                </a>
-            </div>
+        </div>
+
+        <div style="text-align:center; margin-top:32px; padding-bottom:48px;">
+            <a href="{{ route('players.index') }}"
+               style="display:inline-flex; align-items:center; gap:10px; padding:12px 28px;
+                      background:#1e293b; color:#f1f5f9; border:1px solid #334155;
+                      border-radius:8px; font-family:'JetBrains Mono',monospace;
+                      font-size:12px; text-transform:uppercase; letter-spacing:0.08em;
+                      text-decoration:none; transition:background 0.15s, border-color 0.15s;"
+               onmouseover="this.style.background='#ef4444';this.style.borderColor='#ef4444';"
+               onmouseout="this.style.background='#1e293b';this.style.borderColor='#334155';">
+                ← {{ __('Retour aux joueurs') }}
+            </a>
+        </div>
         </div>
     </div>
 

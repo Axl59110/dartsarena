@@ -23,7 +23,7 @@ class PlayerController extends Controller
             ->orderByDesc('recorded_at')
             ->first();
 
-        // Load recent matches (last 10) with opponents and season/competition
+        // Load recent matches (last 15) with opponents and season/competition
         $recentMatches = DartsMatch::where(function($query) use ($player) {
                 $query->where('player1_id', $player->id)
                       ->orWhere('player2_id', $player->id);
@@ -31,7 +31,19 @@ class PlayerController extends Controller
             ->with(['player1', 'player2', 'season.competition', 'winner'])
             ->whereNotNull('winner_id') // Only completed matches
             ->orderByDesc('scheduled_at')
-            ->limit(10)
+            ->limit(15)
+            ->get();
+
+        // Load upcoming matches (no winner yet, future date)
+        $upcomingMatches = DartsMatch::where(function($query) use ($player) {
+                $query->where('player1_id', $player->id)
+                      ->orWhere('player2_id', $player->id);
+            })
+            ->with(['player1', 'player2', 'season.competition'])
+            ->whereNull('winner_id')
+            ->where('scheduled_at', '>=', now())
+            ->orderBy('scheduled_at')
+            ->limit(5)
             ->get();
 
         // Calculate career stats from all matches
@@ -95,9 +107,10 @@ class PlayerController extends Controller
         }
         ksort($seasonStats);
         // Flatten for chart consumption
-        $chartSeasons = array_keys($seasonStats);
+        $chartSeasons  = array_keys($seasonStats);
         $chartAverages = array_map(fn($s) => $s['avg_count'] > 0 ? round($s['avg_sum'] / $s['avg_count'], 2) : 0, $seasonStats);
-        $chart180s = array_map(fn($s) => $s['total_180s'], $seasonStats);
+        $chart180s     = array_map(fn($s) => $s['total_180s'], $seasonStats);
+        $chartWinRates = array_map(fn($s) => $s['matches'] > 0 ? round($s['wins'] / $s['matches'] * 100, 1) : 0, $seasonStats);
 
         // Load equipment and nine darters data
         $currentEquipments = $player->equipments()->current()->get();
@@ -111,13 +124,15 @@ class PlayerController extends Controller
             'player',
             'latestRanking',
             'recentMatches',
+            'upcomingMatches',
             'careerStats',
             'currentEquipments',
             'previousEquipments',
             'nineDarters',
             'chartSeasons',
             'chartAverages',
-            'chart180s'
+            'chart180s',
+            'chartWinRates'
         ));
     }
 }
