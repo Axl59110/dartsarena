@@ -71,6 +71,7 @@
     padding: 20px;
     position: relative;
     overflow: hidden;
+    color: #f1f5f9;
 }
 .prof-sidebar-card::before {
     content: '';
@@ -105,7 +106,7 @@
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #94a3b8;
+    color: #ffffff;
     flex-shrink: 0;
 }
 .prof-info-val {
@@ -187,7 +188,7 @@
                 <span class="prof-rank-num">{{ $latestRanking->position }}</span>
             </div>
             <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem;
-                        text-transform:uppercase; letter-spacing:0.1em; color:#94a3b8;">
+                        text-transform:uppercase; letter-spacing:0.1em; color:#ffffff;">
                 {{ $latestRanking->federation->name ?? 'PDC' }} World Rankings
             </div>
         </div>

@@ -72,6 +72,8 @@
     }
     .pg-dark-card .pg-section-title { color: #94a3b8; }
     .pg-dark-card .pg-section-title::after { background: #1e293b; }
+    .prof-sidebar-card .pg-section-title { color: #ffffff; }
+    .prof-sidebar-card .pg-section-title::after { background: #1e293b; }
 
     /* Texte de corps */
     .pg-body-text {
