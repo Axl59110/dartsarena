@@ -130,13 +130,17 @@
                     Il totalise <span class="ts-stat-gold">{{ $t180s }}</span> 180{{ $t180s > 1 ? 's' : '' }} au cours de sa carrière professionnelle.
                 @endif
                 @if($nine > 0)
+                    @php
+                        $nineSuffix  = $nine > 1 ? 's' : '';
+                        $nineTvSuffix = $nineTv > 1 ? 's' : '';
+                    @endphp
                     Sa précision légendaire lui a permis d'inscrire
-                    <span class="ts-stat-gold">{{ $nine }}</span> nine-darter{{ $nine > 1 ? 's' : '' }} parfait{{ $nine > 1 ? 's' : '' }}@if($nineTv > 0),
-                    dont <span class="ts-stat-gold">{{ $nineTv }}</span> diffusé{{ $nineTv > 1 ? 's' : '' }} en direct à la télévision@endif.
+                    <span class="ts-stat-gold">{{ $nine }}</span> nine-darter{{ $nineSuffix }} parfait{{ $nineSuffix }}@if($nineTv > 0),
+                    dont <span class="ts-stat-gold">{{ $nineTv }}</span> diffusé{{ $nineTvSuffix }} en direct à la télévision@endif.
                 @endif
                 @if($titles > 0)
-                    Avec <span class="ts-stat-gold">{{ $titles }}</span> titre{{ $titles > 1 ? 's' : '' }} remporté{{ $titles > 1 ? 's' : '' }}@if($bestAvg > 0)
-                    et une meilleure moyenne enregistrée de <span class="ts-stat-gold">{{ $bestAvg }}</span>@endif,
+                    @php $avgPart = $bestAvg > 0 ? ' et une meilleure moyenne enregistrée de <span class="ts-stat-gold">'.$bestAvg.'</span>' : ''; @endphp
+                    Avec <span class="ts-stat-gold">{{ $titles }}</span> titre{{ $titles > 1 ? 's' : '' }} remporté{{ $titles > 1 ? 's' : '' }}{!! $avgPart !!},
                     {{ explode(' ', $player->full_name)[0] }} s'impose comme l'un des joueurs les plus performants de sa génération.
                 @endif
             @elseif($titles > 0 || $nine > 0)
@@ -146,8 +150,12 @@
                     Son palmarès compte <span class="ts-stat-gold">{{ $titles }}</span> titre{{ $titles > 1 ? 's' : '' }} en carrière.
                 @endif
                 @if($nine > 0)
-                    Il a réalisé <span class="ts-stat-gold">{{ $nine }}</span> nine-darter{{ $nine > 1 ? 's' : '' }} parfait{{ $nine > 1 ? 's' : '' }}@if($nineTv > 0),
-                    dont <span class="ts-stat-gold">{{ $nineTv }}</span> télévisé{{ $nineTv > 1 ? 's' : '' }}@endif.
+                    @php
+                        $nineSuffix2   = $nine > 1 ? 's' : '';
+                        $nineTvSuffix2 = $nineTv > 1 ? 's' : '';
+                        $tvPart = $nineTv > 0 ? ', dont <span class="ts-stat-gold">'.$nineTv.'</span> télévisé'.$nineTvSuffix2 : '';
+                    @endphp
+                    Il a réalisé <span class="ts-stat-gold">{{ $nine }}</span> nine-darter{{ $nineSuffix2 }} parfait{{ $nineSuffix2 }}{!! $tvPart !!}.
                 @endif
                 Les statistiques détaillées de matchs seront disponibles dès l'intégration des données de compétition.
             @else
