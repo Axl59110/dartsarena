@@ -70,7 +70,7 @@
         height: 1px;
         background: #e2e8f0;
     }
-    .pg-dark-card .pg-section-title { color: #475569; }
+    .pg-dark-card .pg-section-title { color: #64748b; }
     .pg-dark-card .pg-section-title::after { background: #1e293b; }
 
     /* Texte de corps */
@@ -80,6 +80,10 @@
         color: #475569;
         line-height: 1.85;
     }
+    .pg-dark-card .pg-body-text { color: #94a3b8; }
+
+    /* Règle globale : tout texte générique dans une dark card passe au clair */
+    .pg-dark-card .pg-mono-label { color: #64748b; }
 
     /* Grand chiffre impact */
     .pg-impact-num {

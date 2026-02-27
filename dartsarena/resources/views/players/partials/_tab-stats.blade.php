@@ -53,7 +53,7 @@
     font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #475569;
+    color: #64748b;
 }
 
 /* Records */
@@ -71,7 +71,7 @@
     gap: 10px;
     font-family: 'Inter Variable', 'Inter', -apple-system, sans-serif;
     font-size: 0.85rem;
-    color: #64748b;
+    color: #94a3b8;
 }
 .ts-record-icon {
     width: 32px; height: 32px;

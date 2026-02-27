@@ -105,7 +105,7 @@
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #475569;
+    color: #64748b;
     flex-shrink: 0;
 }
 .prof-info-val {
@@ -148,7 +148,7 @@
 .prof-social-handle {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.6rem;
-    color: #475569;
+    color: #64748b;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

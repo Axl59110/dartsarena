@@ -42,7 +42,7 @@
     font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #64748b;
+    color: #94a3b8;
 }
 
 /* Timeline light */
@@ -127,12 +127,12 @@
 
     {{-- 1. COMPTEUR HERO --}}
     <div class="pg-dark-card" style="padding: 40px 24px; text-align: center;">
-        <div class="pg-mono-label" style="color:#4b5563; margin-bottom:12px; letter-spacing:0.18em;">
+        <div class="pg-mono-label" style="color:#64748b; margin-bottom:12px; letter-spacing:0.18em;">
             DARTSARENA · PALMARÈS OFFICIEL
         </div>
         <div class="tp-counter-num" id="tpCounterNum">{{ $titles }}</div>
         <div style="font-family:'Inter Variable','Inter',sans-serif; font-size:0.85rem;
-                    color:#475569; margin-top:8px; text-transform:uppercase; letter-spacing:0.08em;">
+                    color:#94a3b8; margin-top:8px; text-transform:uppercase; letter-spacing:0.08em;">
             Titres Remportés en Carrière
         </div>
 

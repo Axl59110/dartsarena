@@ -240,10 +240,10 @@
 <div class="pg-dark-card" style="text-align:center; padding:56px 24px;">
     <div style="font-size:2.5rem; opacity:0.12; margin-bottom:16px;">⚙️</div>
     <div style="font-family:'Inter Tight Variable','Inter Tight',sans-serif;
-                font-weight:700; font-size:0.95rem; color:#334155; margin-bottom:8px;">
+                font-weight:700; font-size:0.95rem; color:#94a3b8; margin-bottom:8px;">
         Aucun Équipement Référencé
     </div>
-    <div class="pg-body-text" style="font-size:0.82rem; color:#475569; line-height:1.6;">
+    <div class="pg-body-text" style="font-size:0.82rem; color:#64748b; line-height:1.6;">
         Les informations sur l'équipement de ce joueur<br>seront disponibles prochainement.
     </div>
 </div>
