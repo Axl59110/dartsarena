@@ -68,8 +68,6 @@
                 'chart180s' => $chart180s,
             ])
 
-            @include('players.partials._tab-fortune')
-
             @include('players.partials._tab-palmares', ['player' => $player, 'latestRanking' => $latestRanking])
 
             @include('players.partials._tab-matchs', ['player' => $player, 'recentMatches' => $recentMatches])

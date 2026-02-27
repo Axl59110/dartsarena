@@ -6,9 +6,6 @@
     <button @click="activeTab = 'stats'" :class="activeTab === 'stats' ? 'pg-tab active' : 'pg-tab'" role="tab">
         Stats
     </button>
-    <button @click="activeTab = 'fortune'" :class="activeTab === 'fortune' ? 'pg-tab active' : 'pg-tab'" role="tab">
-        💰 {{ __('Fortune') }}
-    </button>
     <button @click="activeTab = 'palmares'" :class="activeTab === 'palmares' ? 'pg-tab active' : 'pg-tab'" role="tab">
         🏆 {{ __('Palmarès') }}
     </button>
@@ -20,7 +17,7 @@
         🎯 9-Darters
         @if($nineDarters->count() > 0)
             <span style="margin-left:6px; display:inline-flex; align-items:center; justify-content:center;
-                         width:18px; height:18px; background:#ef4444; color:white; border-radius:50%;
+                         width:18px; height:18px; background:#a78bfa; color:white; border-radius:50%;
                          font-size:10px; font-weight:700;">
                 {{ $nineDarters->count() }}
             </span>
