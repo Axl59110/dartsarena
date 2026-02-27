@@ -117,53 +117,63 @@
 <div style="display: flex; flex-direction: column; gap: 20px;">
 
     {{-- 1. TEXTE NARRATIF --}}
+    @php
+        $r = fn($v) => '<span class="ts-stat-red">'.$v.'</span>';
+        $g = fn($v) => '<span class="ts-stat-gold">'.$v.'</span>';
+        $pl = $player->full_name;
+        $nick = $player->nickname ? ' (« '.$player->nickname.' »)' : '';
+        $prenom = explode(' ', $pl)[0];
+        $nat = $player->nationality ? ' de nationalité <strong>'.$player->nationality.'</strong>' : '';
+        $natOrig = $player->nationality ? ' originaire de <strong>'.$player->nationality.'</strong>' : '';
+        $nineSfx  = $nine > 1 ? 's' : '';
+        $tvSfx    = $nineTv > 1 ? 's' : '';
+
+        if ($total > 0) {
+            $narrative  = '<strong>'.$pl.'</strong>'.$nick;
+            $narrative .= ' a disputé '.$r($total).' match'.($total>1?'s':'');
+            $narrative .= ' en carrière professionnelle, pour '.$r($wins).' victoire'.($wins>1?'s':'');
+            $narrative .= ' et '.$r($losses).' défaite'.($losses>1?'s':'');
+            $narrative .= ' — soit un taux de victoire de '.$r($wr.'%').'.';
+            if ($t180s > 0) {
+                $narrative .= ' Il totalise '.$g($t180s).' 180'.($t180s>1?'s':'').' au cours de sa carrière professionnelle.';
+            }
+            if ($nine > 0) {
+                $narrative .= ' Sa précision légendaire lui a permis d\'inscrire '.$g($nine).' nine-darter'.$nineSfx.' parfait'.$nineSfx;
+                if ($nineTv > 0) {
+                    $narrative .= ', dont '.$g($nineTv).' diffusé'.$tvSfx.' en direct à la télévision';
+                }
+                $narrative .= '.';
+            }
+            if ($titles > 0) {
+                $narrative .= ' Avec '.$g($titles).' titre'.($titles>1?'s':'').' remporté'.($titles>1?'s':'');
+                if ($bestAvg > 0) {
+                    $narrative .= ' et une meilleure moyenne enregistrée de '.$g($bestAvg);
+                }
+                $narrative .= ', '.$prenom.' s\'impose comme l\'un des joueurs les plus performants de sa génération.';
+            }
+        } elseif ($titles > 0 || $nine > 0) {
+            $narrative  = '<strong>'.$pl.'</strong>'.$nick;
+            $narrative .= ' est un joueur professionnel'.$nat.'.';
+            if ($titles > 0) {
+                $narrative .= ' Son palmarès compte '.$g($titles).' titre'.($titles>1?'s':'').' en carrière.';
+            }
+            if ($nine > 0) {
+                $narrative .= ' Il a réalisé '.$g($nine).' nine-darter'.$nineSfx.' parfait'.$nineSfx;
+                if ($nineTv > 0) {
+                    $narrative .= ', dont '.$g($nineTv).' télévisé'.$tvSfx;
+                }
+                $narrative .= '.';
+            }
+            $narrative .= ' Les statistiques détaillées de matchs seront disponibles dès l\'intégration des données de compétition.';
+        } else {
+            $narrative  = '<strong>'.$pl.'</strong>';
+            $narrative .= ' est un joueur professionnel de fléchettes'.$natOrig.'.';
+            $narrative .= ' Les statistiques de carrière seront disponibles prochainement via l\'intégration des données officielles PDC.';
+        }
+    @endphp
     <div class="pg-light-card" style="padding: 28px 32px;">
         <div class="pg-section-title">Résumé de Carrière</div>
-        <p class="ts-narrative">
-            @if($total > 0)
-                <strong>{{ $player->full_name }}</strong>{{ $player->nickname ? ' (« '.$player->nickname.' »)' : '' }}
-                a disputé <span class="ts-stat-red">{{ $total }}</span> match{{ $total > 1 ? 's' : '' }}
-                en carrière professionnelle, pour <span class="ts-stat-red">{{ $wins }}</span> victoire{{ $wins > 1 ? 's' : '' }}
-                et <span class="ts-stat-red">{{ $losses }}</span> défaite{{ $losses > 1 ? 's' : '' }}
-                — soit un taux de victoire de <span class="ts-stat-red">{{ $wr }}%</span>.
-                @if($t180s > 0)
-                    Il totalise <span class="ts-stat-gold">{{ $t180s }}</span> 180{{ $t180s > 1 ? 's' : '' }} au cours de sa carrière professionnelle.
-                @endif
-                @if($nine > 0)
-                    @php
-                        $nineSuffix  = $nine > 1 ? 's' : '';
-                        $nineTvSuffix = $nineTv > 1 ? 's' : '';
-                    @endphp
-                    Sa précision légendaire lui a permis d'inscrire
-                    <span class="ts-stat-gold">{{ $nine }}</span> nine-darter{{ $nineSuffix }} parfait{{ $nineSuffix }}@if($nineTv > 0),
-                    dont <span class="ts-stat-gold">{{ $nineTv }}</span> diffusé{{ $nineTvSuffix }} en direct à la télévision@endif.
-                @endif
-                @if($titles > 0)
-                    @php $avgPart = $bestAvg > 0 ? ' et une meilleure moyenne enregistrée de <span class="ts-stat-gold">'.$bestAvg.'</span>' : ''; @endphp
-                    Avec <span class="ts-stat-gold">{{ $titles }}</span> titre{{ $titles > 1 ? 's' : '' }} remporté{{ $titles > 1 ? 's' : '' }}{!! $avgPart !!},
-                    {{ explode(' ', $player->full_name)[0] }} s'impose comme l'un des joueurs les plus performants de sa génération.
-                @endif
-            @elseif($titles > 0 || $nine > 0)
-                <strong>{{ $player->full_name }}</strong>{{ $player->nickname ? ' (« '.$player->nickname.' »)' : '' }}
-                est un joueur professionnel@if($player->nationality) de nationalité <strong>{{ $player->nationality }}</strong>@endif.
-                @if($titles > 0)
-                    Son palmarès compte <span class="ts-stat-gold">{{ $titles }}</span> titre{{ $titles > 1 ? 's' : '' }} en carrière.
-                @endif
-                @if($nine > 0)
-                    @php
-                        $nineSuffix2   = $nine > 1 ? 's' : '';
-                        $nineTvSuffix2 = $nineTv > 1 ? 's' : '';
-                        $tvPart = $nineTv > 0 ? ', dont <span class="ts-stat-gold">'.$nineTv.'</span> télévisé'.$nineTvSuffix2 : '';
-                    @endphp
-                    Il a réalisé <span class="ts-stat-gold">{{ $nine }}</span> nine-darter{{ $nineSuffix2 }} parfait{{ $nineSuffix2 }}{!! $tvPart !!}.
-                @endif
-                Les statistiques détaillées de matchs seront disponibles dès l'intégration des données de compétition.
-            @else
-                <strong>{{ $player->full_name }}</strong>
-                est un joueur professionnel de fléchettes@if($player->nationality) originaire de <strong>{{ $player->nationality }}</strong>@endif.
-                Les statistiques de carrière seront disponibles prochainement via l'intégration des données officielles PDC.
-            @endif
-        </p>
+        <p class="ts-narrative">{!! $narrative !!}</p>
     </div>
 
     {{-- 2. SCOREBOARD CARRIÈRE --}}
