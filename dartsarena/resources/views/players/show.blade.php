@@ -83,7 +83,10 @@
             {{-- TAB: STATS --}}
             @include('players.partials._tab-stats', [
                 'player' => $player,
-                'careerStats' => $careerStats
+                'careerStats' => $careerStats,
+                'chartSeasons' => $chartSeasons,
+                'chartAverages' => $chartAverages,
+                'chart180s' => $chart180s,
             ])
 
             {{-- TAB: FORTUNE --}}

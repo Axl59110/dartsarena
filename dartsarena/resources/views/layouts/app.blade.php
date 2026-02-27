@@ -307,5 +307,6 @@
             opacity: 0.5;
         }
     </style>
+    @stack('scripts')
 </body>
 </html>

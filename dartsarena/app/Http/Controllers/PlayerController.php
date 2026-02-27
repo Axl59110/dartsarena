@@ -73,6 +73,32 @@ class PlayerController extends Controller
             'total_180s' => $total180s,
         ];
 
+        // Build stats grouped by season year for charts
+        $seasonStats = [];
+        foreach ($allMatches as $match) {
+            $year = $match->scheduled_at?->year ?? 'Unknown';
+            if (!isset($seasonStats[$year])) {
+                $seasonStats[$year] = ['matches' => 0, 'wins' => 0, 'avg_sum' => 0, 'avg_count' => 0, 'total_180s' => 0];
+            }
+            $seasonStats[$year]['matches']++;
+            if ($match->winner_id === $player->id) {
+                $seasonStats[$year]['wins']++;
+            }
+            $isP1 = $match->player1_id === $player->id;
+            $avg = $isP1 ? $match->player1_average : $match->player2_average;
+            $s180 = $isP1 ? $match->player1_180s : $match->player2_180s;
+            if ($avg) {
+                $seasonStats[$year]['avg_sum'] += $avg;
+                $seasonStats[$year]['avg_count']++;
+            }
+            $seasonStats[$year]['total_180s'] += $s180 ?? 0;
+        }
+        ksort($seasonStats);
+        // Flatten for chart consumption
+        $chartSeasons = array_keys($seasonStats);
+        $chartAverages = array_map(fn($s) => $s['avg_count'] > 0 ? round($s['avg_sum'] / $s['avg_count'], 2) : 0, $seasonStats);
+        $chart180s = array_map(fn($s) => $s['total_180s'], $seasonStats);
+
         // Load equipment and nine darters data
         $currentEquipments = $player->equipments()->current()->get();
         $previousEquipments = $player->equipments()->previous()->get();
@@ -88,7 +114,10 @@ class PlayerController extends Controller
             'careerStats',
             'currentEquipments',
             'previousEquipments',
-            'nineDarters'
+            'nineDarters',
+            'chartSeasons',
+            'chartAverages',
+            'chart180s'
         ));
     }
 }

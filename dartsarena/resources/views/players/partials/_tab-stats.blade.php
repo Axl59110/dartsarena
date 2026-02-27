@@ -65,9 +65,35 @@
                 </div>
             </div>
 
+            {{-- Chart: Évolution Moyenne par Saison --}}
+            @if(count($chartSeasons) > 1)
+            <div class="holo-card rounded-xl p-8">
+                <h2 class="font-gaming text-xl text-white mb-6 uppercase tracking-wider flex items-center gap-3">
+                    <span class="text-2xl">📈</span>
+                    {{ __('Évolution Moyenne par Saison') }}
+                </h2>
+                <div class="relative" style="height: 220px;">
+                    <canvas id="chartAverage-{{ $player->id }}"></canvas>
+                </div>
+            </div>
+            @endif
+
+            {{-- Chart: 180s par Saison --}}
+            @if(count($chartSeasons) > 1)
+            <div class="holo-card rounded-xl p-8">
+                <h2 class="font-gaming text-xl text-white mb-6 uppercase tracking-wider flex items-center gap-3">
+                    <span class="text-2xl">🔥</span>
+                    {{ __('180s par Saison') }}
+                </h2>
+                <div class="relative" style="height: 220px;">
+                    <canvas id="chart180s-{{ $player->id }}"></canvas>
+                </div>
+            </div>
+            @endif
+
         </div>
 
-        {{-- Comparison & Records Column --}}
+        {{-- Records Column --}}
         <div class="space-y-6">
             {{-- Career Highlights --}}
             <div class="holo-card rounded-xl p-6">
@@ -90,6 +116,137 @@
                 </div>
             </div>
 
+            {{-- Saisons disponibles --}}
+            @if(count($chartSeasons) > 0)
+            <div class="holo-card rounded-xl p-6">
+                <h3 class="font-gaming text-lg text-white mb-4 uppercase tracking-wider">{{ __('Par Saison') }}</h3>
+                <div class="space-y-2">
+                    @foreach(array_reverse($chartSeasons) as $idx => $season)
+                    @php
+                        $ridx = count($chartSeasons) - 1 - $idx;
+                        $avg = $chartAverages[$ridx] ?? 0;
+                        $s180 = $chart180s[$ridx] ?? 0;
+                    @endphp
+                    <div class="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+                        <span class="font-gaming text-lg text-slate-300">{{ $season }}</span>
+                        <div class="flex gap-4 text-sm font-mono">
+                            @if($avg)
+                                <span class="text-cyan-400">{{ $avg }}</span>
+                            @endif
+                            @if($s180)
+                                <span class="text-yellow-400">{{ $s180 }}×180</span>
+                            @endif
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
+
+@if(count($chartSeasons) > 1)
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+(function() {
+    const seasons = @json($chartSeasons);
+    const averages = @json($chartAverages);
+    const data180s = @json($chart180s);
+
+    const chartDefaults = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#1e293b',
+                borderColor: '#334155',
+                borderWidth: 1,
+                titleColor: '#f1f5f9',
+                bodyColor: '#94a3b8',
+                padding: 12,
+            }
+        },
+        scales: {
+            x: {
+                grid: { color: 'rgba(255,255,255,0.05)' },
+                ticks: { color: '#64748b', font: { family: 'monospace' } }
+            },
+            y: {
+                grid: { color: 'rgba(255,255,255,0.05)' },
+                ticks: { color: '#64748b', font: { family: 'monospace' } }
+            }
+        }
+    };
+
+    // Chart Moyenne
+    const ctxAvg = document.getElementById('chartAverage-{{ $player->id }}');
+    if (ctxAvg) {
+        new Chart(ctxAvg, {
+            type: 'line',
+            data: {
+                labels: seasons,
+                datasets: [{
+                    data: averages,
+                    borderColor: '#06b6d4',
+                    backgroundColor: 'rgba(6,182,212,0.1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#06b6d4',
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    fill: true,
+                    tension: 0.3,
+                }]
+            },
+            options: {
+                ...chartDefaults,
+                scales: {
+                    ...chartDefaults.scales,
+                    y: {
+                        ...chartDefaults.scales.y,
+                        suggestedMin: Math.max(0, Math.min(...averages.filter(v => v > 0)) - 5),
+                        suggestedMax: Math.max(...averages) + 5,
+                    }
+                }
+            }
+        });
+    }
+
+    // Chart 180s
+    const ctx180 = document.getElementById('chart180s-{{ $player->id }}');
+    if (ctx180) {
+        new Chart(ctx180, {
+            type: 'bar',
+            data: {
+                labels: seasons,
+                datasets: [{
+                    data: data180s,
+                    backgroundColor: 'rgba(245,158,11,0.7)',
+                    borderColor: '#f59e0b',
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    hoverBackgroundColor: 'rgba(245,158,11,0.9)',
+                }]
+            },
+            options: {
+                ...chartDefaults,
+                scales: {
+                    ...chartDefaults.scales,
+                    y: {
+                        ...chartDefaults.scales.y,
+                        beginAtZero: true,
+                        ticks: {
+                            ...chartDefaults.scales.y.ticks,
+                            stepSize: 1,
+                        }
+                    }
+                }
+            }
+        });
+    }
+})();
+</script>
+@endpush
+@endif
