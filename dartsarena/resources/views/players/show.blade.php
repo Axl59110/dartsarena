@@ -16,6 +16,7 @@
 @include('players.partials._styles')
 
 @section('content')
+    <div class="dark">
     {{-- Schema.org Person Markup --}}
     @php
         $schema = [
@@ -124,4 +125,5 @@
 
     {{-- VIDEO MODAL --}}
     @include('players.partials._video-modal')
+    </div>
 @endsection

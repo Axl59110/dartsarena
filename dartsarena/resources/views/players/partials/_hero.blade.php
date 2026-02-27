@@ -1,5 +1,5 @@
 {{-- HERO SECTION - Gaming Card Style --}}
-<section class="relative bg-gradient-to-b from-slate-900 via-slate-800 to-background overflow-hidden">
+<section class="relative overflow-hidden" style="background: linear-gradient(to bottom, #0f172a 0%, #1e293b 50%, oklch(14% 0.02 264) 100%);">
     {{-- Animated Background Pattern --}}
     <div class="absolute inset-0 opacity-10">
         <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);"></div>
