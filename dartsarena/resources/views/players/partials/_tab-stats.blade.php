@@ -65,59 +65,6 @@
                 </div>
             </div>
 
-            {{-- Player Attributes (Gaming Style) --}}
-            <div class="holo-card rounded-xl p-8">
-                <h2 class="font-gaming text-2xl text-white mb-8 uppercase tracking-wider flex items-center gap-3">
-                    <span class="text-3xl">⚡</span>
-                    {{ __('Attributs du Joueur') }}
-                </h2>
-
-                <div class="space-y-6">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-gaming text-lg text-slate-300">{{ __('Précision') }}</span>
-                            <span class="font-gaming text-xl text-primary">92</span>
-                        </div>
-                        <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                            <div class="stat-bar" style="width: 92%"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-gaming text-lg text-slate-300">{{ __('Régularité') }}</span>
-                            <span class="font-gaming text-xl text-primary">88</span>
-                        </div>
-                        <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                            <div class="stat-bar" style="width: 88%"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-gaming text-lg text-slate-300">{{ __('Finition') }}</span>
-                            <span class="font-gaming text-xl text-primary">85</span>
-                        </div>
-                        <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                            <div class="stat-bar" style="width: 85%"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-gaming text-lg text-slate-300">{{ __('Expérience') }}</span>
-                            <span class="font-gaming text-xl text-primary">78</span>
-                        </div>
-                        <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                            <div class="stat-bar" style="width: 78%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-6 text-xs text-slate-500 text-center italic font-mono">
-                    {{ __('Attributs calculés à partir des statistiques de carrière') }}
-                </div>
-            </div>
         </div>
 
         {{-- Comparison & Records Column --}}
@@ -143,34 +90,6 @@
                 </div>
             </div>
 
-            {{-- Player Level --}}
-            <div class="holo-card rounded-xl p-6">
-                <h3 class="font-gaming text-lg text-white mb-4 uppercase tracking-wider">{{ __('Niveau Joueur') }}</h3>
-                <div class="text-center mb-4">
-                    <div class="font-gaming text-6xl text-primary mb-2">
-                        {{ min(99, floor(($careerStats['total_matches'] ?? 0) / 5) + $player->career_titles * 2) }}
-                    </div>
-                    <div class="text-sm text-slate-400 font-mono uppercase tracking-widest">Level</div>
-                </div>
-                <div class="xp-bar-container h-4">
-                    <div class="xp-bar" style="width: 65%"></div>
-                </div>
-                <div class="flex justify-between text-xs text-slate-500 mt-2 font-mono">
-                    <span>{{ (($careerStats['total_matches'] ?? 0) * 100) }} XP</span>
-                    <span>Next: {{ ((floor(($careerStats['total_matches'] ?? 0) / 5) + 1) * 500) }} XP</span>
-                </div>
-            </div>
-
-            {{-- Placeholder: Form Graph --}}
-            <div class="holo-card rounded-xl p-6">
-                <h3 class="font-gaming text-lg text-white mb-4 uppercase tracking-wider">{{ __('Forme Récente') }}</h3>
-                <div class="h-32 flex items-end justify-between gap-1">
-                    @for($i = 0; $i < 10; $i++)
-                        <div class="flex-1 bg-gradient-to-t from-primary/50 to-primary rounded-t" style="height: {{ rand(40, 100) }}%"></div>
-                    @endfor
-                </div>
-                <div class="text-xs text-slate-500 text-center mt-4 font-mono">{{ __('Derniers 10 matchs') }}</div>
-            </div>
         </div>
     </div>
 </div>

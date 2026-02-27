@@ -120,54 +120,34 @@
                     </div>
                 </div>
 
-                {{-- Advanced Stats Bars --}}
+                {{-- Quick Career Highlights --}}
                 <div class="holo-card rounded-xl p-6">
-                    <h3 class="font-gaming text-lg text-white mb-6 uppercase tracking-wider">{{ __('Attributs du Joueur') }}</h3>
-
-                    <div class="space-y-5">
-                        {{-- Precision --}}
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm text-slate-300 font-mono uppercase tracking-wider">{{ __('Précision') }}</span>
-                                <span class="font-gaming text-lg text-primary">{{ min(99, ($careerStats['avg_average'] ?? 0)) }}</span>
-                            </div>
-                            <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                                <div class="stat-bar" style="width: {{ min(99, ($careerStats['avg_average'] ?? 0)) }}%"></div>
-                            </div>
+                    <h3 class="font-gaming text-lg text-white mb-6 uppercase tracking-wider">{{ __('Records Personnels') }}</h3>
+                    <div class="space-y-4">
+                        @if($player->career_highest_average)
+                        <div class="flex justify-between items-center py-3 border-b border-white/10">
+                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('Meilleure Moyenne') }}</span>
+                            <span class="font-gaming text-2xl text-amber-400">{{ $player->career_highest_average }}</span>
                         </div>
-
-                        {{-- Consistency --}}
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm text-slate-300 font-mono uppercase tracking-wider">{{ __('Régularité') }}</span>
-                                <span class="font-gaming text-lg text-blue-400">{{ $careerStats['win_rate'] ?? 0 }}</span>
-                            </div>
-                            <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                                <div class="stat-bar" style="width: {{ $careerStats['win_rate'] ?? 0 }}%; background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);"></div>
-                            </div>
+                        @endif
+                        @if($player->career_9darters > 0)
+                        <div class="flex justify-between items-center py-3 border-b border-white/10">
+                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('9-Darters') }}</span>
+                            <span class="font-gaming text-2xl text-purple-400">{{ $player->career_9darters }}</span>
                         </div>
-
-                        {{-- Finishing --}}
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm text-slate-300 font-mono uppercase tracking-wider">{{ __('Finition') }}</span>
-                                <span class="font-gaming text-lg text-green-400">{{ $careerStats['avg_checkout'] ?? 0 }}</span>
-                            </div>
-                            <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                                <div class="stat-bar" style="width: {{ $careerStats['avg_checkout'] ?? 0 }}%; background: linear-gradient(90deg, #10b981 0%, #34d399 100%);"></div>
-                            </div>
+                        @endif
+                        @if(isset($careerStats['avg_average']) && $careerStats['avg_average'])
+                        <div class="flex justify-between items-center py-3 border-b border-white/10">
+                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('Moyenne Carrière') }}</span>
+                            <span class="font-gaming text-2xl text-cyan-400">{{ $careerStats['avg_average'] }}</span>
                         </div>
-
-                        {{-- Experience (based on matches played) --}}
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm text-slate-300 font-mono uppercase tracking-wider">{{ __('Expérience') }}</span>
-                                <span class="font-gaming text-lg text-purple-400">{{ min(99, floor(($careerStats['total_matches'] ?? 0) / 10)) }}</span>
-                            </div>
-                            <div class="h-3 bg-slate-900 rounded-full overflow-hidden">
-                                <div class="stat-bar" style="width: {{ min(99, floor(($careerStats['total_matches'] ?? 0) / 10)) }}%; background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 100%);"></div>
-                            </div>
+                        @endif
+                        @if(isset($careerStats['avg_checkout']) && $careerStats['avg_checkout'])
+                        <div class="flex justify-between items-center py-3">
+                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('Checkout %') }}</span>
+                            <span class="font-gaming text-2xl text-green-400">{{ $careerStats['avg_checkout'] }}%</span>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>

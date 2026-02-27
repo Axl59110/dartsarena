@@ -16,40 +16,12 @@
                 </div>
             </div>
 
-            {{-- Placeholder: Trophy Timeline --}}
-            <div class="space-y-4">
-                <h3 class="font-gaming text-xl text-white mb-6 uppercase tracking-wider">{{ __('Chronologie des Victoires') }}</h3>
-
-                {{-- Sample trophies (to be replaced with real data) --}}
-                <div class="flex gap-4 items-center p-4 bg-slate-900/50 rounded-lg border border-white/10 hover:border-primary/50 transition-colors">
-                    <div class="text-4xl">🥇</div>
-                    <div class="flex-1">
-                        <div class="font-bold text-white text-lg">{{ __('World Championship') }}</div>
-                        <div class="text-sm text-slate-400">{{ __('Ally Pally, London') }}</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="font-gaming text-primary text-xl">2024</div>
-                        <div class="text-xs text-slate-500 font-mono">£500,000</div>
-                    </div>
-                </div>
-
-                <div class="flex gap-4 items-center p-4 bg-slate-900/50 rounded-lg border border-white/10 hover:border-primary/50 transition-colors">
-                    <div class="text-4xl">🥈</div>
-                    <div class="flex-1">
-                        <div class="font-bold text-white text-lg">{{ __('Premier League') }}</div>
-                        <div class="text-sm text-slate-400">{{ __('PDC Circuit') }}</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="font-gaming text-primary text-xl">2024</div>
-                        <div class="text-xs text-slate-500 font-mono">£275,000</div>
-                    </div>
-                </div>
-
-                <div class="text-center py-8">
-                    <div class="text-slate-500 italic font-mono text-sm">
-                        {{ __('Le détail complet des titres par compétition sera bientôt disponible.') }}
-                    </div>
-                </div>
+            {{-- Placeholder: réel palmarès à venir --}}
+            <div class="mt-8 p-6 bg-slate-900/50 rounded-xl border border-white/10 text-center">
+                <div class="text-4xl mb-4 opacity-60">📅</div>
+                <p class="text-slate-400 font-mono text-sm leading-relaxed max-w-lg mx-auto">
+                    {{ __('La chronologie détaillée des victoires par compétition sera disponible prochainement via les APIs officielles.') }}
+                </p>
             </div>
         @else
             <div class="text-center py-12">
