@@ -70,7 +70,7 @@
 
             @include('players.partials._tab-fortune')
 
-            @include('players.partials._tab-palmares', ['player' => $player])
+            @include('players.partials._tab-palmares', ['player' => $player, 'latestRanking' => $latestRanking])
 
             @include('players.partials._tab-matchs', ['player' => $player, 'recentMatches' => $recentMatches])
 
