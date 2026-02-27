@@ -1,77 +1,100 @@
 {{-- TAB CONTENT: NINE DARTERS --}}
 <div x-show="activeTab === 'nine-darters'" x-transition role="tabpanel">
     @if($nineDarters->count() > 0)
-        <div class="holo-card rounded-xl p-8">
-            <h2 class="font-gaming text-2xl text-white mb-8 uppercase tracking-wider flex items-center gap-3">
-                <span class="text-3xl">🎯</span>
-                {{ __('9-Darters Parfaits') }}
-                <span class="ml-auto font-gaming text-4xl text-primary">{{ $nineDarters->count() }}</span>
+        <div class="pg-card" style="padding:32px;">
+            <h2 style="font-family:'Archivo Black',sans-serif; font-size:1.2rem; color:#f1f5f9;
+                       text-transform:uppercase; letter-spacing:0.06em; margin:0 0 24px;
+                       display:flex; align-items:center; justify-content:space-between;">
+                <span style="display:flex; align-items:center; gap:10px;">
+                    🎯 {{ __('9-Darters Parfaits') }}
+                </span>
+                <span style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:#ef4444;">
+                    {{ $nineDarters->count() }}
+                </span>
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:20px;">
                 @foreach($nineDarters as $nineDarter)
-                    <div class="holo-card rounded-xl overflow-hidden group cursor-pointer"
-                         @click="videoModal.open('{{ $nineDarter->getYouTubeEmbedUrl() }}', '9-Darter #{{ $nineDarter->order_number }}')">
-                        {{-- Thumbnail --}}
-                        <div class="relative aspect-video bg-slate-900 overflow-hidden">
-                            @if($nineDarter->getVideoThumbnailUrl())
-                                <img
-                                    src="{{ $nineDarter->getVideoThumbnailUrl() }}"
-                                    alt="9-Darter #{{ $nineDarter->order_number }}"
-                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                                />
-                            @endif
+                <div class="nine-darter-card"
+                     @if($nineDarter->getYouTubeEmbedUrl())
+                     style="cursor:pointer;"
+                     @click="videoModal.open('{{ $nineDarter->getYouTubeEmbedUrl() }}', '9-Darter #{{ $nineDarter->order_number }}')"
+                     @endif>
 
-                            {{-- Play Button Overlay --}}
-                            <div class="absolute inset-0 bg-black/50 flex items-center justify-center group-hover:bg-black/30 transition-colors">
-                                <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
-                                    </svg>
-                                </div>
+                    {{-- Thumbnail --}}
+                    <div style="position:relative; aspect-ratio:16/9; background:#0f172a; overflow:hidden;">
+                        @if($nineDarter->getVideoThumbnailUrl())
+                            <img src="{{ $nineDarter->getVideoThumbnailUrl() }}"
+                                 alt="9-Darter #{{ $nineDarter->order_number }}"
+                                 style="width:100%; height:100%; object-fit:cover;"
+                                 loading="lazy">
+                        @else
+                            <div style="width:100%; height:100%; display:flex; align-items:center;
+                                        justify-content:center; font-size:3rem; opacity:0.2;">🎯</div>
+                        @endif
+
+                        {{-- Overlay play --}}
+                        @if($nineDarter->getYouTubeEmbedUrl())
+                        <div style="position:absolute; inset:0; background:rgba(0,0,0,0.45);
+                                    display:flex; align-items:center; justify-content:center;">
+                            <div style="width:52px; height:52px; background:#ef4444; border-radius:50%;
+                                        display:flex; align-items:center; justify-content:center;">
+                                <svg width="22" height="22" fill="white" viewBox="0 0 20 20" style="margin-left:3px;">
+                                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                                </svg>
                             </div>
+                        </div>
+                        @endif
 
-                            {{-- Order Badge --}}
-                            <div class="absolute top-3 left-3 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg">
-                                <span class="font-gaming text-white text-lg">#{{ $nineDarter->order_number }}</span>
-                            </div>
-
-                            @if($nineDarter->on_tv)
-                                <div class="absolute top-3 right-3 px-3 py-1 bg-red-600 rounded-full text-white text-xs font-bold uppercase tracking-wider">
-                                    📺 TV
-                                </div>
-                            @endif
+                        {{-- Badge numéro --}}
+                        <div style="position:absolute; top:10px; left:10px;
+                                    background:linear-gradient(90deg,#f59e0b,#ea580c);
+                                    border-radius:6px; padding:4px 12px;">
+                            <span style="font-family:'Archivo Black',sans-serif; color:white; font-size:0.9rem;">
+                                #{{ $nineDarter->order_number }}
+                            </span>
                         </div>
 
-                        {{-- Info --}}
-                        <div class="p-4">
-                            <div class="font-bold text-white mb-2">
-                                {{ $nineDarter->competition->name ?? __('Compétition') }}
-                            </div>
+                        @if($nineDarter->on_tv)
+                        <div style="position:absolute; top:10px; right:10px;
+                                    background:#ef4444; border-radius:9999px;
+                                    padding:3px 10px; font-size:11px; color:white; font-weight:700;">
+                            📺 TV
+                        </div>
+                        @endif
+                    </div>
 
-                            @if($nineDarter->match)
-                                <div class="text-sm text-slate-400 mb-3">
-                                    {{ __('vs') }}
-                                    {{ $nineDarter->match->player1_id === $player->id ? $nineDarter->match->player2->full_name : $nineDarter->match->player1->full_name }}
-                                </div>
+                    {{-- Infos --}}
+                    <div style="padding:14px 16px;">
+                        <div style="font-family:'Archivo Black',sans-serif; font-size:0.95rem; color:#f1f5f9; margin-bottom:6px;">
+                            {{ $nineDarter->competition->name ?? __('Compétition') }}
+                        </div>
+                        @if($nineDarter->match)
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#94a3b8; margin-bottom:8px;">
+                            vs {{ $nineDarter->match->player1_id === $player->id
+                                ? $nineDarter->match->player2->full_name
+                                : $nineDarter->match->player1->full_name }}
+                        </div>
+                        @endif
+                        <div style="display:flex; justify-content:space-between; align-items:center;
+                                    font-family:'JetBrains Mono',monospace; font-size:11px; color:#64748b;">
+                            <span>{{ $nineDarter->achieved_at?->format('d/m/Y') ?? '—' }}</span>
+                            @if($nineDarter->getYouTubeEmbedUrl())
+                            <span style="color:#ef4444; font-weight:700; font-size:11px;">{{ __('Voir') }} →</span>
                             @endif
-
-                            <div class="flex items-center justify-between text-xs text-slate-500 font-mono">
-                                <span>{{ $nineDarter->achieved_at ? $nineDarter->achieved_at->format('d/m/Y') : '-' }}</span>
-                                <span class="text-primary font-bold uppercase">{{ __('Voir vidéo') }} →</span>
-                            </div>
                         </div>
                     </div>
+                </div>
                 @endforeach
             </div>
         </div>
     @else
-        <div class="holo-card rounded-xl p-12 text-center">
-            <div class="text-6xl mb-4 opacity-20">🎯</div>
-            <h2 class="font-gaming text-2xl text-white mb-3">
+        <div class="pg-card" style="padding:48px; text-align:center;">
+            <div style="font-size:3rem; opacity:0.15; margin-bottom:12px;">🎯</div>
+            <h2 style="font-family:'Archivo Black',sans-serif; font-size:1.2rem; color:#f1f5f9; margin:0 0 8px;">
                 {{ __('Aucun 9-Darter Enregistré') }}
             </h2>
-            <p class="text-slate-500 italic">
+            <p style="color:#475569; font-style:italic; margin:0;">
                 {{ __('Les 9-darters parfaits de ce joueur seront affichés ici.') }}
             </p>
         </div>

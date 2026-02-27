@@ -1,156 +1,186 @@
-{{-- HERO SECTION - Gaming Card Style --}}
-<section class="relative overflow-hidden" style="background: linear-gradient(to bottom, #0f172a 0%, #1e293b 50%, oklch(14% 0.02 264) 100%);">
-    {{-- Animated Background Pattern --}}
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.03) 35px, rgba(255,255,255,.03) 70px);"></div>
-    </div>
+{{-- HERO SECTION --}}
+<div class="player-hero">
+    <div style="max-width:1280px; margin:0 auto; padding:48px 16px;">
+        <div style="display:grid; grid-template-columns:1fr; gap:32px; align-items:start;">
 
-    <div class="container relative z-10 py-12 lg:py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {{-- Layout desktop: carte gauche + dashboard droit --}}
+            <style>
+                @media (min-width: 1024px) {
+                    .hero-grid { grid-template-columns: 340px 1fr !important; }
+                }
+            </style>
+            <div class="hero-grid" style="display:grid; grid-template-columns:1fr; gap:32px; align-items:start;">
 
-            {{-- LEFT: Player Card --}}
-            <div class="lg:col-span-4">
-                <div class="holo-card rounded-2xl p-8 text-center">
-                    {{-- Photo with Holographic Border --}}
-                    <div class="relative inline-block mb-6">
-                        @if($player->photo_url)
-                            <div class="relative w-48 h-48 mx-auto">
-                                <div class="absolute inset-0 bg-gradient-to-br from-primary/30 via-purple-500/30 to-pink-500/30 rounded-full animate-spin-slow"></div>
-                                <img
-                                    src="{{ $player->photo_url }}"
-                                    alt="{{ $player->full_name }}"
-                                    loading="lazy"
-                                    class="relative w-full h-full rounded-full object-cover border-4 border-background shadow-2xl"
-                                />
-                            </div>
-                        @else
-                            <div class="w-48 h-48 mx-auto bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center border-4 border-background shadow-2xl">
-                                <span class="font-gaming text-6xl text-primary">
-                                    {{ strtoupper(substr($player->first_name, 0, 1)) }}{{ strtoupper(substr($player->last_name, 0, 1)) }}
-                                </span>
-                            </div>
-                        @endif
+                {{-- GAUCHE : Carte joueur --}}
+                <div class="player-card-left" style="padding:32px 24px; text-align:center;">
 
-                        {{-- Rank Badge --}}
+                    {{-- Photo --}}
+                    <div style="position:relative; display:inline-block; margin-bottom:24px;">
+                        <div class="player-photo-ring">
+                            @if($player->photo_url)
+                                <img src="{{ $player->photo_url }}" alt="{{ $player->full_name }}" loading="eager">
+                            @else
+                                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#0f172a;">
+                                    <span style="font-family:'Archivo Black',sans-serif; font-size:3rem; color:#ef4444;">
+                                        {{ strtoupper(substr($player->first_name,0,1)) }}{{ strtoupper(substr($player->last_name,0,1)) }}
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Badge rang --}}
                         @if($latestRanking)
-                            <div class="rank-badge absolute -bottom-3 left-1/2 -translate-x-1/2 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full border-4 border-background">
-                                <span class="font-gaming text-2xl text-white">#{{ $latestRanking->position }}</span>
-                            </div>
+                        <div class="rank-badge rank-badge-glow"
+                             style="position:absolute; bottom:-12px; left:50%; transform:translateX(-50%);">
+                            <span style="font-family:'Archivo Black',sans-serif; font-size:1.1rem; color:#fff;">
+                                #{{ $latestRanking->position }}
+                            </span>
+                        </div>
                         @endif
                     </div>
 
-                    {{-- Player Name --}}
-                    <h1 class="font-gaming text-3xl xl:text-4xl text-white mb-2 tracking-tight leading-tight">
+                    {{-- Nom --}}
+                    <h1 style="font-family:'Archivo Black',sans-serif; font-size:1.75rem; color:#f1f5f9;
+                               line-height:1.1; margin:0 0 8px; margin-top:8px;">
                         {{ $player->full_name }}
                     </h1>
 
                     @if($player->nickname)
-                        <p class="text-primary text-xl font-bold italic mb-4 tracking-wide">
-                            "{{ $player->nickname }}"
-                        </p>
+                    <p style="color:#ef4444; font-size:1.1rem; font-style:italic; margin:0 0 16px;">
+                        "{{ $player->nickname }}"
+                    </p>
                     @endif
 
-                    {{-- Country & Age --}}
-                    <div class="flex items-center justify-center gap-3 mb-6 text-slate-300">
+                    {{-- Pays + âge --}}
+                    <div style="display:flex; align-items:center; justify-content:center; gap:10px;
+                                color:#94a3b8; margin-bottom:24px; flex-wrap:wrap;">
                         @if($player->country_code)
-                            <span class="text-3xl">{{ \Illuminate\Support\Str::upper($player->country_code) === 'GB' ? '🇬🇧' : '🌍' }}</span>
-                            <span class="font-medium">{{ $player->nationality }}</span>
+                            @php
+                                $flags = ['GB'=>'🇬🇧','EN'=>'🏴󠁧󠁢󠁥󠁮󠁧󠁿','NL'=>'🇳🇱','AU'=>'🇦🇺','BE'=>'🇧🇪','DE'=>'🇩🇪','IE'=>'🇮🇪','US'=>'🇺🇸','WA'=>'🏴󠁧󠁢󠁷󠁬󠁳󠁿'];
+                                $flagEmoji = $flags[strtoupper($player->country_code)] ?? '🌍';
+                            @endphp
+                            <span style="font-size:1.5rem;">{{ $flagEmoji }}</span>
+                            <span style="font-size:0.9rem; font-weight:600;">{{ $player->nationality }}</span>
                         @endif
-
                         @if($player->date_of_birth)
-                            <span class="text-slate-500">•</span>
-                            <span>{{ $player->date_of_birth->age }} {{ __('ans') }}</span>
+                            <span style="color:#475569;">•</span>
+                            <span style="font-size:0.9rem;">{{ $player->date_of_birth->age }} {{ __('ans') }}</span>
                         @endif
                     </div>
 
-                    {{-- Quick Stats Row --}}
-                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
-                        <div class="text-center">
-                            <div class="font-gaming text-3xl text-amber-400 mb-1">{{ $player->career_titles }}</div>
-                            <div class="text-xs text-slate-400 uppercase tracking-wider">{{ __('Titres') }}</div>
+                    {{-- Stats rapides --}}
+                    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+                                padding-top:20px; border-top:1px solid #334155;">
+                        <div style="text-align:center;">
+                            <div style="font-family:'Archivo Black',sans-serif; font-size:1.75rem; color:#f59e0b; line-height:1;">
+                                {{ $player->career_titles }}
+                            </div>
+                            <div style="font-size:10px; color:#64748b; text-transform:uppercase;
+                                        letter-spacing:0.05em; margin-top:4px; font-family:'JetBrains Mono',monospace;">
+                                {{ __('Titres') }}
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <div class="font-gaming text-3xl text-purple-400 mb-1">{{ $player->career_9darters }}</div>
-                            <div class="text-xs text-slate-400 uppercase tracking-wider">9-Darters</div>
+                        <div style="text-align:center;">
+                            <div style="font-family:'Archivo Black',sans-serif; font-size:1.75rem; color:#a78bfa; line-height:1;">
+                                {{ $player->career_9darters }}
+                            </div>
+                            <div style="font-size:10px; color:#64748b; text-transform:uppercase;
+                                        letter-spacing:0.05em; margin-top:4px; font-family:'JetBrains Mono',monospace;">
+                                9-Darters
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <div class="font-gaming text-3xl text-blue-400 mb-1">{{ number_format($player->career_highest_average, 2) }}</div>
-                            <div class="text-xs text-slate-400 uppercase tracking-wider">{{ __('Best Avg') }}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- RIGHT: Stats Dashboard --}}
-            <div class="lg:col-span-8 space-y-6">
-                {{-- Performance Metrics Grid --}}
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="holo-card rounded-xl p-5">
-                        <div class="text-xs text-slate-400 uppercase tracking-widest mb-2 font-mono">{{ __('Win Rate') }}</div>
-                        <div class="font-gaming text-4xl text-green-400 mb-2">{{ $careerStats['win_rate'] ?? 0 }}%</div>
-                        <div class="xp-bar-container h-2">
-                            <div class="xp-bar" style="width: {{ $careerStats['win_rate'] ?? 0 }}%"></div>
-                        </div>
-                    </div>
-
-                    <div class="holo-card rounded-xl p-5">
-                        <div class="text-xs text-slate-400 uppercase tracking-widest mb-2 font-mono">{{ __('Matchs') }}</div>
-                        <div class="font-gaming text-4xl text-white mb-2">{{ $careerStats['total_matches'] ?? 0 }}</div>
-                        <div class="text-sm text-slate-400 font-mono">
-                            <span class="text-green-400">{{ $careerStats['wins'] ?? 0 }}W</span>
-                            <span class="text-slate-600 mx-1">-</span>
-                            <span class="text-red-400">{{ $careerStats['losses'] ?? 0 }}L</span>
-                        </div>
-                    </div>
-
-                    <div class="holo-card rounded-xl p-5">
-                        <div class="text-xs text-slate-400 uppercase tracking-widest mb-2 font-mono">{{ __('Average') }}</div>
-                        <div class="font-gaming text-4xl text-cyan-400 mb-2">{{ $careerStats['avg_average'] ?? '-' }}</div>
-                        <div class="comparison-meter">
-                            <div class="comparison-indicator" style="left: 70%"></div>
-                        </div>
-                    </div>
-
-                    <div class="holo-card rounded-xl p-5">
-                        <div class="text-xs text-slate-400 uppercase tracking-widest mb-2 font-mono">{{ __('Total 180s') }}</div>
-                        <div class="font-gaming text-4xl text-yellow-400 mb-2">{{ $careerStats['total_180s'] ?? 0 }}</div>
-                        <div class="text-sm text-slate-400 font-mono">
-                            {{ __('Checkout') }} {{ $careerStats['avg_checkout'] ?? 0 }}%
+                        <div style="text-align:center;">
+                            <div style="font-family:'Archivo Black',sans-serif; font-size:1.6rem; color:#60a5fa; line-height:1;">
+                                {{ $player->career_highest_average > 0 ? number_format($player->career_highest_average, 2) : '—' }}
+                            </div>
+                            <div style="font-size:10px; color:#64748b; text-transform:uppercase;
+                                        letter-spacing:0.05em; margin-top:4px; font-family:'JetBrains Mono',monospace;">
+                                Best Avg
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Quick Career Highlights --}}
-                <div class="holo-card rounded-xl p-6">
-                    <h3 class="font-gaming text-lg text-white mb-6 uppercase tracking-wider">{{ __('Records Personnels') }}</h3>
-                    <div class="space-y-4">
-                        @if($player->career_highest_average)
-                        <div class="flex justify-between items-center py-3 border-b border-white/10">
-                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('Meilleure Moyenne') }}</span>
-                            <span class="font-gaming text-2xl text-amber-400">{{ $player->career_highest_average }}</span>
+                {{-- DROITE : Dashboard stats --}}
+                <div style="display:flex; flex-direction:column; gap:16px;">
+
+                    {{-- 4 KPI cards --}}
+                    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px;">
+                        <style>@media(min-width:640px){ .kpi-grid { grid-template-columns:repeat(4,1fr) !important; } }</style>
+
+                        <div class="kpi-grid" style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px; grid-column:1/-1;">
+                            <div class="kpi-card">
+                                <div class="kpi-label">Win Rate</div>
+                                <div class="kpi-value pg-text-green">{{ $careerStats['win_rate'] ?? 0 }}%</div>
+                                <div class="pg-bar-track">
+                                    <div class="pg-bar-fill" style="width:{{ $careerStats['win_rate'] ?? 0 }}%; background:#10b981;"></div>
+                                </div>
+                            </div>
+
+                            <div class="kpi-card">
+                                <div class="kpi-label">{{ __('Matchs') }}</div>
+                                <div class="kpi-value pg-text-primary">{{ $careerStats['total_matches'] ?? 0 }}</div>
+                                <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#64748b;">
+                                    <span style="color:#10b981;">{{ $careerStats['wins'] ?? 0 }}W</span>
+                                    <span style="color:#475569; margin:0 4px;">—</span>
+                                    <span style="color:#ef4444;">{{ $careerStats['losses'] ?? 0 }}L</span>
+                                </div>
+                            </div>
+
+                            <div class="kpi-card">
+                                <div class="kpi-label">Average</div>
+                                <div class="kpi-value pg-text-cyan">{{ $careerStats['avg_average'] ?? '—' }}</div>
+                                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#64748b;">
+                                    {{ __('Carrière') }}
+                                </div>
+                            </div>
+
+                            <div class="kpi-card">
+                                <div class="kpi-label">Total 180s</div>
+                                <div class="kpi-value pg-text-yellow">{{ $careerStats['total_180s'] ?? 0 }}</div>
+                                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#64748b;">
+                                    CO% {{ $careerStats['avg_checkout'] ?? 0 }}%
+                                </div>
+                            </div>
                         </div>
-                        @endif
-                        @if($player->career_9darters > 0)
-                        <div class="flex justify-between items-center py-3 border-b border-white/10">
-                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('9-Darters') }}</span>
-                            <span class="font-gaming text-2xl text-purple-400">{{ $player->career_9darters }}</span>
+                    </div>
+
+                    {{-- Records personnels --}}
+                    <div class="pg-card" style="padding:20px 24px;">
+                        <div style="font-family:'Archivo Black',sans-serif; font-size:14px; color:#94a3b8;
+                                    text-transform:uppercase; letter-spacing:0.06em; margin-bottom:16px;">
+                            {{ __('Records Personnels') }}
                         </div>
-                        @endif
-                        @if(isset($careerStats['avg_average']) && $careerStats['avg_average'])
-                        <div class="flex justify-between items-center py-3 border-b border-white/10">
-                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('Moyenne Carrière') }}</span>
-                            <span class="font-gaming text-2xl text-cyan-400">{{ $careerStats['avg_average'] }}</span>
+                        <div>
+                            @if($player->career_highest_average)
+                            <div class="stat-row">
+                                <span class="stat-label">{{ __('Meilleure Moyenne') }}</span>
+                                <span class="stat-value pg-text-amber">{{ $player->career_highest_average }}</span>
+                            </div>
+                            @endif
+                            @if($player->career_9darters > 0)
+                            <div class="stat-row">
+                                <span class="stat-label">9-Darters</span>
+                                <span class="stat-value pg-text-purple">{{ $player->career_9darters }}</span>
+                            </div>
+                            @endif
+                            @if($player->career_titles > 0)
+                            <div class="stat-row">
+                                <span class="stat-label">{{ __('Titres') }}</span>
+                                <span class="stat-value pg-text-blue">{{ $player->career_titles }}</span>
+                            </div>
+                            @endif
+                            @if($latestRanking)
+                            <div class="stat-row">
+                                <span class="stat-label">{{ __('Classement') }} {{ $latestRanking->federation->name ?? 'PDC' }}</span>
+                                <span class="stat-value pg-text-red">#{{ $latestRanking->position }}</span>
+                            </div>
+                            @endif
                         </div>
-                        @endif
-                        @if(isset($careerStats['avg_checkout']) && $careerStats['avg_checkout'])
-                        <div class="flex justify-between items-center py-3">
-                            <span class="text-slate-400 font-mono text-sm uppercase tracking-wider">{{ __('Checkout %') }}</span>
-                            <span class="font-gaming text-2xl text-green-400">{{ $careerStats['avg_checkout'] }}%</span>
-                        </div>
-                        @endif
                     </div>
                 </div>
-            </div>
+
+            </div>{{-- /hero-grid --}}
         </div>
     </div>
-</section>
+</div>

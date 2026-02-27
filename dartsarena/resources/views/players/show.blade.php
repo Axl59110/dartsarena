@@ -16,8 +16,9 @@
 @include('players.partials._styles')
 
 @section('content')
-    <div class="dark">
-    {{-- Schema.org Person Markup --}}
+<div class="player-page">
+
+    {{-- Schema.org --}}
     @php
         $schema = [
             '@context' => 'https://schema.org',
@@ -29,58 +30,36 @@
             'jobTitle' => 'Professional Darts Player',
             'award' => $player->career_titles . ' career titles'
         ];
-
-        if ($player->photo_url) {
-            $schema['image'] = asset($player->photo_url);
-        }
-
-        if ($player->date_of_birth) {
-            $schema['birthDate'] = $player->date_of_birth->format('Y-m-d');
-        }
+        if ($player->photo_url) $schema['image'] = asset($player->photo_url);
+        if ($player->date_of_birth) $schema['birthDate'] = $player->date_of_birth->format('Y-m-d');
     @endphp
     <script type="application/ld+json">
     {!! json_encode($schema, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) !!}
     </script>
 
-    {{-- HERO SECTION --}}
+    {{-- HERO --}}
     @include('players.partials._hero', [
         'player' => $player,
         'latestRanking' => $latestRanking
     ])
 
-    {{-- TABS SECTION --}}
-    <div class="container py-8 lg:py-12"
+    {{-- TABS --}}
+    <div style="max-width:1280px; margin:0 auto; padding:32px 16px;"
          x-data="{
              activeTab: 'profil',
              videoModal: {
-                 isOpen: false,
-                 videoUrl: '',
-                 title: '',
-                 open(url, title) {
-                     this.videoUrl = url;
-                     this.title = title;
-                     this.isOpen = true;
-                 },
-                 close() {
-                     this.isOpen = false;
-                     this.videoUrl = '';
-                     this.title = '';
-                 }
+                 isOpen: false, videoUrl: '', title: '',
+                 open(url, title) { this.videoUrl=url; this.title=title; this.isOpen=true; },
+                 close() { this.isOpen=false; this.videoUrl=''; this.title=''; }
              }
          }">
 
-        {{-- TABS NAVIGATION --}}
         @include('players.partials._tabs-nav')
 
-        {{-- TABS CONTENT --}}
-        <div class="mt-8">
-            {{-- TAB: PROFIL --}}
-            @include('players.partials._tab-profil', [
-                'player' => $player,
-                'latestRanking' => $latestRanking
-            ])
+        <div style="margin-top:24px;">
 
-            {{-- TAB: STATS --}}
+            @include('players.partials._tab-profil', ['player' => $player, 'latestRanking' => $latestRanking])
+
             @include('players.partials._tab-stats', [
                 'player' => $player,
                 'careerStats' => $careerStats,
@@ -89,44 +68,34 @@
                 'chart180s' => $chart180s,
             ])
 
-            {{-- TAB: FORTUNE --}}
             @include('players.partials._tab-fortune')
 
-            {{-- TAB: PALMARÈS --}}
-            @include('players.partials._tab-palmares', [
-                'player' => $player
-            ])
+            @include('players.partials._tab-palmares', ['player' => $player])
 
-            {{-- TAB: MATCHS --}}
-            @include('players.partials._tab-matchs', [
-                'player' => $player,
-                'recentMatches' => $recentMatches
-            ])
+            @include('players.partials._tab-matchs', ['player' => $player, 'recentMatches' => $recentMatches])
 
-            {{-- TAB: NINE-DARTERS --}}
-            @include('players.partials._tab-nine-darters', [
-                'player' => $player,
-                'nineDarters' => $nineDarters
-            ])
+            @include('players.partials._tab-nine-darters', ['player' => $player, 'nineDarters' => $nineDarters])
 
-            {{-- TAB: ÉQUIPEMENT --}}
             @include('players.partials._tab-equipement', [
                 'currentEquipments' => $currentEquipments,
                 'previousEquipments' => $previousEquipments
             ])
 
-            {{-- Back Button --}}
-            <div class="text-center mt-12">
+            <div style="text-align:center; margin-top:48px;">
                 <a href="{{ route('players.index') }}"
-                   class="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 hover:bg-primary text-white border-2 border-white/10 hover:border-primary rounded-xl font-gaming uppercase tracking-wider transition-all hover:scale-105">
-                    <span class="text-xl">←</span>
-                    {{ __('Retour aux joueurs') }}
+                   style="display:inline-flex; align-items:center; gap:10px; padding:14px 32px;
+                          background:#1e293b; color:#f1f5f9; border:1px solid #334155;
+                          border-radius:10px; font-family:'Archivo Black',sans-serif;
+                          font-size:14px; text-transform:uppercase; letter-spacing:0.05em;
+                          text-decoration:none; transition:background 0.15s, border-color 0.15s;"
+                   onmouseover="this.style.background='#ef4444';this.style.borderColor='#ef4444';"
+                   onmouseout="this.style.background='#1e293b';this.style.borderColor='#334155';">
+                    ← {{ __('Retour aux joueurs') }}
                 </a>
             </div>
         </div>
     </div>
 
-    {{-- VIDEO MODAL --}}
     @include('players.partials._video-modal')
-    </div>
+</div>
 @endsection

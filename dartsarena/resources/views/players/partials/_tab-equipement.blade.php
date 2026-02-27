@@ -1,105 +1,106 @@
 {{-- TAB CONTENT: ÉQUIPEMENT --}}
 <div x-show="activeTab === 'equipement'" x-transition role="tabpanel">
     @if($currentEquipments->count() > 0 || $previousEquipments->count() > 0)
-        {{-- Current Equipment --}}
+
+        {{-- Setup actuel --}}
         @if($currentEquipments->count() > 0)
-            <div class="mb-8">
-                <h2 class="font-gaming text-2xl text-white mb-6 uppercase tracking-wider flex items-center gap-3">
-                    <span class="text-3xl">⚙️</span>
-                    {{ __('Setup Actuel') }}
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    @foreach($currentEquipments as $equipment)
-                        <div class="holo-card rounded-xl overflow-hidden group">
-                            @if($equipment->photo_url)
-                                <div class="aspect-square bg-gradient-to-br from-slate-900 to-slate-800 p-8 flex items-center justify-center">
-                                    <img
-                                        src="{{ $equipment->photo_url }}"
-                                        alt="{{ $equipment->full_name }}"
-                                        loading="lazy"
-                                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
-                                    />
-                                </div>
-                            @endif
-
-                            <div class="p-6">
-                                <div class="mb-3">
-                                    <span class="inline-block px-3 py-1 bg-primary/20 text-primary text-xs font-bold uppercase tracking-widest rounded-full font-mono">
-                                        {{ __($equipment->equipment_type) }}
-                                    </span>
-                                </div>
-
-                                <h3 class="font-gaming text-xl text-white mb-1">
-                                    {{ $equipment->brand }}
-                                </h3>
-                                <p class="text-lg text-slate-300 font-semibold mb-3">
-                                    {{ $equipment->model }}
-                                </p>
-
-                                @if($equipment->description)
-                                    <p class="text-sm text-slate-400 mb-4 line-clamp-2">
-                                        {{ $equipment->description }}
-                                    </p>
-                                @endif
-
-                                @if($equipment->affiliate_link)
-                                    <a
-                                        href="{{ $equipment->affiliate_link }}"
-                                        target="_blank"
-                                        rel="noopener noreferrer nofollow sponsored"
-                                        class="block text-center py-3 bg-primary hover:bg-primary/90 text-white font-bold rounded-lg transition-colors uppercase tracking-wider text-sm"
-                                    >
-                                        {{ __('Acheter') }} →
-                                    </a>
-                                @endif
-                            </div>
+        <div style="margin-bottom:32px;">
+            <h2 style="font-family:'Archivo Black',sans-serif; font-size:1.2rem; color:#f1f5f9;
+                       text-transform:uppercase; letter-spacing:0.06em; margin:0 0 20px;
+                       display:flex; align-items:center; gap:10px;">
+                ⚙️ {{ __('Setup Actuel') }}
+            </h2>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px;">
+                @foreach($currentEquipments as $equipment)
+                <div class="pg-card" style="overflow:hidden;">
+                    @if($equipment->photo_url)
+                    <div style="background:#0f172a; padding:24px; display:flex; align-items:center; justify-content:center; aspect-ratio:1;">
+                        <img src="{{ $equipment->photo_url }}" alt="{{ $equipment->brand }}"
+                             loading="lazy" style="max-height:140px; max-width:100%; object-fit:contain;">
+                    </div>
+                    @endif
+                    <div style="padding:16px;">
+                        <div style="margin-bottom:10px;">
+                            <span style="display:inline-block; padding:3px 10px;
+                                         background:rgba(239,68,68,0.15); color:#ef4444;
+                                         font-family:'JetBrains Mono',monospace; font-size:10px;
+                                         font-weight:700; text-transform:uppercase; letter-spacing:0.06em;
+                                         border-radius:9999px;">
+                                {{ __($equipment->equipment_type) }}
+                            </span>
                         </div>
-                    @endforeach
+                        <div style="font-family:'Archivo Black',sans-serif; font-size:1rem; color:#f1f5f9; margin-bottom:4px;">
+                            {{ $equipment->brand }}
+                        </div>
+                        <div style="color:#94a3b8; font-size:0.9rem; margin-bottom:8px;">
+                            {{ $equipment->model }}
+                        </div>
+                        @if($equipment->description)
+                        <p style="font-size:12px; color:#64748b; margin:0 0 12px; line-height:1.5;
+                                  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                            {{ $equipment->description }}
+                        </p>
+                        @endif
+                        @if($equipment->affiliate_link)
+                        <a href="{{ $equipment->affiliate_link }}" target="_blank" rel="noopener noreferrer nofollow sponsored"
+                           style="display:block; text-align:center; padding:10px; background:#ef4444;
+                                  color:white; font-family:'Archivo Black',sans-serif; font-size:12px;
+                                  text-transform:uppercase; letter-spacing:0.05em; border-radius:8px;
+                                  text-decoration:none; transition:background 0.15s;"
+                           onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">
+                            {{ __('Acheter') }} →
+                        </a>
+                        @endif
+                    </div>
                 </div>
+                @endforeach
             </div>
+        </div>
         @endif
 
-        {{-- Previous Equipment --}}
+        {{-- Équipements précédents --}}
         @if($previousEquipments->count() > 0)
-            <div>
-                <h2 class="font-gaming text-2xl text-white mb-6 uppercase tracking-wider flex items-center gap-3 opacity-60">
-                    <span class="text-3xl">📦</span>
-                    {{ __('Équipements Précédents') }}
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    @foreach($previousEquipments as $equipment)
-                        <div class="holo-card rounded-xl p-4 opacity-50 hover:opacity-75 transition-opacity">
-                            @if($equipment->photo_url)
-                                <div class="aspect-square bg-slate-900 p-4 rounded-lg mb-3 flex items-center justify-center">
-                                    <img
-                                        src="{{ $equipment->photo_url }}"
-                                        alt="{{ $equipment->full_name }}"
-                                        loading="lazy"
-                                        class="max-h-full max-w-full object-contain"
-                                    />
-                                </div>
-                            @endif
-
-                            <div class="text-sm">
-                                <div class="font-bold text-white mb-1">{{ $equipment->brand }}</div>
-                                <div class="text-slate-400 text-xs mb-2">{{ $equipment->model }}</div>
-                                @if($equipment->period)
-                                    <div class="text-xs text-slate-600 italic font-mono">{{ $equipment->period }}</div>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
+        <div>
+            <h2 style="font-family:'Archivo Black',sans-serif; font-size:1rem; color:#64748b;
+                       text-transform:uppercase; letter-spacing:0.06em; margin:0 0 16px;
+                       display:flex; align-items:center; gap:10px;">
+                📦 {{ __('Équipements Précédents') }}
+            </h2>
+            <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; opacity:0.65;">
+                @foreach($previousEquipments as $equipment)
+                <div class="pg-card" style="padding:14px;">
+                    @if($equipment->photo_url)
+                    <div style="background:#0f172a; border-radius:6px; padding:12px; margin-bottom:10px;
+                                display:flex; align-items:center; justify-content:center; aspect-ratio:1;">
+                        <img src="{{ $equipment->photo_url }}" alt="{{ $equipment->brand }}"
+                             loading="lazy" style="max-height:80px; object-fit:contain;">
+                    </div>
+                    @endif
+                    <div style="font-family:'Archivo Black',sans-serif; font-size:0.85rem; color:#f1f5f9; margin-bottom:3px;">
+                        {{ $equipment->brand }}
+                    </div>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#64748b; margin-bottom:4px;">
+                        {{ $equipment->model }}
+                    </div>
+                    @if($equipment->period)
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#475569; font-style:italic;">
+                        {{ $equipment->period }}
+                    </div>
+                    @endif
                 </div>
+                @endforeach
             </div>
+        </div>
         @endif
+
     @else
-        <div class="holo-card rounded-xl p-12 text-center">
-            <div class="text-6xl mb-4 opacity-20">⚙️</div>
-            <h2 class="font-gaming text-2xl text-white mb-3">
+        <div class="pg-card" style="padding:48px; text-align:center;">
+            <div style="font-size:3rem; opacity:0.15; margin-bottom:12px;">⚙️</div>
+            <h2 style="font-family:'Archivo Black',sans-serif; font-size:1.2rem; color:#f1f5f9; margin:0 0 8px;">
                 {{ __('Aucun Équipement Référencé') }}
             </h2>
-            <p class="text-slate-500 italic">
-                {{ __('Les informations sur l\'équipement de ce joueur seront bientôt disponibles.') }}
+            <p style="color:#475569; font-style:italic; margin:0;">
+                {{ __("Les informations sur l'équipement de ce joueur seront bientôt disponibles.") }}
             </p>
         </div>
     @endif

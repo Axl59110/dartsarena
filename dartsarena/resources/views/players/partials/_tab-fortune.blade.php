@@ -1,41 +1,59 @@
 {{-- TAB CONTENT: FORTUNE --}}
 <div x-show="activeTab === 'fortune'" x-transition role="tabpanel">
-    <div class="holo-card rounded-xl p-8">
-        <h2 class="font-gaming text-2xl text-white mb-8 uppercase tracking-wider flex items-center gap-3">
-            <span class="text-3xl">💰</span>
-            {{ __('Prize Money & Gains') }}
+    <div class="pg-card" style="padding:32px;">
+        <h2 style="font-family:'Archivo Black',sans-serif; font-size:1.2rem; color:#f1f5f9;
+                   text-transform:uppercase; letter-spacing:0.06em; margin:0 0 28px;
+                   display:flex; align-items:center; gap:10px;">
+            💰 {{ __('Prize Money & Gains') }}
         </h2>
 
-        {{-- Total Career Titles as proxy --}}
-        @if($player->career_titles > 0)
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-gradient-to-br from-amber-900/30 to-transparent p-6 rounded-xl border-2 border-amber-500/30 text-center">
-                    <div class="text-xs text-amber-300 uppercase tracking-widest font-mono mb-3">{{ __('Titres de Carrière') }}</div>
-                    <div class="font-gaming text-6xl text-amber-400 mb-2">{{ $player->career_titles }}</div>
-                    <div class="text-sm text-slate-400">{{ __('Tournois remportés') }}</div>
+        @if($player->career_titles > 0 || $player->career_9darters > 0)
+        <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px; margin-bottom:28px;">
+            @if($player->career_titles > 0)
+            <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.25);
+                        border-radius:10px; padding:24px; text-align:center;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#fbbf24;
+                            text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
+                    {{ __('Titres de Carrière') }}
                 </div>
-
-                @if($player->career_9darters > 0)
-                <div class="bg-gradient-to-br from-purple-900/30 to-transparent p-6 rounded-xl border-2 border-purple-500/30 text-center">
-                    <div class="text-xs text-purple-300 uppercase tracking-widest font-mono mb-3">{{ __('Perfections') }}</div>
-                    <div class="font-gaming text-6xl text-purple-400 mb-2">{{ $player->career_9darters }}</div>
-                    <div class="text-sm text-slate-400">9-Darters</div>
+                <div style="font-family:'Archivo Black',sans-serif; font-size:3rem; color:#f59e0b; line-height:1; margin-bottom:6px;">
+                    {{ $player->career_titles }}
                 </div>
-                @endif
+                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#64748b;">
+                    {{ __('Tournois remportés') }}
+                </div>
             </div>
+            @endif
+
+            @if($player->career_9darters > 0)
+            <div style="background:rgba(167,139,250,0.08); border:1px solid rgba(167,139,250,0.25);
+                        border-radius:10px; padding:24px; text-align:center;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#c4b5fd;
+                            text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">
+                    {{ __('Perfections') }}
+                </div>
+                <div style="font-family:'Archivo Black',sans-serif; font-size:3rem; color:#a78bfa; line-height:1; margin-bottom:6px;">
+                    {{ $player->career_9darters }}
+                </div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#64748b;">
+                    9-Darters
+                </div>
+            </div>
+            @endif
+        </div>
         @endif
 
-        {{-- Honest message about financial data --}}
-        <div class="p-6 bg-slate-900/50 rounded-xl border border-white/10 text-center">
-            <div class="text-4xl mb-4 opacity-60">📊</div>
-            <p class="text-slate-400 font-mono text-sm leading-relaxed max-w-lg mx-auto">
+        <div style="background:#0f172a; border-radius:10px; padding:24px; text-align:center; border:1px solid #1e293b;">
+            <div style="font-size:2rem; margin-bottom:12px; opacity:0.4;">📊</div>
+            <p style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#64748b;
+                      line-height:1.7; margin:0 auto; max-width:480px;">
                 {{ __('Les données financières détaillées (prize money par tournoi, sponsors, fortune nette) nécessitent un accès aux APIs officielles PDC et seront disponibles prochainement.') }}
             </p>
-            <div class="mt-6">
+            <div style="margin-top:18px;">
                 <a href="https://www.pdc.tv/player-rankings" target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 font-mono underline underline-offset-4 transition-colors">
-                    {{ __('Classements officiels PDC') }}
-                    <span>↗</span>
+                   style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#ef4444;
+                          text-decoration:underline; text-underline-offset:3px;">
+                    {{ __('Classements officiels PDC') }} ↗
                 </a>
             </div>
         </div>
