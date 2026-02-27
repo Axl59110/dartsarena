@@ -26,27 +26,8 @@
         font-family: 'JetBrains Mono', monospace;
     }
 
-    /* ---- HERO ---- */
-    .player-hero {
-        background: linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
-        border-bottom: 1px solid #1e293b;
-        overflow: hidden;
-        position: relative;
-    }
-
-    .player-hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-image: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 40px,
-            rgba(255,255,255,0.015) 40px,
-            rgba(255,255,255,0.015) 80px
-        );
-        pointer-events: none;
-    }
+    /* ---- HERO : styles de base (le reste est dans _hero.blade.php) ---- */
+    .player-hero { position: relative; }
 
     /* ---- CARTES ---- */
     .pg-card {
@@ -61,66 +42,6 @@
         background-color: #243347;
     }
 
-    /* Carte joueur gauche dans le hero */
-    .player-card-left {
-        background: linear-gradient(135deg, #1e293b 0%, #162032 100%);
-        border: 1px solid #334155;
-        border-radius: 16px;
-    }
-
-    /* ---- BADGE RANG ---- */
-    .rank-badge {
-        background: linear-gradient(90deg, #f59e0b, #ea580c);
-        border-radius: 9999px;
-        padding: 6px 16px;
-        border: 3px solid #0f172a;
-        display: inline-block;
-    }
-
-    .rank-badge-glow {
-        box-shadow: 0 0 16px rgba(245, 158, 11, 0.5);
-        animation: badge-pulse 2.5s ease-in-out infinite;
-    }
-
-    @keyframes badge-pulse {
-        0%, 100% { box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); }
-        50%       { box-shadow: 0 0 24px rgba(245, 158, 11, 0.7); }
-    }
-
-    /* ---- PHOTO JOUEUR ---- */
-    .player-photo-ring {
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        border: 3px solid #334155;
-        overflow: hidden;
-        margin: 0 auto;
-        background-color: #0f172a;
-        position: relative;
-    }
-
-    .player-photo-ring img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* Anneau de couleur autour de la photo — statique */
-    .player-photo-ring::after {
-        content: '';
-        position: absolute;
-        inset: -4px;
-        border-radius: 50%;
-        background: conic-gradient(
-            #ef4444 0%, #f59e0b 33%, #8b5cf6 66%, #ef4444 100%
-        );
-        z-index: -1;
-    }
-
-    /* ---- SÉPARATEUR ---- */
-    .player-divider {
-        border-color: #334155;
-    }
 
     /* ---- TABS ---- */
     .pg-tabs-wrapper {
