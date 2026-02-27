@@ -219,11 +219,11 @@
                     {{ $equipment->brand }}
                 </div>
                 <div style="font-family:'JetBrains Mono',monospace; font-size:0.62rem;
-                            color:#94a3b8; margin-bottom:4px;">
+                            color:#64748b; margin-bottom:4px;">
                     {{ $equipment->model }}
                 </div>
                 @if($equipment->period)
-                <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:#cbd5e1;">
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.58rem; color:#94a3b8;">
                     {{ $equipment->period }}
                 </div>
                 @endif
@@ -240,10 +240,10 @@
 <div class="pg-dark-card" style="text-align:center; padding:56px 24px;">
     <div style="font-size:2.5rem; opacity:0.12; margin-bottom:16px;">⚙️</div>
     <div style="font-family:'Inter Tight Variable','Inter Tight',sans-serif;
-                font-weight:700; font-size:0.95rem; color:#94a3b8; margin-bottom:8px;">
+                font-weight:700; font-size:0.95rem; color:#f1f5f9; margin-bottom:8px;">
         Aucun Équipement Référencé
     </div>
-    <div class="pg-body-text" style="font-size:0.82rem; color:#64748b; line-height:1.6;">
+    <div class="pg-body-text" style="font-size:0.82rem; color:#94a3b8; line-height:1.6;">
         Les informations sur l'équipement de ce joueur<br>seront disponibles prochainement.
     </div>
 </div>

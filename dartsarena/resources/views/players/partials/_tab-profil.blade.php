@@ -105,7 +105,7 @@
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #64748b;
+    color: #94a3b8;
     flex-shrink: 0;
 }
 .prof-info-val {
@@ -148,7 +148,7 @@
 .prof-social-handle {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.6rem;
-    color: #64748b;
+    color: #94a3b8;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -187,7 +187,7 @@
                 <span class="prof-rank-num">{{ $latestRanking->position }}</span>
             </div>
             <div style="font-family:'JetBrains Mono',monospace; font-size:0.65rem;
-                        text-transform:uppercase; letter-spacing:0.1em; color:#475569;">
+                        text-transform:uppercase; letter-spacing:0.1em; color:#94a3b8;">
                 {{ $latestRanking->federation->name ?? 'PDC' }} World Rankings
             </div>
         </div>

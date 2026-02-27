@@ -201,7 +201,7 @@
         <div class="tm-next-card">
             <div>
                 <div style="font-family:'JetBrains Mono',monospace; font-size:0.6rem;
-                            text-transform:uppercase; letter-spacing:0.14em; color:#64748b; margin-bottom:8px;">
+                            text-transform:uppercase; letter-spacing:0.14em; color:#94a3b8; margin-bottom:8px;">
                     vs
                 </div>
                 <div class="tm-next-vs">{{ $nextOpp?->full_name ?? '—' }}</div>
@@ -244,12 +244,12 @@
                         justify-content:space-between; gap:12px;">
                 <div>
                     <span style="font-family:'Inter Tight Variable','Inter Tight',sans-serif;
-                                 font-weight:600; font-size:0.82rem; color:#94a3b8;">
+                                 font-weight:600; font-size:0.82rem; color:#f1f5f9;">
                         vs {{ $nextOpp?->full_name ?? '—' }}
                     </span>
                 </div>
                 <span style="font-family:'JetBrains Mono',monospace; font-size:0.6rem;
-                             color:#64748b; white-space:nowrap;">
+                             color:#94a3b8; white-space:nowrap;">
                     {{ $next->scheduled_at?->format('d/m/Y') ?? '—' }}
                 </span>
             </div>
@@ -290,7 +290,7 @@
 
         {{-- Barre W/L visuelle --}}
         <div>
-            <div class="pg-mono-label" style="color:#64748b; margin-bottom:10px; font-size:0.58rem;">
+            <div class="pg-mono-label" style="color:#94a3b8; margin-bottom:10px; font-size:0.58rem;">
                 Résultats récents (du plus ancien au plus récent) →
             </div>
             <div style="display:flex; gap:4px; flex-wrap:wrap;">
@@ -378,10 +378,10 @@
     <div class="pg-dark-card" style="padding: 56px 24px; text-align: center;">
         <div style="font-size: 2.5rem; opacity: 0.12; margin-bottom: 16px;">⚔️</div>
         <div style="font-family:'Inter Tight Variable','Inter Tight',sans-serif;
-                    font-weight:700; font-size:0.95rem; color:#94a3b8; margin-bottom:8px;">
+                    font-weight:700; font-size:0.95rem; color:#f1f5f9; margin-bottom:8px;">
             Aucun Match Disponible
         </div>
-        <div class="pg-body-text" style="font-size:0.82rem; color:#64748b;">
+        <div class="pg-body-text" style="font-size:0.82rem; color:#94a3b8;">
             Les matchs de ce joueur apparaîtront ici dès l'intégration des données.
         </div>
     </div>

@@ -127,7 +127,7 @@
 
     {{-- 1. COMPTEUR HERO --}}
     <div class="pg-dark-card" style="padding: 40px 24px; text-align: center;">
-        <div class="pg-mono-label" style="color:#64748b; margin-bottom:12px; letter-spacing:0.18em;">
+        <div class="pg-mono-label" style="color:#94a3b8; margin-bottom:12px; letter-spacing:0.18em;">
             DARTSARENA · PALMARÈS OFFICIEL
         </div>
         <div class="tp-counter-num" id="tpCounterNum">{{ $titles }}</div>
@@ -210,7 +210,7 @@
             <div style="font-size:1.3rem; flex-shrink:0;">📡</div>
             <div>
                 <div style="font-family:'Inter Tight Variable','Inter Tight',sans-serif;
-                            font-weight:700; font-size:0.82rem; color:#64748b; margin-bottom:3px;">
+                            font-weight:700; font-size:0.82rem; color:#94a3b8; margin-bottom:3px;">
                     Données détaillées en cours d'intégration
                 </div>
                 <div style="font-family:'Inter Variable','Inter',sans-serif;

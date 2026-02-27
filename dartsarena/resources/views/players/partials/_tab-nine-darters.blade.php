@@ -217,7 +217,7 @@
 
     {{-- 1. COMPTEUR HERO --}}
     <div class="pg-dark-card" style="padding: 36px 24px; text-align: center;">
-        <div class="pg-mono-label" style="color:#64748b; margin-bottom:10px; letter-spacing:0.18em;">
+        <div class="pg-mono-label" style="color:#94a3b8; margin-bottom:10px; letter-spacing:0.18em;">
             PERFECTION · DARTSARENA
         </div>
         <div class="pg-impact-num" style="font-size: clamp(4rem,10vw,6rem); color:#f59e0b;">
@@ -233,7 +233,7 @@
             @if($onTv > 0)
             <div style="text-align:center;">
                 <div class="pg-impact-num" style="font-size:1.5rem; color:#ef4444;">{{ $onTv }}</div>
-                <div class="pg-mono-label" style="font-size:0.58rem; color:#64748b; margin-top:3px;">
+                <div class="pg-mono-label" style="font-size:0.58rem; color:#94a3b8; margin-top:3px;">
                     En Direct TV
                 </div>
             </div>
@@ -241,7 +241,7 @@
             @if($withVid > 0)
             <div style="text-align:center;">
                 <div class="pg-impact-num" style="font-size:1.5rem; color:#f59e0b;">{{ $withVid }}</div>
-                <div class="pg-mono-label" style="font-size:0.58rem; color:#64748b; margin-top:3px;">
+                <div class="pg-mono-label" style="font-size:0.58rem; color:#94a3b8; margin-top:3px;">
                     Vidéos Dispo
                 </div>
             </div>
@@ -353,10 +353,10 @@
 <div class="pg-dark-card" style="text-align:center; padding:56px 24px;">
     <div style="font-size:2.5rem; opacity:0.12; margin-bottom:16px;">⚡</div>
     <div style="font-family:'Inter Tight Variable','Inter Tight',sans-serif;
-                font-weight:700; font-size:0.95rem; color:#94a3b8; margin-bottom:8px;">
+                font-weight:700; font-size:0.95rem; color:#f1f5f9; margin-bottom:8px;">
         Aucun 9-Darter Enregistré
     </div>
-    <div class="pg-body-text" style="font-size:0.82rem; color:#64748b; line-height:1.6;">
+    <div class="pg-body-text" style="font-size:0.82rem; color:#94a3b8; line-height:1.6;">
         Les 9-darters parfaits de ce joueur<br>seront affichés ici dès leur enregistrement.
     </div>
 </div>

@@ -53,7 +53,7 @@
     font-size: 0.6rem;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #64748b;
+    color: #94a3b8;
 }
 
 /* Records */
@@ -71,7 +71,7 @@
     gap: 10px;
     font-family: 'Inter Variable', 'Inter', -apple-system, sans-serif;
     font-size: 0.85rem;
-    color: #94a3b8;
+    color: #e2e8f0;
 }
 .ts-record-icon {
     width: 32px; height: 32px;
@@ -192,7 +192,7 @@
                 <div class="ts-score-lbl">Victoires</div>
             </div>
             <div class="ts-score-cell">
-                <div class="ts-score-num" style="color:#475569;">{{ $losses }}</div>
+                <div class="ts-score-num" style="color:#94a3b8;">{{ $losses }}</div>
                 <div class="ts-score-lbl">Défaites</div>
             </div>
             <div class="ts-score-cell">

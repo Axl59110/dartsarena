@@ -70,7 +70,7 @@
         height: 1px;
         background: #e2e8f0;
     }
-    .pg-dark-card .pg-section-title { color: #64748b; }
+    .pg-dark-card .pg-section-title { color: #94a3b8; }
     .pg-dark-card .pg-section-title::after { background: #1e293b; }
 
     /* Texte de corps */
@@ -80,10 +80,11 @@
         color: #475569;
         line-height: 1.85;
     }
-    .pg-dark-card .pg-body-text { color: #94a3b8; }
+    .pg-dark-card .pg-body-text { color: #e2e8f0; }
 
-    /* Règle globale : tout texte générique dans une dark card passe au clair */
-    .pg-dark-card .pg-mono-label { color: #64748b; }
+    /* Règle globale : tout texte dans une dark card passe au blanc */
+    .pg-dark-card { color: #f1f5f9; }
+    .pg-dark-card .pg-mono-label { color: #94a3b8; }
 
     /* Grand chiffre impact */
     .pg-impact-num {
